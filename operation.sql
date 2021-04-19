@@ -30,3 +30,51 @@
 
     -- 更新采购订单
     UPDATE purchaseOrders SET time = "2020-10-6 06:30:51", state = true WHERE id = 1;
+
+
+-- 进库操作
+
+    -- 新增进库操作
+    INSERT INTO purchaseOperations (purchaseOrderId, productId, num) VALUES (1, 1, 10);
+
+    -- 删除进库操作
+    DELETE FROM purchaseOperations WHERE id = 1;
+
+    -- 更新进库操作
+    UPDATE purchaseOperations SET purchaseOrderId = 2, productId = 2, num = 20 WHERE id = 1;
+
+
+-- 出售订单操作
+
+    -- 新增出售订单
+    INSERT INTO saleOrders (time, state, userId, selling) VALUES ("2021-4-19 06:48:51", false, 1, 100);
+
+    -- 删除出售订单
+    DELETE FROM saleOrders WHERE id = 1;
+
+    -- 更新出售订单
+    UPDATE saleOrders SET time = "2020-10-6 06:30:51", state = true, userId = 2, selling = 200 WHERE id = 1;
+
+
+-- 出库操作
+
+    -- 新增出库操作
+    INSERT INTO saleOperations (saleOrderId, productId, num) VALUES (1, 1, 10);
+
+    -- 删除出库操作
+    DELETE FROM saleOperations WHERE id = 1;
+
+    -- 更新出库操作
+    UPDATE saleOperations SET saleOrderId = 2, productId = 2, num = 20 WHERE id = 1;
+
+
+-- 结账记录操作
+
+    -- 新增结账记录
+    INSERT INTO checkOuts (saleOrderId, time, amount) VALUES (1, "2021-4-19 06:48:51", 50);
+
+    -- 删除结账记录
+    DELETE FROM checkOuts WHERE id = 1;
+
+    -- 更新结账记录
+    UPDATE checkOuts SET saleOrderId = 2, time = "2020-10-6 06:30:51", amount = 70 WHERE id = 1;
