@@ -19,3 +19,14 @@
 
     -- 更新用户
     UPDATE users SET name = "ccczg", tel = 13683767894, address = "郑州", notes = "备注2" WHERE id = 1;
+
+-- 采购订单操作
+
+    -- 新增采购订单
+    INSERT INTO purchaseOrders (time, state) VALUES ("2021-4-19 06:48:51", false);
+
+    -- 删除采购订单
+    DELETE FROM purchaseOrders WHERE id = 1;
+
+    -- 更新采购订单
+    UPDATE purchaseOrders SET time = "2020-10-6 06:30:51", state = true WHERE id = 1;

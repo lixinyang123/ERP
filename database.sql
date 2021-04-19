@@ -28,6 +28,17 @@ CREATE TABLE users (
 );
 
 
+-- 采购订单
+CREATE TABLE purchaseOrders (
+    -- ID
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    -- 时间
+    time DATETIME NOT NULL ,
+    -- 状态（订单完成状态）
+    state BOOLEAN NOT NULL 
+);
+
+
 -- 进库操作
 CREATE TABLE purchaseOperations (
     -- ID
@@ -37,36 +48,9 @@ CREATE TABLE purchaseOperations (
     -- 商品ID
     productId INTEGER NOT NULL ,
     -- 操作数量
-    num INTEGER NOT NULL ，
-    -- 外键
-    FOREIGN KEY (purchaseOrderId) REFERENCES purchaseOrders(id) ,
-    FOREIGN KEY (productId) REFERENCES products(id)
-);
-
-
--- 采购订单
-CREATE TABLE purchaseOrders (
-    -- ID
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    -- 时间
-    time DATETIME NOT NULL ,
-    -- 状态（订单完成状态）
-    state BOOLEAN NOT NULL ,
-);
-
-
--- 出库操作
-CREATE TABLE saleOperations (
-    -- ID
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    -- 订单ID
-    saleOrderId INTEGER NOT NULL ,
-    -- 商品ID
-    productId INTEGER NOT NULL ,
-    -- 操作数量
     num INTEGER NOT NULL ,
     -- 外键
-    FOREIGN KEY (saleOrderId) REFERENCES saleOrders(id) ,
+    FOREIGN KEY (purchaseOrderId) REFERENCES purchaseOrders(id) ,
     FOREIGN KEY (productId) REFERENCES products(id)
 );
 
@@ -85,6 +69,22 @@ CREATE TABLE saleOrders (
     selling DOUBLE NOT NULL ,
     -- 外键
     FOREIGN KEY (userId) REFERENCES users(id) 
+);
+
+
+-- 出库操作
+CREATE TABLE saleOperations (
+    -- ID
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    -- 订单ID
+    saleOrderId INTEGER NOT NULL ,
+    -- 商品ID
+    productId INTEGER NOT NULL ,
+    -- 操作数量
+    num INTEGER NOT NULL ,
+    -- 外键
+    FOREIGN KEY (saleOrderId) REFERENCES saleOrders(id) ,
+    FOREIGN KEY (productId) REFERENCES products(id)
 );
 
 
