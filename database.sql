@@ -13,7 +13,7 @@ CREATE TABLE products (
 );
 
 
--- 客户表
+-- 用户表
 CREATE TABLE users (
     -- ID
     id INTEGER PRIMARY KEY AUTOINCREMENT,
