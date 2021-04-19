@@ -9,6 +9,7 @@
     -- 更新产品
     UPDATE products SET price = 20, num = 20, specifications = "20*20", notes = "备注2" WHERE id = 1;
 
+
 -- 用户操作
 
     -- 新增用户
@@ -19,6 +20,7 @@
 
     -- 更新用户
     UPDATE users SET name = "ccczg", tel = 13683767894, address = "郑州", notes = "备注2" WHERE id = 1;
+
 
 -- 采购订单操作
 
