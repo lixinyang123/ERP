@@ -1,5 +1,10 @@
 -- 产品操作
 
+    -- 查询产品
+    SELECT * FROM products LIMIT 0,10;
+
+    SELECT * FROM products WHERE id = 1;
+
     -- 新增产品
     INSERT INTO products (price, num, specifications, notes) VALUES (10, 10, "10*10", "备注");
 
@@ -12,6 +17,11 @@
 
 -- 用户操作
 
+    -- 查询用户
+    SELECT * FROM users LIMIT 0,10;
+
+    SELECT * FROM users WHERE id = 1;
+
     -- 新增用户
     INSERT INTO users (name, tel, address, notes) VALUES ("lllxy", 15637606156, "洛阳", "备注");
 
@@ -23,6 +33,15 @@
 
 
 -- 采购订单操作
+
+    -- 查询订单
+    SELECT * FROM purchaseOrders LIMIT 0,10;
+
+    SELECT * FROM purchaseOrders, purchaseOperations ON purchaseOrders.id = purchaseOperations.purchaseOrderId LIMIT 0,10;
+
+    SELECT * FROM purchaseOrders LEFT JOIN purchaseOperations ON purchaseOrders.id = purchaseOperations.purchaseOrderId LIMIT 0,10;
+
+    SELECT * FROM purchaseOrders WHERE id = 1;
 
     -- 新增采购订单
     INSERT INTO purchaseOrders (time, state) VALUES ("2021-4-19 06:48:51", false);
