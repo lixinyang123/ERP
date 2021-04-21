@@ -55,6 +55,11 @@
 
 -- 进库操作
 
+    -- 查询进库操作
+    SELECT * FROM purchaseOperations LIMIT 0,10;
+
+    SELECT * FROM purchaseOperations WHERE id = 1;
+
     -- 新增进库操作
     INSERT INTO purchaseOperations (purchaseOrderId, productId, num) VALUES (1, 1, 10);
 
@@ -66,6 +71,15 @@
 
 
 -- 出售订单操作
+
+    -- 查询订单
+    SELECT * FROM saleOrders LIMIT 0,10;
+
+    SELECT * FROM saleOrders, saleOperations ON saleOrders.id = saleOperations.saleOrderId LIMIT 0,10;
+
+    SELECT * FROM saleOrders LEFT JOIN saleOperations ON saleOrders.id = saleOperations.saleOrderId LIMIT 0,10;
+
+    SELECT * FROM saleOrders WHERE id = 1;
 
     -- 新增出售订单
     INSERT INTO saleOrders (time, state, userId, selling) VALUES ("2021-4-19 06:48:51", false, 1, 100);
@@ -79,6 +93,11 @@
 
 -- 出库操作
 
+    -- 查询出库操作
+    SELECT * FROM saleOperations LIMIT 0,10;
+
+    SELECT * FROM saleOperations WHERE id = 1;
+
     -- 新增出库操作
     INSERT INTO saleOperations (saleOrderId, productId, num) VALUES (1, 1, 10);
 
@@ -90,6 +109,11 @@
 
 
 -- 结账记录操作
+
+    -- 查询结账记录
+    SELECT * FROM checkOuts LIMIT 0,10;
+
+    SELECT * FROM checkOuts WHERE id = 1;
 
     -- 新增结账记录
     INSERT INTO checkOuts (saleOrderId, time, amount) VALUES (1, "2021-4-19 06:48:51", 50);
