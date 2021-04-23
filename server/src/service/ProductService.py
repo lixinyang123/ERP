@@ -7,20 +7,60 @@ class ProductService:
 
     def __init__(self):
         self.operations = DbService("products")
-        self.conn = sqlite3.connect('test.db').cursor()
+        self.conn = sqlite3.connect('server/src/erp.db')
 
-    def Add(self, product: Product):
+    # 释放连接
+    def dispose(self):
+        self.conn.close()
+
+    # 新增产品
+    def Add(self, product: Product) -> bool:
+
         sql = self.operations.GetOperation("add")
-        print(sql)
+        try:
+            cursor = self.conn.cursor()
+            cursor.execute(sql, (product.price, product.num, product.specifications, product.notes))
+            self.conn.commit()
+            return True
+            
+        except:
+            return False
 
-    def Delete(self, id: int):
+    # 删除产品
+    def Delete(self, id: int) -> bool:
+
         sql = self.operations.GetOperation("delete")
-        print(sql)
+        try:
+            cursor = self.conn.cursor()
+            cursor.execute(sql, str(id))
+            self.conn.commit()
+            return True
+            
+        except Exception as e:
+            return False
 
-    def Modify(self, product: Product):
+    # 更新产品信息
+    def Modify(self, product: Product) -> bool:
         sql = self.operations.GetOperation("modify")
-        print(sql)
 
-    def Get(self, id: int):
+        try:
+            cursor = self.conn.cursor()
+            cursor.execute(sql, (product.price, product.num, product.specifications, product.notes, product.id))
+            self.conn.commit()
+            return True
+            
+        except:
+            return False
+
+    # 查找产品
+    def Find(self, id: int) -> Product:
         sql = self.operations.GetOperation("find")
-        print(sql)
+        
+        try:
+            cursor = self.conn.cursor()
+            rows = cursor.execute(sql, str(id))
+            for row in rows:
+                return Product(int(row[0]), float(row[1]), int(row[2]), row[3], row[4])
+                
+        except:
+            return None

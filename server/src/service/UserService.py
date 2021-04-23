@@ -13,5 +13,5 @@ class UserService:
     def Modify(self, user: User):
         print("modify user")
 
-    def Get(self, id: int):
+    def Find(self, id: int):
         print("search user")
