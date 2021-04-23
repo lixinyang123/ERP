@@ -7,7 +7,7 @@ class ProductService:
 
     def __init__(self):
         self.operations = DbService("products")
-        self.conn = sqlite3.connect('server/src/erp.db')
+        self.conn = sqlite3.connect('server/erp.db')
 
     # 释放连接
     def dispose(self):
