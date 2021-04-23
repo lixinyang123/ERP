@@ -1,11 +1,11 @@
 import sqlite3
-from server.src.service.DbOperation import *
+from server.src.service.DbService import *
 
 # 用户管理
 class ProductService:
 
     def __init__(self):
-        self.operations = DbOperation("products")
+        self.operations = DbService("products")
 
     def Add(self,product):
         sql = self.operations.GetOperation("add")

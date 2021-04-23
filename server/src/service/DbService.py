@@ -1,7 +1,7 @@
 from xml.dom.minidom import parse
 import xml.dom.minidom
 
-class DbOperation:
+class DbService:
 
     # 构造器初始化操作表
     def __init__(self, tableName):
