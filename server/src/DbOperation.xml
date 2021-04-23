@@ -1,37 +1,37 @@
 <tables>
     <products>
         <add>
-            INSERT INTO products (price, num, specifications, notes) VALUES (@price, @num, @specifications, @notes);
+            INSERT INTO products (price, num, specifications, notes) VALUES (?, ?, ?, ?);
         </add>
 
         <delete>
-            DELETE FROM products WHERE id = @id;
+            DELETE FROM products WHERE id = ?;
         </delete>
 
         <modify>
-            UPDATE products SET price = @price, num = @num, specifications = @specifications, notes = @notes WHERE id = @id;
+            UPDATE products SET price = ?, num = ?, specifications = ?, notes = ? WHERE id = ?;
         </modify>
 
         <find>
-            SELECT * FROM products WHERE id = @id;
+            SELECT * FROM products WHERE id = ?;
         </find>
     </products>
 
      <users>
         <add>
-            INSERT INTO users (name, tel, address, notes) VALUES (@name, @tel, @address, @notes);
+            INSERT INTO users (name, tel, address, notes) VALUES (?, ?, ?, ?);
         </add>
 
         <delete>
-            DELETE FROM users WHERE id = @id;
+            DELETE FROM users WHERE id = ?;
         </delete>
 
         <modify>
-            UPDATE users SET name = @name, tel = @tel, address = @address, notes = @notes WHERE id = @id;
+            UPDATE users SET name = ?, tel = ?, address = ?, notes = ? WHERE id = ?;
         </modify>
 
         <find>
-            SELECT * FROM users WHERE id = @id;
+            SELECT * FROM users WHERE id = ?;
         </find>
     </users>
 </tables>

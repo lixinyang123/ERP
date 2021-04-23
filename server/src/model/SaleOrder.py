@@ -1,25 +1,21 @@
+from datetime import *
+from server.src.model.User import *
+
 # 出售订单
 class SaleOrder:
-    # ID
-    id = None
-    # 时间
-    time = None
-    # 状态（订单完成状态）
-    state = None
-    # 用户
-    user = None
-    # 售价
-    selling = None
-    # 出库操作 ProductOperation[]
-    saleOperations = []
-    # 结账记录
-    checkOuts = []
 
-    def __init__(self,id,time,state,user,selling,saleOperations,checkOuts):
-        self.id = id
-        self.time = time
-        self.state = state
-        self.user = user
-        self.selling = selling
-        self.saleOperations = saleOperations
-        self.checkOuts = checkOuts
+    def __init__(self, id: int, time: datetime, state: bool, user: User, selling: float, saleOperations: list, checkOuts: list):
+        # ID
+        self.id: int = id
+        # 时间
+        self.time: datetime = time
+        # 状态（订单完成状态）
+        self.state: bool = state
+        # 用户
+        self.user: User = user
+        # 售价
+        self.selling: float = selling
+        # 出库操作 list<ProductOperation>
+        self.saleOperations: list = saleOperations
+        # 结账记录 list<CheckOut>
+        self.checkOuts: list = checkOuts
