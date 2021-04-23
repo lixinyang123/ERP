@@ -1,0 +1,37 @@
+<tables>
+    <products>
+        <add>
+            INSERT INTO products (price, num, specifications, notes) VALUES (@price, @num, @specifications, @notes);
+        </add>
+
+        <delete>
+            DELETE FROM products WHERE id = @id;
+        </delete>
+
+        <modify>
+            UPDATE products SET price = @price, num = @num, specifications = @specifications, notes = @notes WHERE id = @id;
+        </modify>
+
+        <find>
+            SELECT * FROM products WHERE id = @id;
+        </find>
+    </products>
+
+     <users>
+        <add>
+            INSERT INTO users (name, tel, address, notes) VALUES (@name, @tel, @address, @notes);
+        </add>
+
+        <delete>
+            DELETE FROM users WHERE id = @id;
+        </delete>
+
+        <modify>
+            UPDATE users SET name = @name, tel = @tel, address = @address, notes = @notes WHERE id = @id;
+        </modify>
+
+        <find>
+            SELECT * FROM users WHERE id = @id;
+        </find>
+    </users>
+</tables>
