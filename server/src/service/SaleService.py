@@ -24,12 +24,16 @@ class SaleService:
 
         orderSql = self.saleOrders.GetOperation("add")
         saleSql = self.saleOperations.GetOperation("add")
+        checkOutSql = self.checkOuts.GetOperation("add")
         try:
             cursor = self.conn.cursor()
             cursor.execute(orderSql, [order.id, order.time, order.state, order.user.id, order.selling])
 
             for operation in order.saleOperations:
                 cursor.execute(saleSql, [operation.id, order.id, operation.product.id, operation.num])
+
+            for checkOut in order.checkOuts:
+                cursor.execute(checkOutSql, [checkOut.id, order.id, checkOut.time, checkOut.amount])
 
             self.conn.commit()
             return True
@@ -66,7 +70,7 @@ class SaleService:
         try:
             cursor = self.conn.cursor()
             cursor.execute(orderSql, [order.time, order.state, order.user.id, order.selling, order.id])
-            
+
             cursor.execute(deleteSaleSql, [order.id])
             cursor.execute(deleteCheckOutSql, [order.id])
 
@@ -115,7 +119,7 @@ class SaleService:
 
             checkOutList = list()
             for row in rows:
-                checkOutList.append(CheckOut(row[0], row[1], row[2]))
+                checkOutList.append(CheckOut(row[0], row[2], row[3]))
             
             # 订单
             rows = cursor.execute(orderSql, [id])
