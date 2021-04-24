@@ -2,11 +2,11 @@ import sqlite3
 from server.src.service.DbService import *
 from server.src.model.Product import *
 
-# 用户管理
+# 产品管理
 class ProductService:
 
     def __init__(self):
-        self.operations = DbService("products")
+        self.products = DbService("products")
         self.conn = sqlite3.connect('server/erp.db')
 
     # 释放连接
@@ -16,7 +16,7 @@ class ProductService:
     # 新增产品
     def add(self, product: Product) -> bool:
 
-        sql = self.operations.GetOperation("add")
+        sql = self.products.GetOperation("add")
         try:
             cursor = self.conn.cursor()
             cursor.execute(sql, [product.id, product.price, product.num, product.specifications, product.notes])
@@ -29,7 +29,7 @@ class ProductService:
     # 删除产品
     def delete(self, id: str) -> bool:
 
-        sql = self.operations.GetOperation("delete")
+        sql = self.products.GetOperation("delete")
         try:
             cursor = self.conn.cursor()
             cursor.execute(sql, [id])
@@ -42,7 +42,7 @@ class ProductService:
     # 更新产品信息
     def modify(self, product: Product) -> bool:
 
-        sql = self.operations.GetOperation("modify")
+        sql = self.products.GetOperation("modify")
         try:
             cursor = self.conn.cursor()
             cursor.execute(sql, [product.price, product.num, product.specifications, product.notes, product.id])
@@ -55,7 +55,7 @@ class ProductService:
     # 查找产品
     def find(self, id: str) -> Product:
         
-        sql = self.operations.GetOperation("find")
+        sql = self.products.GetOperation("find")
         try:
             cursor = self.conn.cursor()
             rows = cursor.execute(sql, [id])

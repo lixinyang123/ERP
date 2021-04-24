@@ -35,8 +35,15 @@
         </find>
     </users>
 
-    <purchaseOrder>
+    <purchaseOrders>
         <add>
+            INSERT INTO purchaseOrders (id, time, state) VALUES (?, ?, ?);
         </add>
-    </purchaseOrder>
+    </purchaseOrders>
+
+    <purchaseOperations>
+        <add>
+            INSERT INTO purchaseOperations (id, purchaseOrderId, productId, num) VALUES (?, ?, ?, ?);
+        </add>
+    </purchaseOperations>
 </tables>

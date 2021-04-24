@@ -6,7 +6,7 @@ from server.src.model.User import *
 class UserService:
 
     def __init__(self):
-        self.operations = DbService("users")
+        self.users = DbService("users")
         self.conn = sqlite3.connect('server/erp.db')
 
     # 释放连接
@@ -16,7 +16,7 @@ class UserService:
     # 新增用户
     def add(self, user: User) -> bool:
         
-        sql = self.operations.GetOperation("add")
+        sql = self.users.GetOperation("add")
         try:
             cursor = self.conn.cursor()
             cursor.execute(sql, [user.id, user.name, user.tel, user.address, user.notes])
@@ -29,7 +29,7 @@ class UserService:
     # 删除用户
     def delete(self, id: str) -> bool:
         
-        sql = self.operations.GetOperation("delete")
+        sql = self.users.GetOperation("delete")
         try:
             cursor = self.conn.cursor()
             cursor.execute(sql, [id])
@@ -42,7 +42,7 @@ class UserService:
     # 修改用户信息
     def modify(self, user: User):
         
-        sql = self.operations.GetOperation("modify")
+        sql = self.users.GetOperation("modify")
         try:
             cursor = self.conn.cursor()
             cursor.execute(sql, [user.name, user.tel, user.address, user.notes, user.id])
@@ -54,7 +54,7 @@ class UserService:
 
     def find(self, id: str):
         
-        sql = self.operations.GetOperation("find")
+        sql = self.users.GetOperation("find")
         try:
             cursor = self.conn.cursor()
             rows = cursor.execute(sql, [id])
