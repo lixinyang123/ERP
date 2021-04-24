@@ -2,6 +2,8 @@
 CREATE TABLE products (
     -- ID
     id CHAR(36) PRIMARY KEY,
+    -- 名称
+    name VARCHAR(10) NOT NULL,
     -- 价格
     price DOUBLE NOT NULL ,
     -- 库存数量

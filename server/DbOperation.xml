@@ -1,7 +1,7 @@
 <tables>
     <products>
         <add>
-            INSERT INTO products (id, price, num, specifications, notes) VALUES (?, ?, ?, ?, ?);
+            INSERT INTO products (id, name, price, num, specifications, notes) VALUES (?, ?, ?, ?, ?, ?);
         </add>
 
         <delete>
@@ -9,7 +9,7 @@
         </delete>
 
         <modify>
-            UPDATE products SET price = ?, num = ?, specifications = ?, notes = ? WHERE id = ?;
+            UPDATE products SET name = ?, price = ?, num = ?, specifications = ?, notes = ? WHERE id = ?;
         </modify>
 
         <find>

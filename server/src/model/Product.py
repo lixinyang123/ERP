@@ -1,9 +1,11 @@
 # 产品
 class Product:
 
-    def __init__(self, id: str, price: float, num: int, specifications: str, notes: str):
+    def __init__(self, id: str, name: str, price: float, num: int, specifications: str, notes: str):
         # ID
         self.id: str = id
+        # 名称
+        self.name: str = name
         # 价格
         self.price: float = price
         # 库存数量
