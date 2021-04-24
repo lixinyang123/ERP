@@ -53,8 +53,8 @@ class PurchaseService:
     def modify(self, order: PurchaseOrder) -> bool:
         
         orderSql = self.purchaseOrders.GetOperation("modify")
-        deletePurchaseSql = self.purchaseOperations.GetOperation("delete")
         addPurchaseSql = self.purchaseOperations.GetOperation("add")
+        deletePurchaseSql = self.purchaseOperations.GetOperation("delete")
         try:
             cursor = self.conn.cursor()
             cursor.execute(orderSql, [order.time, order.state, order.id])

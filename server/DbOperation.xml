@@ -71,18 +71,46 @@
         <add>
             INSERT INTO saleOrders (id, time, state, userId, selling) VALUES (?, ?, ?, ?, ?);
         </add>
+
+        <delete>
+            DELETE FROM saleOrders WHERE id = ?;
+        </delete>
+
+        <modify>
+            UPDATE saleOrders SET time = ?, state = ?, userId = ?, selling = ? WHERE id = ?;
+        </modify>
+
+        <find>
+            DELETE FROM saleOrders WHERE id = ?;
+        </find>
     </saleOrders>
 
     <saleOperations>
         <add>
             INSERT INTO saleOperations (id, saleOrderId, productId, num) VALUES (?, ?, ?, ?);
         </add>
+        
+        <delete>
+            DELETE FROM saleOperations WHERE saleOrderId = ?;
+        </delete>
+
+        <find>
+            SELECT * FROM saleOperations WHERE saleOrderId = ?;
+        </find>
     </saleOperations>
 
     <checkOuts>
         <add>
             INSERT INTO checkOuts (id, saleOrderId, time, amount) VALUES (?, ?, ?, ?);
         </add>
+
+        <delete>
+            DELETE FROM checkOuts WHERE saleOrderId = ?;
+        </delete>
+
+        <find>
+            SELECT * FROM checkOuts WHERE saleOrderId = ?;
+        </find>
     </checkOuts>
 
 </tables>

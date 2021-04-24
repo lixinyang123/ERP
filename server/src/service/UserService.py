@@ -40,7 +40,7 @@ class UserService:
             return False
 
     # 修改用户信息
-    def modify(self, user: User):
+    def modify(self, user: User) -> bool:
         
         sql = self.users.GetOperation("modify")
         try:
@@ -53,7 +53,7 @@ class UserService:
             return False
 
     # 查找用户信息
-    def find(self, id: str):
+    def find(self, id: str) -> User:
         
         sql = self.users.GetOperation("find")
         try:
