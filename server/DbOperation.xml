@@ -15,6 +15,10 @@
         <find>
             SELECT * FROM products WHERE id = ?;
         </find>
+
+        <list>
+            SELECT * FROM products LIMIT ?,?;
+        </list>
     </products>
 
      <users>
@@ -33,6 +37,10 @@
         <find>
             SELECT * FROM users WHERE id = ?;
         </find>
+
+        <list>
+            SELECT * FROM users LIMIT ?,?;
+        </list>
     </users>
 
     <purchaseOrders>
@@ -51,6 +59,10 @@
         <find>
             SELECT * FROM purchaseOrders WHERE id = ?;
         </find>
+
+        <list>
+            SELECT * FROM purchaseOrders LIMIT ?,?;
+        </list>
     </purchaseOrders>
 
     <purchaseOperations>
@@ -83,6 +95,10 @@
         <find>
             SELECT * FROM saleOrders WHERE id = ?;
         </find>
+
+        <list>
+            SELECT * FROM saleOrders LIMIT ?,?;
+        </list>
     </saleOrders>
 
     <saleOperations>

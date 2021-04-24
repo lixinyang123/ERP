@@ -98,3 +98,20 @@ class PurchaseService:
             
         except:
             return None
+
+    # 采购订单列表
+    def list(self, pageIndex: int, pageSize: int) -> list:
+        
+        sql = self.purchaseOrders.GetOperation("list")
+        try:
+            cursor = self.conn.cursor()
+            rows = cursor.execute(sql, [pageIndex*pageSize, pageSize]).fetchall()
+
+            results = []
+            for row in rows:
+                results.append(self.find(row[0]))
+            
+            return results
+
+        except:
+            return []

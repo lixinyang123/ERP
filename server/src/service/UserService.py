@@ -65,3 +65,20 @@ class UserService:
 
         except:
             return None
+
+    # 用户信息列表
+    def list(self, pageIndex: int, pageSize: int) -> list:
+
+        sql = self.users.GetOperation("list")
+        try:
+            cursor = self.conn.cursor()
+
+            results = list()
+            rows = cursor.execute(sql, [pageIndex*pageSize, pageSize]).fetchall()
+            for row in rows:
+                results.append(User(row[0], row[1], int(row[2]), row[3], row[4]))
+
+            return results
+        
+        except:
+            return []

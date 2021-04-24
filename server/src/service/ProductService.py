@@ -65,3 +65,20 @@ class ProductService:
                 
         except:
             return None
+
+    # 产品列表
+    def list(self, pageIndex: int, pageSize: int) -> list:
+
+        sql = self.products.GetOperation("list")
+        try:
+            cursor = self.conn.cursor()
+
+            results = list()
+            rows = cursor.execute(sql, [pageIndex*pageSize, pageSize]).fetchall()
+            for row in rows:
+                results.append(Product(row[0], row[1], float(row[2]), int(row[3]), row[4], row[5]))
+
+            return results
+        
+        except:
+            return []
