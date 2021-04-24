@@ -1,17 +1,65 @@
 import sqlite3
+from server.src.service.DbService import *
 from server.src.model.User import *
 
 # 用户管理
 class UserService:
 
-    def Add(self, user: User):
-        print("add user")
+    def __init__(self):
+        self.operations = DbService("users")
+        self.conn = sqlite3.connect('server/erp.db')
 
-    def Delete(self, id: int):
-        print("delete user")
+    # 释放连接
+    def dispose(self):
+        self.conn.close()
 
-    def Modify(self, user: User):
-        print("modify user")
+    # 新增用户
+    def add(self, user: User) -> bool:
+        
+        sql = self.operations.GetOperation("add")
+        try:
+            cursor = self.conn.cursor()
+            cursor.execute(sql, (user.name, user.tel, user.address, user.notes))
+            self.conn.commit()
+            return True
+            
+        except:
+            return False
 
-    def Find(self, id: int):
-        print("search user")
+    # 删除用户
+    def delete(self, id: int) -> bool:
+        
+        sql = self.operations.GetOperation("delete")
+        try:
+            cursor = self.conn.cursor()
+            cursor.execute(sql, str(id))
+            self.conn.commit()
+            return True
+            
+        except Exception as e:
+            return False
+
+    # 修改用户信息
+    def modify(self, user: User):
+        
+        sql = self.operations.GetOperation("modify")
+        try:
+            cursor = self.conn.cursor()
+            cursor.execute(sql, (user.name, user.tel, user.address, user.notes, user.id))
+            self.conn.commit()
+            return True
+            
+        except:
+            return False
+
+    def find(self, id: int):
+        
+        sql = self.operations.GetOperation("find")
+        try:
+            cursor = self.conn.cursor()
+            rows = cursor.execute(sql, str(id))
+            for row in rows:
+                return User(int(row[0]), row[1], int(row[2]), row[3], row[4])
+                
+        except:
+            return None

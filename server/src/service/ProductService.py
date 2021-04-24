@@ -14,7 +14,7 @@ class ProductService:
         self.conn.close()
 
     # 新增产品
-    def Add(self, product: Product) -> bool:
+    def add(self, product: Product) -> bool:
 
         sql = self.operations.GetOperation("add")
         try:
@@ -27,7 +27,7 @@ class ProductService:
             return False
 
     # 删除产品
-    def Delete(self, id: int) -> bool:
+    def delete(self, id: int) -> bool:
 
         sql = self.operations.GetOperation("delete")
         try:
@@ -40,9 +40,9 @@ class ProductService:
             return False
 
     # 更新产品信息
-    def Modify(self, product: Product) -> bool:
-        sql = self.operations.GetOperation("modify")
+    def modify(self, product: Product) -> bool:
 
+        sql = self.operations.GetOperation("modify")
         try:
             cursor = self.conn.cursor()
             cursor.execute(sql, (product.price, product.num, product.specifications, product.notes, product.id))
@@ -53,9 +53,9 @@ class ProductService:
             return False
 
     # 查找产品
-    def Find(self, id: int) -> Product:
-        sql = self.operations.GetOperation("find")
+    def find(self, id: int) -> Product:
         
+        sql = self.operations.GetOperation("find")
         try:
             cursor = self.conn.cursor()
             rows = cursor.execute(sql, str(id))
