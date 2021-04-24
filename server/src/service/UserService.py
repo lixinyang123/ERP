@@ -19,7 +19,7 @@ class UserService:
         sql = self.operations.GetOperation("add")
         try:
             cursor = self.conn.cursor()
-            cursor.execute(sql, (user.id, user.name, user.tel, user.address, user.notes))
+            cursor.execute(sql, [user.id, user.name, user.tel, user.address, user.notes])
             self.conn.commit()
             return True
             
@@ -32,7 +32,7 @@ class UserService:
         sql = self.operations.GetOperation("delete")
         try:
             cursor = self.conn.cursor()
-            cursor.execute(sql, id)
+            cursor.execute(sql, [id])
             self.conn.commit()
             return True
             
@@ -45,7 +45,7 @@ class UserService:
         sql = self.operations.GetOperation("modify")
         try:
             cursor = self.conn.cursor()
-            cursor.execute(sql, (user.name, user.tel, user.address, user.notes, user.id))
+            cursor.execute(sql, [user.name, user.tel, user.address, user.notes, user.id])
             self.conn.commit()
             return True
             
@@ -57,9 +57,9 @@ class UserService:
         sql = self.operations.GetOperation("find")
         try:
             cursor = self.conn.cursor()
-            rows = cursor.execute(sql, id)
+            rows = cursor.execute(sql, [id])
             for row in rows:
-                return User(int(row[0]), row[1], int(row[2]), row[3], row[4])
+                return User(row[0], row[1], int(row[2]), row[3], row[4])
                 
         except:
             return None

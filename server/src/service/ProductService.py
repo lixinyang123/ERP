@@ -19,7 +19,7 @@ class ProductService:
         sql = self.operations.GetOperation("add")
         try:
             cursor = self.conn.cursor()
-            cursor.execute(sql, (product.id, product.price, product.num, product.specifications, product.notes))
+            cursor.execute(sql, [product.id, product.price, product.num, product.specifications, product.notes])
             self.conn.commit()
             return True
             
@@ -32,7 +32,7 @@ class ProductService:
         sql = self.operations.GetOperation("delete")
         try:
             cursor = self.conn.cursor()
-            cursor.execute(sql, id)
+            cursor.execute(sql, [id])
             self.conn.commit()
             return True
             
@@ -45,7 +45,7 @@ class ProductService:
         sql = self.operations.GetOperation("modify")
         try:
             cursor = self.conn.cursor()
-            cursor.execute(sql, (product.price, product.num, product.specifications, product.notes, product.id))
+            cursor.execute(sql, [product.price, product.num, product.specifications, product.notes, product.id])
             self.conn.commit()
             return True
             
@@ -58,9 +58,9 @@ class ProductService:
         sql = self.operations.GetOperation("find")
         try:
             cursor = self.conn.cursor()
-            rows = cursor.execute(sql, id)
+            rows = cursor.execute(sql, [id])
             for row in rows:
-                return Product(int(row[0]), float(row[1]), int(row[2]), row[3], row[4])
+                return Product(row[0], float(row[1]), int(row[2]), row[3], row[4])
                 
         except:
             return None
