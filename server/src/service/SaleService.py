@@ -1,4 +1,5 @@
 import sqlite3
+from server.src.service.DbService import *
 from server.src.model.SaleOrder import *
 from server.src.model.ProductOperation import *
 from server.src.model.CheckOut import *
@@ -10,6 +11,7 @@ class SaleService:
         self.saleOrders = DbService("saleOrders")
         self.saleOperations = DbService("saleOperations")
         self.checkOuts = DbService("checkOuts")
+        self.products = DbService("products")
         self.users = DbService("users")
         self.conn = sqlite3.connect('server/erp.db')
 
@@ -26,13 +28,13 @@ class SaleService:
             cursor = self.conn.cursor()
             cursor.execute(orderSql, [order.id, order.time, order.state, order.user.id, order.selling])
 
-            for operation in saleOrder.saleOperations:
+            for operation in order.saleOperations:
                 cursor.execute(saleSql, [operation.id, order.id, operation.product.id, operation.num])
 
             self.conn.commit()
             return True
             
-        except:
+        except Exception as e:
             return False
         
     # 删除销售订单
@@ -83,18 +85,46 @@ class SaleService:
         userSql = self.users.GetOperation("find")
         try:
             cursor = self.conn.cursor()
+
+            # 商品操作记录
             rows = cursor.execute(saleSql, [id]).fetchall()
 
             operations = list()
             for row in rows:
-                results = cursor.execute(productSql, [row[2]])
+
+                # 操作产品信息
                 product = None
+                results = cursor.execute(productSql, [row[2]])
 
                 for result in results:
-                    product = Product(result[0], float(result[1]), int(result[2]), result[3], result[4])
+                    product = Product(result[0], result[1], float(result[2]), int(result[3]), result[4], result[5])
                     break
 
-            return None
+                operations.append(ProductOperation(row[0], product, row[3]))
+            
 
-        except:
+            # 订单付款记录
+            rows = cursor.execute(checkOutSql, [id]).fetchall()
+
+            checkOutList = list()
+            for row in rows:
+                checkOutList.append(CheckOut(row[0], row[1], row[2]))
+            
+            # 订单
+            rows = cursor.execute(orderSql, [id])
+            for row in rows:
+
+                # 订单用户信息
+                user = None
+                results = cursor.execute(userSql, [row[3]])
+
+                for result in results:
+                    user = User(row[0], row[1], int(row[2]), row[3], row[4])
+                    break
+
+                return SaleOrder(row[0], row[1], row[2], user, row[4], operations, checkOutList)
+
+            raise "can't find order"
+
+        except Exception as e:
             return None

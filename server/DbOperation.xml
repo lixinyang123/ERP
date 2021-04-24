@@ -81,7 +81,7 @@
         </modify>
 
         <find>
-            DELETE FROM saleOrders WHERE id = ?;
+            SELECT * FROM saleOrders WHERE id = ?;
         </find>
     </saleOrders>
 

@@ -61,6 +61,7 @@ class ProductService:
             rows = cursor.execute(sql, [id])
             for row in rows:
                 return Product(row[0], row[1], float(row[2]), int(row[3]), row[4], row[5])
+            raise "can't find product"
                 
         except:
             return None

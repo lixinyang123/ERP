@@ -61,6 +61,7 @@ class UserService:
             rows = cursor.execute(sql, [id])
             for row in rows:
                 return User(row[0], row[1], int(row[2]), row[3], row[4])
-                
+            raise "can't find user"
+
         except:
             return None

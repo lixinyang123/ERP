@@ -93,6 +93,8 @@ class PurchaseService:
 
             for order in orders:
                 return PurchaseOrder(order[0], order[1], order[2], operations)
+
+            raise "can't find order"
             
         except:
             return None
