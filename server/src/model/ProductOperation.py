@@ -1,7 +1,7 @@
 from server.src.model.Product import *
 
 # 进出库操作
-class SaleOperation:
+class ProductOperation:
 
     def __init__(self, id: str, product: Product, num: int):
         # ID

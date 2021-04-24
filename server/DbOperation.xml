@@ -39,11 +39,31 @@
         <add>
             INSERT INTO purchaseOrders (id, time, state) VALUES (?, ?, ?);
         </add>
+
+        <delete>
+            DELETE FROM purchaseOrders WHERE id = ?;
+        </delete>
+
+        <modify>
+            UPDATE purchaseOrders SET time = ?, state = ? WHERE id = ?;
+        </modify>
+
+        <find>
+            SELECT * FROM purchaseOrders WHERE id = ?;
+        </find>
     </purchaseOrders>
 
     <purchaseOperations>
         <add>
             INSERT INTO purchaseOperations (id, purchaseOrderId, productId, num) VALUES (?, ?, ?, ?);
         </add>
+
+        <delete>
+            DELETE FROM purchaseOperations WHERE purchaseOrderId = ?;
+        </delete>
+
+        <find>
+            SELECT * FROM purchaseOperations WHERE purchaseOrderId = ?;
+        </find>
     </purchaseOperations>
 </tables>
