@@ -3,9 +3,9 @@ from datetime import *
 # 采购订单
 class PurchaseOrder:
 
-    def __init__(self, id: int, time: datetime ,state: bool, purchaseOperations: list):
+    def __init__(self, id: str, time: datetime ,state: bool, purchaseOperations: list):
         # ID
-        self.id: int = id
+        self.id: str = id
         # 时间
         self.time: datetime = time
         # 状态（订单完成状态）

@@ -1,7 +1,7 @@
 -- 产品表
 CREATE TABLE products (
     -- ID
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id CHAR(36) PRIMARY KEY,
     -- 价格
     price DOUBLE NOT NULL ,
     -- 库存数量
@@ -16,7 +16,7 @@ CREATE TABLE products (
 -- 用户表
 CREATE TABLE users (
     -- ID
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id CHAR(36) PRIMARY KEY,
     -- 姓名
     name VARCHAR(10) NOT NULL ,
     -- 电话
@@ -31,7 +31,7 @@ CREATE TABLE users (
 -- 采购订单
 CREATE TABLE purchaseOrders (
     -- ID
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id CHAR(36) PRIMARY KEY,
     -- 时间
     time DATETIME NOT NULL ,
     -- 状态（订单完成状态）
@@ -42,11 +42,11 @@ CREATE TABLE purchaseOrders (
 -- 进库操作
 CREATE TABLE purchaseOperations (
     -- ID
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id CHAR(36) PRIMARY KEY,
     -- 订单ID
-    purchaseOrderId INTEGER NOT NULL ,
+    purchaseOrderId CHAR(36) NOT NULL ,
     -- 商品ID
-    productId INTEGER NOT NULL ,
+    productId CHAR(36) NOT NULL ,
     -- 操作数量
     num INTEGER NOT NULL ,
     -- 外键
@@ -58,13 +58,13 @@ CREATE TABLE purchaseOperations (
 -- 出售订单
 CREATE TABLE saleOrders (
     -- ID
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id CHAR(36) PRIMARY KEY,
     -- 时间
     time DATETIME NOT NULL ,
     -- 状态（订单完成状态）
     state BOOLEAN NOT NULL ,
     -- 用户ID
-    userId INTEGER NOT NULL ,
+    userId CHAR(36) NOT NULL ,
     -- 售价
     selling DOUBLE NOT NULL ,
     -- 外键
@@ -75,11 +75,11 @@ CREATE TABLE saleOrders (
 -- 出库操作
 CREATE TABLE saleOperations (
     -- ID
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id CHAR(36) PRIMARY KEY,
     -- 订单ID
-    saleOrderId INTEGER NOT NULL ,
+    saleOrderId CHAR(36) NOT NULL ,
     -- 商品ID
-    productId INTEGER NOT NULL ,
+    productId CHAR(36) NOT NULL ,
     -- 操作数量
     num INTEGER NOT NULL ,
     -- 外键
@@ -91,9 +91,9 @@ CREATE TABLE saleOperations (
 -- 结账记录
 CREATE TABLE checkOuts (
     -- ID
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id CHAR(36) PRIMARY KEY,
     -- 订单ID
-    saleOrderId INTEGER NOT NULL ,
+    saleOrderId CHAR(36) NOT NULL ,
     -- 时间
     time DATETIME NOT NULL ,
     -- 付款金额

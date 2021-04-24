@@ -1,4 +1,4 @@
-import sqlite3
+import sqlite3,uuid
 from server.src.service.DbService import *
 from server.src.model.User import *
 
@@ -19,7 +19,7 @@ class UserService:
         sql = self.operations.GetOperation("add")
         try:
             cursor = self.conn.cursor()
-            cursor.execute(sql, (user.name, user.tel, user.address, user.notes))
+            cursor.execute(sql, (user.id, user.name, user.tel, user.address, user.notes))
             self.conn.commit()
             return True
             
@@ -27,12 +27,12 @@ class UserService:
             return False
 
     # 删除用户
-    def delete(self, id: int) -> bool:
+    def delete(self, id: str) -> bool:
         
         sql = self.operations.GetOperation("delete")
         try:
             cursor = self.conn.cursor()
-            cursor.execute(sql, str(id))
+            cursor.execute(sql, id)
             self.conn.commit()
             return True
             
@@ -52,12 +52,12 @@ class UserService:
         except:
             return False
 
-    def find(self, id: int):
+    def find(self, id: str):
         
         sql = self.operations.GetOperation("find")
         try:
             cursor = self.conn.cursor()
-            rows = cursor.execute(sql, str(id))
+            rows = cursor.execute(sql, id)
             for row in rows:
                 return User(int(row[0]), row[1], int(row[2]), row[3], row[4])
                 

@@ -23,7 +23,7 @@
     SELECT * FROM users WHERE id = 1;
 
     -- 新增用户
-    INSERT INTO users (name, tel, address, notes) VALUES ("lllxy", 15637606156, "洛阳", "备注");
+    INSERT INTO users (id, name, tel, address, notes) VALUES ("lllxy", 15637606156, "洛阳", "备注");
 
     -- 删除用户
     DELETE FROM users WHERE id = 1;
@@ -44,7 +44,7 @@
     SELECT * FROM purchaseOrders WHERE id = 1;
 
     -- 新增采购订单
-    INSERT INTO purchaseOrders (time, state) VALUES ("2021-4-19 06:48:51", false);
+    INSERT INTO purchaseOrders (id, time, state) VALUES ("2021-4-19 06:48:51", false);
 
     -- 删除采购订单
     DELETE FROM purchaseOrders WHERE id = 1;
@@ -61,7 +61,7 @@
     SELECT * FROM purchaseOperations WHERE id = 1;
 
     -- 新增进库操作
-    INSERT INTO purchaseOperations (purchaseOrderId, productId, num) VALUES (1, 1, 10);
+    INSERT INTO purchaseOperations (id, purchaseOrderId, productId, num) VALUES (1, 1, 10);
 
     -- 删除进库操作
     DELETE FROM purchaseOperations WHERE id = 1;
@@ -82,7 +82,7 @@
     SELECT * FROM saleOrders WHERE id = 1;
 
     -- 新增出售订单
-    INSERT INTO saleOrders (time, state, userId, selling) VALUES ("2021-4-19 06:48:51", false, 1, 100);
+    INSERT INTO saleOrders (id, time, state, userId, selling) VALUES ("2021-4-19 06:48:51", false, 1, 100);
 
     -- 删除出售订单
     DELETE FROM saleOrders WHERE id = 1;
@@ -99,7 +99,7 @@
     SELECT * FROM saleOperations WHERE id = 1;
 
     -- 新增出库操作
-    INSERT INTO saleOperations (saleOrderId, productId, num) VALUES (1, 1, 10);
+    INSERT INTO saleOperations (id, saleOrderId, productId, num) VALUES (1, 1, 10);
 
     -- 删除出库操作
     DELETE FROM saleOperations WHERE id = 1;
@@ -116,7 +116,7 @@
     SELECT * FROM checkOuts WHERE id = 1;
 
     -- 新增结账记录
-    INSERT INTO checkOuts (saleOrderId, time, amount) VALUES (1, "2021-4-19 06:48:51", 50);
+    INSERT INTO checkOuts (id, saleOrderId, time, amount) VALUES (1, "2021-4-19 06:48:51", 50);
 
     -- 删除结账记录
     DELETE FROM checkOuts WHERE id = 1;

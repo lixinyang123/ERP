@@ -1,7 +1,7 @@
 <tables>
     <products>
         <add>
-            INSERT INTO products (price, num, specifications, notes) VALUES (?, ?, ?, ?);
+            INSERT INTO products (id, price, num, specifications, notes) VALUES (?, ?, ?, ?, ?);
         </add>
 
         <delete>
@@ -19,7 +19,7 @@
 
      <users>
         <add>
-            INSERT INTO users (name, tel, address, notes) VALUES (?, ?, ?, ?);
+            INSERT INTO users (id, name, tel, address, notes) VALUES (?, ?, ?, ?, ?);
         </add>
 
         <delete>
@@ -34,4 +34,9 @@
             SELECT * FROM users WHERE id = ?;
         </find>
     </users>
+
+    <purchaseOrder>
+        <add>
+        </add>
+    </purchaseOrder>
 </tables>

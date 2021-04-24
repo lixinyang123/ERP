@@ -4,9 +4,9 @@ from server.src.model.User import *
 # 出售订单
 class SaleOrder:
 
-    def __init__(self, id: int, time: datetime, state: bool, user: User, selling: float, saleOperations: list, checkOuts: list):
+    def __init__(self, id: str, time: datetime, state: bool, user: User, selling: float, saleOperations: list, checkOuts: list):
         # ID
-        self.id: int = id
+        self.id: str = id
         # 时间
         self.time: datetime = time
         # 状态（订单完成状态）

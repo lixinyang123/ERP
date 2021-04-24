@@ -19,7 +19,7 @@ class ProductService:
         sql = self.operations.GetOperation("add")
         try:
             cursor = self.conn.cursor()
-            cursor.execute(sql, (product.price, product.num, product.specifications, product.notes))
+            cursor.execute(sql, (product.id, product.price, product.num, product.specifications, product.notes))
             self.conn.commit()
             return True
             
@@ -27,12 +27,12 @@ class ProductService:
             return False
 
     # 删除产品
-    def delete(self, id: int) -> bool:
+    def delete(self, id: str) -> bool:
 
         sql = self.operations.GetOperation("delete")
         try:
             cursor = self.conn.cursor()
-            cursor.execute(sql, str(id))
+            cursor.execute(sql, id)
             self.conn.commit()
             return True
             
@@ -53,12 +53,12 @@ class ProductService:
             return False
 
     # 查找产品
-    def find(self, id: int) -> Product:
+    def find(self, id: str) -> Product:
         
         sql = self.operations.GetOperation("find")
         try:
             cursor = self.conn.cursor()
-            rows = cursor.execute(sql, str(id))
+            rows = cursor.execute(sql, id)
             for row in rows:
                 return Product(int(row[0]), float(row[1]), int(row[2]), row[3], row[4])
                 

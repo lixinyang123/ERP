@@ -1,9 +1,9 @@
 # 用户
 class User:
 
-    def __init__(self, id: int, name: str, tel: int, address: str, notes: str):
+    def __init__(self, id: str, name: str, tel: int, address: str, notes: str):
         # ID
-        self.id: int = id
+        self.id: str = id
         # 姓名
         self.name: str = name
         # 电话
