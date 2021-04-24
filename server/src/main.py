@@ -1,6 +1,6 @@
 from flask import Flask
-# import os, json
-# from server.src.service.SaleService import *
+from flask import redirect, Request, Response
+import os
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -8,15 +8,14 @@ app.secret_key = os.urandom(24)
 # @app.before_request
 # @app.after_request
 
-@app.route('/')
-def hello_world():
+@app.route("/")
+def root():
+    return redirect("/home")
 
-    # saleService = SaleService()
-    # order = saleService.find("7d3de239-4810-4a2c-81d0-a76d6960c127")
-    # saleService.dispose()
+@app.route("/home")
+def home():
+    return redirect("/home/index")
 
-    # jsonStr = json.dumps(order.dicted())
-
-    # return (jsonStr, 200, [("content-type", "application/json")])
-
+@app.route("/<controller>/<action>")
+def index(controller: str, action: str):
     return "Hello World"
