@@ -10,3 +10,12 @@ class PurchaseOrder:
         self.state: bool = state
         # 进库操作 list<ProductOperation>
         self.purchaseOperations: list = purchaseOperations
+
+    def dicted(self) -> dict:
+
+        results = []
+        for operation in self.purchaseOperations:
+            results.append(operation.dicted())
+        self.purchaseOperations = results
+
+        return self.__dict__

@@ -14,3 +14,6 @@ class Product:
         self.specifications: str = specifications
         # 备注
         self.notes: str = notes
+
+    def dicted(self) -> dict:
+        return self.__dict__

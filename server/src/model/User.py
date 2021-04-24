@@ -12,3 +12,6 @@ class User:
         self.address: str = address
         # 备注
         self.notes: str = notes
+
+    def dicted(self) -> dict:
+        return self.__dict__

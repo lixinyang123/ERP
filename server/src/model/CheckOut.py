@@ -8,3 +8,6 @@ class CheckOut:
         self.time: str = time
         # 付款金额
         self.amount: float = amount
+
+    def dicted(self) -> dict:
+        return self.__dict__

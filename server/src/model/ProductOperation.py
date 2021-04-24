@@ -10,3 +10,7 @@ class ProductOperation:
         self.product: Product = product
         # 操作商品数量
         self.num: int = num
+
+    def dicted(self) -> dict:
+        self.product = self.product.dicted()
+        return self.__dict__
