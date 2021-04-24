@@ -55,7 +55,6 @@ class PurchaseService:
         orderSql = self.purchaseOrders.GetOperation("modify")
         deletePurchaseSql = self.purchaseOperations.GetOperation("delete")
         addPurchaseSql = self.purchaseOperations.GetOperation("add")
-
         try:
             cursor = self.conn.cursor()
             cursor.execute(orderSql, [order.time, order.state, order.id])
@@ -75,10 +74,9 @@ class PurchaseService:
         orderSql = self.purchaseOrders.GetOperation("find")
         purchaseSql = self.purchaseOperations.GetOperation("find")
         productSql = self.products.GetOperation("find")
-
         try:
             cursor = self.conn.cursor()
-            rows = cursor.execute(purchaseSql, [id])
+            rows = cursor.execute(purchaseSql, [id]).fetchall()
 
             operations = list()
             for row in rows:
