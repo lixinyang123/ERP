@@ -1,4 +1,4 @@
-import sqlite3,uuid
+import sqlite3
 from server.src.service.DbService import *
 from server.src.model.PurchaseOrder import *
 from server.src.model.ProductOperation import *

@@ -66,4 +66,23 @@
             SELECT * FROM purchaseOperations WHERE purchaseOrderId = ?;
         </find>
     </purchaseOperations>
+
+    <saleOrders>
+        <add>
+            INSERT INTO saleOrders (id, time, state, userId, selling) VALUES (?, ?, ?, ?, ?);
+        </add>
+    </saleOrders>
+
+    <saleOperations>
+        <add>
+            INSERT INTO saleOperations (id, saleOrderId, productId, num) VALUES (?, ?, ?, ?);
+        </add>
+    </saleOperations>
+
+    <checkOuts>
+        <add>
+            INSERT INTO checkOuts (id, saleOrderId, time, amount) VALUES (?, ?, ?, ?);
+        </add>
+    </checkOuts>
+
 </tables>

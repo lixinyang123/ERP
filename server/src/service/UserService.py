@@ -1,4 +1,4 @@
-import sqlite3,uuid
+import sqlite3
 from server.src.service.DbService import *
 from server.src.model.User import *
 
@@ -52,6 +52,7 @@ class UserService:
         except:
             return False
 
+    # 查找用户信息
     def find(self, id: str):
         
         sql = self.users.GetOperation("find")
