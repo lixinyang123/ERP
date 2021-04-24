@@ -61,13 +61,20 @@ class SaleService:
         orderSql = self.saleOrders.GetOperation("modify")
         addSaleSql = self.saleOperations.GetOperation("add")
         deleteSaleSql = self.saleOperations.GetOperation("delete")
+        addCheckOutSql = self.checkOuts.GetOperation("add")
+        deleteCheckOutSql = self.checkOuts.GetOperation("delete")
         try:
             cursor = self.conn.cursor()
             cursor.execute(orderSql, [order.time, order.state, order.user.id, order.selling, order.id])
+            
             cursor.execute(deleteSaleSql, [order.id])
+            cursor.execute(deleteCheckOutSql, [order.id])
 
             for operation in order.saleOperations:
                 cursor.execute(addSaleSql, [operation.id, order.id, operation.product.id, operation.num])
+
+            for checkOut in order.checkOuts:
+                cursor.execute(addCheckOutSql, [checkOut.id, order.id, checkOut.time, checkOut.amount])
 
             self.conn.commit()
             return True
