@@ -11,17 +11,11 @@ app.secret_key = os.urandom(24)
 
 def controllers():
     return {
-        "home": HomeController(),
-        "user": UserController()
+        "user": UserController(),
+        "product": ProductController(),
+        "purchase": PurchaseController(),
+        "sale": SaleController()
     }
-
-@app.route("/")
-def root():
-    return redirect("/home")
-
-@app.route("/<controller>")
-def controller(controller: str):
-    return redirect("/" + controller + "/index")
 
 @app.route("/<controller>/<action>")
 def action(controller: str, action: str):
