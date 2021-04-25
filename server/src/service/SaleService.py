@@ -1,8 +1,6 @@
 import sqlite3
-from server.src.service.DbService import *
-from server.src.model.SaleOrder import *
-from server.src.model.ProductOperation import *
-from server.src.model.CheckOut import *
+from server.src.service import *
+from server.src.model import *
 
 # 销售管理
 class SaleService:

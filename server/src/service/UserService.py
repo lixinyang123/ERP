@@ -1,6 +1,6 @@
 import sqlite3
-from server.src.service.DbService import *
-from server.src.model.User import *
+from server.src.service import *
+from server.src.model import *
 
 # 用户管理
 class UserService:

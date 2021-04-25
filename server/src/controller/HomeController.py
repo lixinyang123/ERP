@@ -1,4 +1,6 @@
+from flask import request
+
 class HomeController:
 
-    def Index():
-        return "Hello World"
+    def index(self):
+        return "Hello HomeController"
