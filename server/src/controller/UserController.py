@@ -1,4 +1,4 @@
-import json
+import json, math
 from flask import request
 from service.UserService import *
 from util.Configuration import *
@@ -10,17 +10,21 @@ class UserController:
         self.userService = UserService()
 
     def index(self):
-        pageIndex = int(request.args.get("page")) - 1
 
-        if pageIndex is None:
+        currentIndex = request.args.get("page")
+        if currentIndex is None:
             return None
 
-        # lastIndex = self.userService.count()
+        lastIndex = math.ceil(self.userService.count() / float(self.pageSize))
 
-        users = self.userService.list(pageIndex, self.pageSize)
+        users = self.userService.list(int(currentIndex) - 1, self.pageSize)
 
         result = []
         for user in users:
             result.append(user.dicted())
 
-        return json.dumps(result)
+        return json.dumps({
+            "currentIndex": currentIndex,
+            "lastIndex": lastIndex,
+            "users": result
+        })
