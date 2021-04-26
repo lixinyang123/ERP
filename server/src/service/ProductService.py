@@ -18,9 +18,12 @@ class ProductService:
         sql = self.products.GetOperation("add")
         try:
             cursor = self.conn.cursor()
-            cursor.execute(sql, [product.id, product.name, product.price, product.num, product.specifications, product.notes])
-            self.conn.commit()
-            return True
+            rows = cursor.execute(sql, [product.id, product.name, product.price, product.num, product.specifications, product.notes])
+            
+            if rows.rowcount != 0:
+                self.conn.commit()
+                return True
+            return False
             
         except:
             return False
@@ -31,9 +34,12 @@ class ProductService:
         sql = self.products.GetOperation("delete")
         try:
             cursor = self.conn.cursor()
-            cursor.execute(sql, [id])
-            self.conn.commit()
-            return True
+            rows = cursor.execute(sql, [id])
+            
+            if rows.rowcount != 0:
+                self.conn.commit()
+                return True
+            return False
             
         except Exception as e:
             return False
@@ -44,9 +50,12 @@ class ProductService:
         sql = self.products.GetOperation("modify")
         try:
             cursor = self.conn.cursor()
-            cursor.execute(sql, [product.name, product.price, product.num, product.specifications, product.notes, product.id])
-            self.conn.commit()
-            return True
+            rows = cursor.execute(sql, [product.name, product.price, product.num, product.specifications, product.notes, product.id])
+            
+            if rows.rowcount != 0:
+                self.conn.commit()
+                return True
+            return False
             
         except:
             return False

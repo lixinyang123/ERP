@@ -17,3 +17,6 @@ class Product:
 
     def dicted(self) -> dict:
         return self.__dict__
+
+    def dict2Obj(dict: dict):
+        return Product(dict["id"], dict["name"], dict["price"], dict["num"], dict["specifications"], dict["notes"])
