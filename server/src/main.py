@@ -1,5 +1,4 @@
-from flask import Flask
-from flask import redirect
+from flask import *
 from controller import *
 import os
 
@@ -17,7 +16,7 @@ def controllers():
         "sale": SaleController()
     }
 
-@app.route("/<controller>/<action>")
+@app.route("/<controller>/<action>", methods=["get","post"])
 def action(controller: str, action: str):
 
     controllerName = controller.lower()

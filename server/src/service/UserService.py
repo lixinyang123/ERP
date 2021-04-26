@@ -18,9 +18,12 @@ class UserService:
         sql = self.users.GetOperation("add")
         try:
             cursor = self.conn.cursor()
-            cursor.execute(sql, [user.id, user.name, user.tel, user.address, user.notes])
-            self.conn.commit()
-            return True
+            rows = cursor.execute(sql, [user.id, user.name, user.tel, user.address, user.notes])
+
+            if rows.rowcount != 0:
+                self.conn.commit()
+                return True
+            return False
             
         except:
             return False
@@ -31,9 +34,12 @@ class UserService:
         sql = self.users.GetOperation("delete")
         try:
             cursor = self.conn.cursor()
-            cursor.execute(sql, [id])
-            self.conn.commit()
-            return True
+            rows = cursor.execute(sql, [id])
+
+            if rows.rowcount != 0:
+                self.conn.commit()
+                return True
+            return False
             
         except Exception as e:
             return False
@@ -44,9 +50,11 @@ class UserService:
         sql = self.users.GetOperation("modify")
         try:
             cursor = self.conn.cursor()
-            cursor.execute(sql, [user.name, user.tel, user.address, user.notes, user.id])
-            self.conn.commit()
-            return True
+            rows = cursor.execute(sql, [user.name, user.tel, user.address, user.notes, user.id])
+            if rows.rowcount != 0:
+                self.conn.commit()
+                return True
+            return False
             
         except:
             return False

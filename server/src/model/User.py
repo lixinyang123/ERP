@@ -15,3 +15,6 @@ class User:
 
     def dicted(self) -> dict:
         return self.__dict__
+
+    def dict2Obj(dict: dict):
+        return User(dict["id"], dict["name"], dict["tel"], dict["address"], dict["notes"])
