@@ -1,4 +1,3 @@
-import sqlite3
 from service.DbService import *
 from model import *
 
@@ -7,11 +6,11 @@ class UserService:
 
     def __init__(self):
         self.users = DbService("users")
-        self.conn = sqlite3.connect('erp.db')
+        self.conn = getConnection()
 
     # 释放连接
     def dispose(self):
-        self.conn.close()
+        disposeConnection(self.conn)
 
     # 新增用户
     def add(self, user: User) -> bool:

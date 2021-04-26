@@ -7,5 +7,4 @@ class UserController:
         self.userService = UserService()
 
     def index(self):
-        self.userService.list()
         return "Hello UserController"

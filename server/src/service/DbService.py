@@ -1,3 +1,4 @@
+import sqlite3
 from xml.dom.minidom import *
 
 class DbService:
@@ -11,3 +12,9 @@ class DbService:
     # 获取指定操作的 SQL
     def GetOperation(self, operationName: str) -> str:
         return self.table.getElementsByTagName(operationName)[0].childNodes[0].data.strip()
+
+def getConnection():
+    return sqlite3.connect('erp.db')
+
+def disposeConnection(conn):
+    conn.close()
