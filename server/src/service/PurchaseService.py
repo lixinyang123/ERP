@@ -59,13 +59,11 @@ class PurchaseService:
         try:
             cursor = self.conn.cursor()
 
-            cursor.execute(self.purchaseOperations.GetOperation("delete"), [order.id])
-
             for operation in order.purchaseOperations:
-                paras = [operation.id, order.id, operation.product.id, operation.num]
-                cursor.execute(self.purchaseOperations.GetOperation("add"), paras)
+                paras = [operation.product.id, operation.num, operation.id]
+                cursor.execute(self.purchaseOperations.GetOperation("modify"), paras)
 
-            paras = [order.time, order.state, order.id]
+            paras = [order.state, order.id]
             rows = cursor.execute(self.purchaseOrders.GetOperation("modify"), paras)
 
             if rows.rowcount != 0:

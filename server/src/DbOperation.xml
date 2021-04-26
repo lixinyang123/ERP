@@ -61,7 +61,7 @@
         </delete>
 
         <modify>
-            UPDATE purchaseOrders SET time = ?, state = ? WHERE id = ?;
+            UPDATE purchaseOrders SET state = ? WHERE id = ?;
         </modify>
 
         <find>
@@ -86,6 +86,10 @@
             DELETE FROM purchaseOperations WHERE purchaseOrderId = ?;
         </delete>
 
+        <modify>
+            UPDATE purchaseOperations SET productId = ?， num = ？ WHERE id = ?;
+        </modify>
+
         <find>
             SELECT * FROM purchaseOperations WHERE purchaseOrderId = ?;
         </find>
@@ -101,7 +105,7 @@
         </delete>
 
         <modify>
-            UPDATE saleOrders SET time = ?, state = ?, userId = ?, selling = ? WHERE id = ?;
+            UPDATE saleOrders SET state = ?, selling = ? WHERE id = ?;
         </modify>
 
         <find>
@@ -126,6 +130,10 @@
             DELETE FROM saleOperations WHERE saleOrderId = ?;
         </delete>
 
+        <modify>
+            UPDATE saleOperations SET productId = ?， num = ？ WHERE id = ?;
+        </modify>
+
         <find>
             SELECT * FROM saleOperations WHERE saleOrderId = ?;
         </find>
@@ -139,6 +147,10 @@
         <delete>
             DELETE FROM checkOuts WHERE saleOrderId = ?;
         </delete>
+
+        <modify>
+            UPDATE checkOuts SET amount = ？ WHERE id = ?;
+        </modify>
 
         <find>
             SELECT * FROM checkOuts WHERE saleOrderId = ?;
