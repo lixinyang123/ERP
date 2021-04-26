@@ -17,15 +17,15 @@ class PurchaseService:
     # 新增采购订单
     def add(self, order: PurchaseOrder) -> bool:
         
-        orderSql = self.purchaseOrders.GetOperation("add")
-        purchaseSql = self.purchaseOperations.GetOperation("add")
         try:
             cursor = self.conn.cursor()
 
             for operation in order.purchaseOperations:
-                cursor.execute(purchaseSql, [operation.id, order.id, operation.product.id, operation.num])
+                paras = [operation.id, order.id, operation.product.id, operation.num]
+                cursor.execute(self.purchaseOperations.GetOperation("add"), paras)
 
-            rows = cursor.execute(orderSql, [order.id, order.time, order.state])
+            paras = [order.id, order.time, order.state]
+            rows = cursor.execute(self.purchaseOrders.GetOperation("add"), paras)
             
             if rows.rowcount != 0:
                 self.conn.commit()
@@ -38,12 +38,12 @@ class PurchaseService:
     # 删除采购订单
     def delete(self, id: int) -> bool:
         
-        orderSql = self.purchaseOrders.GetOperation("delete")
-        purchaseSql = self.purchaseOperations.GetOperation("delete")
         try:
             cursor = self.conn.cursor()
-            cursor.execute(purchaseSql, [id])
-            rows = cursor.execute(orderSql, [id])
+
+            # 删除此订单的进出库记录
+            cursor.execute(self.purchaseOperations.GetOperation("delete"), [id])
+            rows = cursor.execute(self.purchaseOrders.GetOperation("delete"), [id])
             
             if rows.rowcount != 0:
                 self.conn.commit()
@@ -56,18 +56,17 @@ class PurchaseService:
     # 更新采购订单
     def modify(self, order: PurchaseOrder) -> bool:
         
-        orderSql = self.purchaseOrders.GetOperation("modify")
-        addPurchaseSql = self.purchaseOperations.GetOperation("add")
-        deletePurchaseSql = self.purchaseOperations.GetOperation("delete")
         try:
             cursor = self.conn.cursor()
 
-            cursor.execute(deletePurchaseSql, [order.id])
+            cursor.execute(self.purchaseOperations.GetOperation("delete"), [order.id])
 
             for operation in order.purchaseOperations:
-                cursor.execute(addPurchaseSql, [operation.id, order.id, operation.product.id, operation.num])
+                paras = [operation.id, order.id, operation.product.id, operation.num]
+                cursor.execute(self.purchaseOperations.GetOperation("add"), paras)
 
-            rows = cursor.execute(orderSql, [order.time, order.state, order.id])
+            paras = [order.time, order.state, order.id]
+            rows = cursor.execute(self.purchaseOrders.GetOperation("modify"), paras)
 
             if rows.rowcount != 0:
                 self.conn.commit()
@@ -80,16 +79,13 @@ class PurchaseService:
     # 查找采购订单
     def find(self, id: str) -> PurchaseOrder:
         
-        orderSql = self.purchaseOrders.GetOperation("find")
-        purchaseSql = self.purchaseOperations.GetOperation("find")
-        productSql = self.products.GetOperation("find")
         try:
             cursor = self.conn.cursor()
-            rows = cursor.execute(purchaseSql, [id]).fetchall()
+            rows = cursor.execute(self.purchaseOperations.GetOperation("find"), [id]).fetchall()
 
             operations = list()
             for row in rows:
-                results = cursor.execute(productSql, [row[2]])
+                results = cursor.execute(self.products.GetOperation("find"), [row[2]])
                 product = None
 
                 for result in results:
@@ -98,7 +94,7 @@ class PurchaseService:
 
                 operations.append(ProductOperation(row[0], product, row[3]))
 
-            orders = cursor.execute(orderSql, [id])
+            orders = cursor.execute(self.purchaseOrders.GetOperation("find"), [id])
 
             for order in orders:
                 return PurchaseOrder(order[0], order[1], order[2], operations)
@@ -111,10 +107,9 @@ class PurchaseService:
     # 采购订单列表
     def list(self, pageIndex: int, pageSize: int) -> list:
         
-        sql = self.purchaseOrders.GetOperation("list")
         try:
             cursor = self.conn.cursor()
-            rows = cursor.execute(sql, [pageIndex*pageSize, pageSize]).fetchall()
+            rows = cursor.execute(self.purchaseOrders.GetOperation("list"), [pageIndex*pageSize, pageSize]).fetchall()
 
             results = []
             for row in rows:
@@ -128,11 +123,10 @@ class PurchaseService:
     # 获取采购订单数量
     def count(self) -> int:
 
-        sql = self.purchaseOrders.GetOperation("count")
         try:
             cursor = self.conn.cursor()
 
-            for row in cursor.execute(sql):
+            for row in cursor.execute(self.purchaseOrders.GetOperation("count")):
                 return row[0]
             return 0
 

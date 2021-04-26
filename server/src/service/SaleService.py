@@ -19,18 +19,19 @@ class SaleService:
     # 新增销售订单
     def add(self, order: SaleOrder) -> bool:
 
-        orderSql = self.saleOrders.GetOperation("add")
-        saleSql = self.saleOperations.GetOperation("add")
-        checkOutSql = self.checkOuts.GetOperation("add")
         try:
             cursor = self.conn.cursor()
-            cursor.execute(orderSql, [order.id, order.time, order.state, order.user.id, order.selling])
+
+            paras = [order.id, order.time, order.state, order.user.id, order.selling]
+            cursor.execute(self.saleOrders.GetOperation("add"), paras)
 
             for operation in order.saleOperations:
-                cursor.execute(saleSql, [operation.id, order.id, operation.product.id, operation.num])
+                paras = [operation.id, order.id, operation.product.id, operation.num]
+                cursor.execute(self.saleOperations.GetOperation("add"), paras)
 
             for checkOut in order.checkOuts:
-                cursor.execute(checkOutSql, [checkOut.id, order.id, checkOut.time, checkOut.amount])
+                paras = [checkOut.id, order.id, checkOut.time, checkOut.amount]
+                cursor.execute(self.checkOuts.GetOperation("add"), )
 
             self.conn.commit()
             return True
@@ -41,14 +42,14 @@ class SaleService:
     # 删除销售订单
     def delete(self, id: str) -> bool:
         
-        orderSql = self.saleOrders.GetOperation("delete")
-        saleSql = self.saleOperations.GetOperation("delete")
-        checkOutSql = self.checkOuts.GetOperation("delete")
         try:
             cursor = self.conn.cursor()
-            cursor.execute(saleSql, [id])
-            cursor.execute(orderSql, [id])
-            cursor.execute(checkOutSql, [id])
+            
+            # 删除此订单的进出库和结账记录
+            cursor.execute(self.checkOuts.GetOperation("delete"), [id])
+            cursor.execute(self.saleOperations.GetOperation("delete"), [id])
+
+            cursor.execute(self.saleOrders.GetOperation("delete"), [id])
 
             self.conn.commit()
             return True
@@ -58,24 +59,23 @@ class SaleService:
 
     # 修改销售订单
     def modify(self, order: SaleOrder) -> bool:
-        
-        orderSql = self.saleOrders.GetOperation("modify")
-        addSaleSql = self.saleOperations.GetOperation("add")
-        deleteSaleSql = self.saleOperations.GetOperation("delete")
-        addCheckOutSql = self.checkOuts.GetOperation("add")
-        deleteCheckOutSql = self.checkOuts.GetOperation("delete")
+         
         try:
             cursor = self.conn.cursor()
-            cursor.execute(orderSql, [order.time, order.state, order.user.id, order.selling, order.id])
 
-            cursor.execute(deleteSaleSql, [order.id])
-            cursor.execute(deleteCheckOutSql, [order.id])
+            paras = [order.time, order.state, order.user.id, order.selling, order.id]
+            cursor.execute(self.saleOrders.GetOperation("modify"), paras)
+
+            cursor.execute(self.saleOperations.GetOperation("delete"), [order.id])
+            cursor.execute(self.checkOuts.GetOperation("delete"), [order.id])
 
             for operation in order.saleOperations:
-                cursor.execute(addSaleSql, [operation.id, order.id, operation.product.id, operation.num])
+                paras = [operation.id, order.id, operation.product.id, operation.num]
+                cursor.execute(self.saleOperations.GetOperation("add"), paras)
 
             for checkOut in order.checkOuts:
-                cursor.execute(addCheckOutSql, [checkOut.id, order.id, checkOut.time, checkOut.amount])
+                paras = [checkOut.id, order.id, checkOut.time, checkOut.amount]
+                cursor.execute(self.checkOuts.GetOperation("add"), paras)
 
             self.conn.commit()
             return True
@@ -85,24 +85,19 @@ class SaleService:
 
     # 查找销售订单
     def find(self, id: str) -> SaleOrder:
-        
-        orderSql = self.saleOrders.GetOperation("find")
-        saleSql = self.saleOperations.GetOperation("find")
-        productSql = self.products.GetOperation("find")
-        checkOutSql = self.checkOuts.GetOperation("find")
-        userSql = self.users.GetOperation("find")
+
         try:
             cursor = self.conn.cursor()
 
             # 商品操作记录
-            rows = cursor.execute(saleSql, [id]).fetchall()
+            rows = cursor.execute(self.saleOperations.GetOperation("find"), [id]).fetchall()
 
             operations = list()
             for row in rows:
 
                 # 操作产品信息
                 product = None
-                results = cursor.execute(productSql, [row[2]])
+                results = cursor.execute(self.products.GetOperation("find"), [row[2]])
 
                 for result in results:
                     product = Product(result[0], result[1], float(result[2]), int(result[3]), result[4], result[5])
@@ -112,19 +107,19 @@ class SaleService:
             
 
             # 订单付款记录
-            rows = cursor.execute(checkOutSql, [id]).fetchall()
+            rows = cursor.execute(self.checkOuts.GetOperation("find"), [id]).fetchall()
 
             checkOutList = list()
             for row in rows:
                 checkOutList.append(CheckOut(row[0], row[2], row[3]))
             
             # 订单
-            rows = cursor.execute(orderSql, [id])
+            rows = cursor.execute(self.saleOrders.GetOperation("find"), [id])
             for row in rows:
 
                 # 订单用户信息
                 user = None
-                results = cursor.execute(userSql, [row[3]])
+                results = cursor.execute(self.users.GetOperation("find"), [row[3]])
 
                 for result in results:
                     user = User(row[0], row[1], int(row[2]), row[3], row[4])
@@ -140,10 +135,9 @@ class SaleService:
     # 销售订单列表
     def list(self, pageIndex: int, pageSize: int) -> list:
         
-        sql = self.saleOrders.GetOperation("list")
         try:
             cursor = self.conn.cursor()
-            rows = cursor.execute(sql, [pageIndex*pageSize, pageSize]).fetchall()
+            rows = cursor.execute(self.saleOrders.GetOperation("list"), [pageIndex*pageSize, pageSize]).fetchall()
 
             results = []
             for row in rows:
@@ -157,11 +151,10 @@ class SaleService:
     # 获取销售订单数量
     def count(self) -> int:
 
-        sql = self.saleOrders.GetOperation("count")
         try:
             cursor = self.conn.cursor()
 
-            for row in cursor.execute(sql):
+            for row in cursor.execute(self.saleOrders.GetOperation("count")):
                 return row[0]
             return 0
 

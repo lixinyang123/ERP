@@ -1,6 +1,7 @@
-import json, math
-from flask import request
+import json, math, uuid
+from flask import *
 from service.SaleService import *
+from util.Configuration import *
 
 class SaleController:
 
@@ -8,6 +9,7 @@ class SaleController:
         self.pageSize = Configuration().get("PageSize")
         self.saleService = SaleService()
 
+    # 销售订单列表
     def index(self):
         
         currentIndex = request.args.get("page")

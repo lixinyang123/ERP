@@ -22,7 +22,11 @@ def action(controller: str, action: str):
     controllerName = controller.lower()
     actionName = action.lower()
 
-    result = getattr(controllers()[controllerName], actionName)()
+    result = None
+    try:
+        result = getattr(controllers()[controllerName], actionName)()
+    except Exception as e:
+        return ("notfound", 404)
 
     if result is None:
         return ("forbidden", 403)
