@@ -113,3 +113,17 @@ class PurchaseService:
 
         except:
             return []
+
+    # 获取采购订单数量
+    def count(self) -> int:
+
+        sql = self.purchaseOrders.GetOperation("count")
+        try:
+            cursor = self.conn.cursor()
+
+            for row in cursor.execute(sql):
+                return row[0]
+            return 0
+
+        except:
+            return 0

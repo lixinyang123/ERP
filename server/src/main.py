@@ -24,7 +24,11 @@ def action(controller: str, action: str):
     actionName = action.lower()
 
     result = getattr(controllers()[controllerName], actionName)()
-    return result
+
+    if result is None:
+        return ("forbidden", 403)
+
+    return result, 200, {'Content-Type': 'application/json'}
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="8080")

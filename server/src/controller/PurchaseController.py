@@ -3,5 +3,5 @@ from service.PurchaseService import *
 
 class PurchaseController:
 
-    def index(self):
-        return "Hello ProductController"
+    def index(self, request):
+        return "Hello PurchaseController"

@@ -81,3 +81,17 @@ class ProductService:
         
         except:
             return []
+
+    # 获取产品信息数量
+    def count(self) -> int:
+
+        sql = self.products.GetOperation("count")
+        try:
+            cursor = self.conn.cursor()
+
+            for row in cursor.execute(sql):
+                return row[0]
+            return 0
+
+        except:
+            return 0

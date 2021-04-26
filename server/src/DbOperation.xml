@@ -19,6 +19,10 @@
         <list>
             SELECT * FROM products LIMIT ?,?;
         </list>
+
+        <count>
+            SELECT count(*) FROM products;
+        </count>
     </products>
 
      <users>
@@ -41,6 +45,10 @@
         <list>
             SELECT * FROM users LIMIT ?,?;
         </list>
+
+        <count>
+            SELECT count(*) FROM users;
+        </count>
     </users>
 
     <purchaseOrders>
@@ -63,6 +71,10 @@
         <list>
             SELECT * FROM purchaseOrders LIMIT ?,?;
         </list>
+
+        <count>
+            SELECT count(*) FROM purchaseOrders;
+        </count>
     </purchaseOrders>
 
     <purchaseOperations>
@@ -99,6 +111,10 @@
         <list>
             SELECT * FROM saleOrders LIMIT ?,?;
         </list>
+
+        <count>
+            SELECT count(*) FROM saleOrders;
+        </count>
     </saleOrders>
 
     <saleOperations>
