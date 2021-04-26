@@ -11,3 +11,6 @@ class CheckOut:
 
     def dicted(self) -> dict:
         return self.__dict__
+
+    def dict2Obj(dict: dict):
+        return CheckOut(dict["id"], dict["time"], dict["amount"])

@@ -21,13 +21,16 @@ class PurchaseService:
         purchaseSql = self.purchaseOperations.GetOperation("add")
         try:
             cursor = self.conn.cursor()
-            cursor.execute(orderSql, [order.id, order.time, order.state])
 
             for operation in order.purchaseOperations:
                 cursor.execute(purchaseSql, [operation.id, order.id, operation.product.id, operation.num])
 
-            self.conn.commit()
-            return True
+            rows = cursor.execute(orderSql, [order.id, order.time, order.state])
+            
+            if rows.rowcount != 0:
+                self.conn.commit()
+                return True
+            return False
             
         except:
             return False
@@ -40,10 +43,13 @@ class PurchaseService:
         try:
             cursor = self.conn.cursor()
             cursor.execute(purchaseSql, [id])
-            cursor.execute(orderSql, [id])
+            rows = cursor.execute(orderSql, [id])
             
-            self.conn.commit()
-            return True
+            if rows.rowcount != 0:
+                self.conn.commit()
+                return True
+            return False
+
         except:
             return False
 
@@ -55,14 +61,19 @@ class PurchaseService:
         deletePurchaseSql = self.purchaseOperations.GetOperation("delete")
         try:
             cursor = self.conn.cursor()
-            cursor.execute(orderSql, [order.time, order.state, order.id])
+
             cursor.execute(deletePurchaseSql, [order.id])
 
             for operation in order.purchaseOperations:
                 cursor.execute(addPurchaseSql, [operation.id, order.id, operation.product.id, operation.num])
 
-            self.conn.commit()
-            return True
+            rows = cursor.execute(orderSql, [order.time, order.state, order.id])
+
+            if rows.rowcount != 0:
+                self.conn.commit()
+                return True
+            return False
+            
         except:
             return False
 
@@ -82,7 +93,7 @@ class PurchaseService:
                 product = None
 
                 for result in results:
-                    product = Product(result[0], float(result[1]), int(result[2]), result[3], result[4])
+                    product = Product(result[0], result[1], float(result[2]), int(result[3]), result[4], result[5])
                     break
 
                 operations.append(ProductOperation(row[0], product, row[3]))

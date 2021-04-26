@@ -14,3 +14,7 @@ class ProductOperation:
     def dicted(self) -> dict:
         self.product = self.product.dicted()
         return self.__dict__
+
+    def dict2Obj(dict: dict):
+        product = Product.dict2Obj(dict["product"])
+        return ProductOperation(dict["id"], product, dict["num"])

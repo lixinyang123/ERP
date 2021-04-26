@@ -1,3 +1,5 @@
+from model.ProductOperation import *
+
 # 采购订单
 class PurchaseOrder:
 
@@ -19,3 +21,11 @@ class PurchaseOrder:
         self.purchaseOperations = results
 
         return self.__dict__
+
+    def dict2Obj(dict: dict):
+        
+        operations = list()
+        for operation in dict["purchaseOperations"]:
+            operations.append(ProductOperation.dict2Obj(operation))
+
+        return PurchaseOrder(dict["id"], dict["time"], dict["state"], operations)

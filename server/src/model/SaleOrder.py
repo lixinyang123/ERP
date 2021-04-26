@@ -1,5 +1,7 @@
 from datetime import *
 from model.User import *
+from model.ProductOperation import *
+from model.CheckOut import *
 
 # 出售订单
 class SaleOrder:
@@ -34,3 +36,17 @@ class SaleOrder:
         self.checkOuts = results
 
         return self.__dict__
+
+    def dict2Obj(dict: dict):
+        user = User.dict2Obj(dict["user"])
+        
+        operations = list()
+        for operation in dict["saleOperations"]:
+            operations.append(ProductOperation.dict2Obj(operation))
+
+        checkOutList = list()
+        for checkOut in dict["checkOuts"]:
+            checkOutList.append(CheckOut.dict2Obj(checkOut))
+
+        SaleOrder(dict["id"], dict["time"], dict["state"], user, dict["selling"], operations, checkOutList)
+        return 
