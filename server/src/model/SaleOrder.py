@@ -1,5 +1,5 @@
 from datetime import *
-from server.src.model import *
+from model.User import *
 
 # 出售订单
 class SaleOrder:

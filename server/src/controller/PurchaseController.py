@@ -1,5 +1,5 @@
 from flask import request
-from server.src.service.PurchaseService import *
+from service.PurchaseService import *
 
 class PurchaseController:
 

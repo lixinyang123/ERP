@@ -4,7 +4,7 @@ class DbService:
 
     # 构造器初始化操作表
     def __init__(self, tableName: str):
-        DOMTree = parse("server/DbOperation.xml")
+        DOMTree = parse("DbOperation.xml")
         tables = DOMTree.documentElement
         self.table = tables.getElementsByTagName(tableName)[0]
 

@@ -1,4 +1,4 @@
-from server.src.model import *
+from model.Product import *
 
 # 进出库操作
 class ProductOperation:

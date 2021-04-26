@@ -1,6 +1,6 @@
 import sqlite3
-from server.src.service import *
-from server.src.model import *
+from service.DbService import *
+from model import *
 
 # 销售管理
 class SaleService:
@@ -11,7 +11,7 @@ class SaleService:
         self.checkOuts = DbService("checkOuts")
         self.products = DbService("products")
         self.users = DbService("users")
-        self.conn = sqlite3.connect('server/erp.db')
+        self.conn = sqlite3.connect('erp.db')
 
     # 释放连接
     def dispose(self):

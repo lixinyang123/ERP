@@ -1,13 +1,13 @@
 import sqlite3
-from server.src.service import *
-from server.src.model import *
+from service.DbService import *
+from model import *
 
 # 用户管理
 class UserService:
 
     def __init__(self):
         self.users = DbService("users")
-        self.conn = sqlite3.connect('server/erp.db')
+        self.conn = sqlite3.connect('erp.db')
 
     # 释放连接
     def dispose(self):
