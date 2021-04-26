@@ -25,3 +25,5 @@ def action(controller: str, action: str):
 
     result = getattr(controllers()[controllerName], actionName)()
     return result
+
+app.run(host="0.0.0.0")
