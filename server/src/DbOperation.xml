@@ -87,7 +87,7 @@
         </delete>
 
         <modify>
-            UPDATE purchaseOperations SET productId = ?， num = ？ WHERE id = ?;
+            UPDATE purchaseOperations SET productId = ?， num = ? WHERE id = ?;
         </modify>
 
         <find>
@@ -135,7 +135,7 @@
         </delete>
 
         <modify>
-            UPDATE saleOperations SET productId = ?， num = ？ WHERE id = ?;
+            UPDATE saleOperations SET productId = ?， num = ? WHERE id = ?;
         </modify>
 
         <find>
@@ -153,7 +153,7 @@
         </delete>
 
         <modify>
-            UPDATE checkOuts SET amount = ？ WHERE id = ?;
+            UPDATE checkOuts SET amount = ? WHERE id = ?;
         </modify>
 
         <find>

@@ -58,3 +58,31 @@ class SaleController:
         return json.dumps({
             "successful": flag
         })
+
+    # 删除销售订单
+    def delete(self):
+
+        orderId = request.args.get("id")
+        if orderId is None:
+            return None
+
+        return json.dumps({
+            "successful": self.userService.delete(orderId)
+        })
+
+    # 修改销售信息
+    def modify(self):
+
+        if request.method != "POST":
+            return None
+
+        flag = False
+
+        try:
+            order = SaleOrder.dict2Obj(json.loads(request.data))
+            flag = self.purchaseService.modify(order)
+        except: {}
+
+        return json.dumps({
+            "successful": flag
+        })
