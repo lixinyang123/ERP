@@ -28,7 +28,7 @@ class SaleService:
 
             for checkOut in order.checkOuts:
                 paras = [checkOut.id, order.id, checkOut.time, checkOut.amount]
-                cursor.execute(self.checkOuts.GetOperation("add"), )
+                cursor.execute(self.checkOuts.GetOperation("add"), paras)
 
             paras = [order.id, order.time, order.state, order.user.id, order.selling]
             rows = cursor.execute(self.saleOrders.GetOperation("add"), paras)
@@ -70,7 +70,7 @@ class SaleService:
             rows = cursor.execute(self.saleOrders.GetOperation("findByUser"), [userId]).fetchall()
 
             for row in rows:
-                results.append(self.delete(row[0]))
+                self.delete(row[0])
 
             return True
 
@@ -90,7 +90,7 @@ class SaleService:
 
             for checkOut in order.checkOuts:
                 paras = [checkOut.amount, checkOut.id]
-                cursor.execute(self.checkOuts.GetOperation("add"), paras)
+                cursor.execute(self.checkOuts.GetOperation("modify"), paras)
 
             paras = [order.state, order.selling, order.id]
             rows = cursor.execute(self.saleOrders.GetOperation("modify"), paras)

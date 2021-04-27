@@ -49,8 +49,10 @@ class SaleController:
 
             for checkOut in order.checkOuts:
                 checkOut.id = str(uuid.uuid4())
+                checkOut.time = str(datetime.now())
             
             flag = self.saleService.add(order)
+
         except Exception as e: {
             print(e)
         }
