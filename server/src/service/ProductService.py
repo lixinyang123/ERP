@@ -6,6 +6,14 @@ class ProductService:
 
     def __init__(self):
         self.products = DbService("products")
+        self.checkOuts = DbService("checkOuts")
+
+        self.purchaseOperations = DbService("purchaseOperations")
+        self.saleOperations = DbService("saleOperations")
+
+        self.purchaseOrders = DbService("purchaseOrders")
+        self.saleOrders = DbService("saleOrders")
+
         self.conn = getConnection()
 
     # 释放连接
@@ -35,9 +43,20 @@ class ProductService:
         try:
             cursor = self.conn.cursor()
 
-            # 移除此商品的进出货订单
-            
+            # 删除此商品的进货订单
+            rows = cursor.execute(self.purchaseOperations.GetOperation("findByProduct"), [id]).fetchall()
+            for row in rows:
+                cursor.execute(self.purchaseOperations.GetOperation("delete"), [row[1]])
+                cursor.execute(self.purchaseOrders.GetOperation("delete"), [row[1]])
 
+            # 删除此商品的出货订单
+            rows = cursor.execute(self.saleOperations.GetOperation("findByProduct"), [id])
+            for row in rows:
+                cursor.execute(self.saleOperations.GetOperation("delete"), [row[1]])
+                cursor.execute(self.checkOuts.GetOperation("delete"), [row[1]])
+                cursor.execute(self.saleOrders.GetOperation("delete"), [row[1]])
+
+            # 删除此商品
             rows = cursor.execute(self.products.GetOperation("delete"), [id])
             
             if rows.rowcount != 0:
