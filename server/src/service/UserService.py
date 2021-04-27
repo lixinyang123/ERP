@@ -1,4 +1,5 @@
 from service.DbService import *
+from service.SaleService import *
 from model import *
 
 # 用户管理
@@ -6,6 +7,7 @@ class UserService:
 
     def __init__(self):
         self.users = DbService("users")
+        self.saleService = SaleService()
         self.conn = getConnection()
 
     # 释放连接
@@ -36,7 +38,7 @@ class UserService:
             cursor = self.conn.cursor()
 
             # 删除此用户的出货订单
-
+            self.saleService.deleteByUser(id)
 
             rows = cursor.execute(self.users.GetOperation("delete"), [id])
 

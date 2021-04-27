@@ -67,7 +67,7 @@ class SaleController:
             return None
 
         return json.dumps({
-            "successful": self.userService.delete(orderId)
+            "successful": self.saleService.delete(orderId)
         })
 
     # 修改销售信息
@@ -80,9 +80,20 @@ class SaleController:
 
         try:
             order = SaleOrder.dict2Obj(json.loads(request.data))
-            flag = self.purchaseService.modify(order)
+            flag = self.saleService.modify(order)
         except: {}
 
         return json.dumps({
             "successful": flag
         })
+
+    # 查找销售信息
+    def find(self):
+
+        orderId = request.args.get("id")
+        if orderId is None:
+            return None
+
+        order = self.saleService.find(orderId)
+
+        return json.dumps(order.dicted())

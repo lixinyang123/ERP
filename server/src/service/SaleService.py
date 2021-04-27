@@ -22,9 +22,6 @@ class SaleService:
         try:
             cursor = self.conn.cursor()
 
-            paras = [order.id, order.time, order.state, order.user.id, order.selling]
-            cursor.execute(self.saleOrders.GetOperation("add"), paras)
-
             for operation in order.saleOperations:
                 paras = [operation.id, order.id, operation.product.id, operation.num]
                 cursor.execute(self.saleOperations.GetOperation("add"), paras)
@@ -33,8 +30,13 @@ class SaleService:
                 paras = [checkOut.id, order.id, checkOut.time, checkOut.amount]
                 cursor.execute(self.checkOuts.GetOperation("add"), )
 
-            self.conn.commit()
-            return True
+            paras = [order.id, order.time, order.state, order.user.id, order.selling]
+            rows = cursor.execute(self.saleOrders.GetOperation("add"), paras)
+
+            if rows.rowcount != 0:
+                self.conn.commit()
+                return True
+            return False
             
         except Exception as e:
             return False
@@ -49,22 +51,38 @@ class SaleService:
             cursor.execute(self.checkOuts.GetOperation("delete"), [id])
             cursor.execute(self.saleOperations.GetOperation("delete"), [id])
 
-            cursor.execute(self.saleOrders.GetOperation("delete"), [id])
+            rows = cursor.execute(self.saleOrders.GetOperation("delete"), [id])
 
-            self.conn.commit()
+            if rows.rowcount != 0:
+                self.conn.commit()
+                return True
+            return False
+
+        except:
+            return False
+
+    def deleteByUser(self, userId: str):
+        
+        try:
+            cursor = self.conn.cursor()
+            
+             # 商品操作记录
+            rows = cursor.execute(self.saleOrders.GetOperation("findByUser"), [userId]).fetchall()
+
+            for row in rows:
+                results.append(self.delete(row[0]))
+
             return True
 
         except:
             return False
+
 
     # 修改销售订单
     def modify(self, order: SaleOrder) -> bool:
          
         try:
             cursor = self.conn.cursor()
-
-            paras = [order.state, order.selling, order.id]
-            cursor.execute(self.saleOrders.GetOperation("modify"), paras)
 
             for operation in order.saleOperations:
                 paras = [operation.product.id, operation.num, operation.id]
@@ -74,8 +92,13 @@ class SaleService:
                 paras = [checkOut.amount, checkOut.id]
                 cursor.execute(self.checkOuts.GetOperation("add"), paras)
 
-            self.conn.commit()
-            return True
+            paras = [order.state, order.selling, order.id]
+            rows = cursor.execute(self.saleOrders.GetOperation("modify"), paras)
+
+            if rows.rowcount != 0:
+                self.conn.commit()
+                return True
+            return False
 
         except:
             return False
