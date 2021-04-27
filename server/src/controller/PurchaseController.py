@@ -8,22 +8,24 @@ class PurchaseController:
 
     def __init__(self):
         self.pageSize = Configuration().get("PageSize")
-        self.purchaseService = PurchaseService()
 
     # 进货订单列表
     def index(self):
+        purchaseService = PurchaseService()
         
         currentIndex = request.args.get("page")
         if currentIndex is None:
             return None
 
-        lastIndex = math.ceil(self.purchaseService.count() / float(self.pageSize))
+        lastIndex = math.ceil(purchaseService.count() / float(self.pageSize))
 
-        purchases = self.purchaseService.list(int(currentIndex) - 1, self.pageSize)
+        purchases = purchaseService.list(int(currentIndex) - 1, self.pageSize)
 
         result = []
         for purchase in purchases:
             result.append(purchase.dicted())
+
+        purchaseService.dispose()
 
         return json.dumps({
             "currentIndex": currentIndex,
@@ -33,6 +35,7 @@ class PurchaseController:
 
     # 新增进货订单
     def add(self):
+        purchaseService = PurchaseService()
 
         if request.method != "POST":
             return None
@@ -48,10 +51,12 @@ class PurchaseController:
             for operation in order.purchaseOperations:
                 operation.id = str(uuid.uuid4())
             
-            flag = self.purchaseService.add(order)
+            flag = purchaseService.add(order)
         except Exception as e: {
             print(e)
         }
+
+        purchaseService.dispose()
 
         return json.dumps({
             "successful": flag
@@ -59,17 +64,21 @@ class PurchaseController:
 
     # 删除进货订单
     def delete(self):
+        purchaseService = PurchaseService()
 
         orderId = request.args.get("id")
         if orderId is None:
             return None
 
+        purchaseService.dispose()
+
         return json.dumps({
-            "successful": self.purchaseService.delete(orderId)
+            "successful": purchaseService.delete(orderId)
         })
 
     # 修改进货信息
     def modify(self):
+        purchaseService = PurchaseService()
 
         if request.method != "POST":
             return None
@@ -78,8 +87,10 @@ class PurchaseController:
 
         try:
             order = PurchaseOrder.dict2Obj(json.loads(request.data))
-            flag = self.purchaseService.modify(order)
+            flag = purchaseService.modify(order)
         except: {}
+
+        purchaseService.dispose()
 
         return json.dumps({
             "successful": flag
@@ -87,11 +98,14 @@ class PurchaseController:
 
     # 查找进货信息
     def find(self):
+        purchaseService = PurchaseService()
 
         orderId = request.args.get("id")
         if orderId is None:
             return None
         
-        order = self.purchaseService.find(orderId)
+        order = purchaseService.find(orderId)
+
+        purchaseService.dispose()
 
         return json.dumps(order.dicted())

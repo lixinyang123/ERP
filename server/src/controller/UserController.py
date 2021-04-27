@@ -7,22 +7,24 @@ class UserController:
 
     def __init__(self):
         self.pageSize = Configuration().get("PageSize")
-        self.userService = UserService()
 
     # 用户列表
     def index(self):
+        userService = UserService()
 
         currentIndex = request.args.get("page")
         if currentIndex is None:
             return None
 
-        lastIndex = math.ceil(self.userService.count() / float(self.pageSize))
+        lastIndex = math.ceil(userService.count() / float(self.pageSize))
 
-        users = self.userService.list(int(currentIndex) - 1, self.pageSize)
+        users = userService.list(int(currentIndex) - 1, self.pageSize)
 
         result = []
         for user in users:
             result.append(user.dicted())
+        
+        userService.dispose()
 
         return json.dumps({
             "currentIndex": currentIndex,
@@ -33,6 +35,8 @@ class UserController:
     # 创建用户
     def add(self):
 
+        userService = UserService()
+
         if request.method != "POST":
             return None
 
@@ -41,8 +45,10 @@ class UserController:
         try:
             user = User.dict2Obj(json.loads(request.data))
             user.id = str(uuid.uuid4())
-            flag = self.userService.add(user)
+            flag = userService.add(user)
         except: {}
+
+        userService.dispose()
 
         return json.dumps({
             "successful": flag
@@ -51,16 +57,22 @@ class UserController:
     # 删除用户
     def delete(self):
 
+        userService = UserService()
+
         userId = request.args.get("id")
         if userId is None:
             return None
 
+        userService.dispose()
+
         return json.dumps({
-            "successful": self.userService.delete(userId)
+            "successful": userService.delete(userId)
         })
 
     # 修改用户信息
     def modify(self):
+
+        userService = UserService()
 
         if request.method != "POST":
             return None
@@ -69,8 +81,10 @@ class UserController:
 
         try:
             user = User.dict2Obj(json.loads(request.data))
-            flag = self.userService.modify(user)
+            flag = userService.modify(user)
         except: {}
+
+        userService.dispose()
 
         return json.dumps({
             "successful": flag
@@ -79,10 +93,14 @@ class UserController:
     # 查找指定用户
     def find(self):
 
+        userService = UserService()
+
         userId = request.args.get("id")
         if userId is None:
             return None
         
-        user = self.userService.find(userId)
+        user = userService.find(userId)
+
+        userService.dispose()
 
         return json.dumps(user.dicted())
