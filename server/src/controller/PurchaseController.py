@@ -25,13 +25,14 @@ class PurchaseController:
         for purchase in purchases:
             result.append(purchase.dicted())
 
-        purchaseService.dispose()
-
-        return json.dumps({
+        result = json.dumps({
             "currentIndex": currentIndex,
             "lastIndex": lastIndex,
             "purchases": result
         })
+
+        purchaseService.dispose()
+        return result
 
     # 新增进货订单
     def add(self):
@@ -56,11 +57,12 @@ class PurchaseController:
             print(e)
         }
 
-        purchaseService.dispose()
-
-        return json.dumps({
+        result = json.dumps({
             "successful": flag
         })
+
+        purchaseService.dispose()
+        return result
 
     # 删除进货订单
     def delete(self):
@@ -70,11 +72,12 @@ class PurchaseController:
         if orderId is None:
             return None
 
-        purchaseService.dispose()
-
-        return json.dumps({
+        result = json.dumps({
             "successful": purchaseService.delete(orderId)
         })
+
+        purchaseService.dispose()
+        return result
 
     # 修改进货信息
     def modify(self):
@@ -90,11 +93,12 @@ class PurchaseController:
             flag = purchaseService.modify(order)
         except: {}
 
-        purchaseService.dispose()
-
-        return json.dumps({
+        result = json.dumps({
             "successful": flag
         })
+
+        purchaseService.dispose()
+        return result
 
     # 查找进货信息
     def find(self):

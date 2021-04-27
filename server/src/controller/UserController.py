@@ -24,13 +24,14 @@ class UserController:
         for user in users:
             result.append(user.dicted())
         
-        userService.dispose()
-
-        return json.dumps({
+        result = json.dumps({
             "currentIndex": currentIndex,
             "lastIndex": lastIndex,
             "users": result
         })
+
+        userService.dispose()
+        return result
 
     # 创建用户
     def add(self):
@@ -48,11 +49,12 @@ class UserController:
             flag = userService.add(user)
         except: {}
 
-        userService.dispose()
-
-        return json.dumps({
+        result = json.dumps({
             "successful": flag
         })
+
+        userService.dispose()
+        return result
 
     # 删除用户
     def delete(self):
@@ -63,11 +65,12 @@ class UserController:
         if userId is None:
             return None
 
-        userService.dispose()
-
-        return json.dumps({
+        result = json.dumps({
             "successful": userService.delete(userId)
         })
+
+        userService.dispose()
+        return result
 
     # 修改用户信息
     def modify(self):
@@ -84,11 +87,12 @@ class UserController:
             flag = userService.modify(user)
         except: {}
 
-        userService.dispose()
-
-        return json.dumps({
+        result = json.dumps({
             "successful": flag
         })
+
+        userService.dispose()
+        return result
 
     # 查找指定用户
     def find(self):

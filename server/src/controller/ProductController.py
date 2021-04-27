@@ -24,13 +24,14 @@ class ProductController:
         for product in products:
             result.append(product.dicted())
 
-        productService.dispose()
-
-        return json.dumps({
+        result = json.dumps({
             "currentIndex": currentIndex,
             "lastIndex": lastIndex,
             "products": result
         })
+
+        productService.dispose()
+        return result
 
     # 新增产品
     def add(self):
@@ -47,11 +48,12 @@ class ProductController:
             flag = productService.add(product)
         except: {}
 
-        productService.dispose()
-
-        return json.dumps({
+        result = json.dumps({
             "successful": flag
         })
+
+        productService.dispose()
+        return result
 
     # 删除产品
     def delete(self):
@@ -61,11 +63,12 @@ class ProductController:
         if productId is None:
             return None
 
-        productService.dispose()
-
-        return json.dumps({
+        result = json.dumps({
             "successful": productService.delete(productId)
         })
+
+        productService.dispose()
+        return result
 
     # 修改产品信息
     def modify(self):
@@ -81,11 +84,12 @@ class ProductController:
             flag = productService.modify(product)
         except: {}
 
-        productService.dispose()
-
-        return json.dumps({
+        result = json.dumps({
             "successful": flag
         })
+
+        productService.dispose()
+        return result
 
     # 查找指定产品
     def find(self):

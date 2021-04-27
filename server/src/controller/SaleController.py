@@ -24,13 +24,14 @@ class SaleController:
         for sale in sales:
             result.append(sale.dicted())
 
-        saleService.dispose()
-
-        return json.dumps({
+        result = json.dumps({
             "currentIndex": currentIndex,
             "lastIndex": lastIndex,
             "sales": result
         })
+
+        saleService.dispose()
+        return result
 
     # 新增销售订单
     def add(self):
@@ -60,11 +61,12 @@ class SaleController:
             print(e)
         }
 
-        saleService.dispose()
-
-        return json.dumps({
+        result = json.dumps({
             "successful": flag
         })
+
+        saleService.dispose()
+        return result
 
     # 删除销售订单
     def delete(self):
@@ -74,11 +76,12 @@ class SaleController:
         if orderId is None:
             return None
 
-        saleService.dispose()
-
-        return json.dumps({
+        result = json.dumps({
             "successful": saleService.delete(orderId)
         })
+
+        saleService.dispose()
+        return result
 
     # 修改销售信息
     def modify(self):
@@ -94,11 +97,12 @@ class SaleController:
             flag = saleService.modify(order)
         except: {}
 
-        saleService.dispose()
-
-        return json.dumps({
+        result = json.dumps({
             "successful": flag
         })
+
+        saleService.dispose()
+        return result
 
     # 查找销售信息
     def find(self):
