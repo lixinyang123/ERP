@@ -61,23 +61,6 @@ class SaleService:
         except:
             return False
 
-    def deleteByUser(self, userId: str):
-        
-        try:
-            cursor = self.conn.cursor()
-            
-             # 商品操作记录
-            rows = cursor.execute(self.saleOrders.GetOperation("findByUser"), [userId]).fetchall()
-
-            for row in rows:
-                self.delete(row[0])
-
-            return True
-
-        except:
-            return False
-
-
     # 修改销售订单
     def modify(self, order: SaleOrder) -> bool:
          
@@ -148,24 +131,6 @@ class SaleService:
                 return SaleOrder(row[0], row[1], row[2], user, row[4], operations, checkOutList)
 
             raise "can't find order"
-
-        except Exception as e:
-            return None
-
-    # 按用户 id 查找销售订单
-    def findByUser(self, userId: str) -> list():
-
-        try:
-            cursor = self.conn.cursor()
-            
-             # 商品操作记录
-            rows = cursor.execute(self.saleOrders.GetOperation("findByUser"), [userId]).fetchall()
-
-            results = list()
-            for row in rows:
-                results.append(self.find(row[0]))
-
-            return results
 
         except Exception as e:
             return None
