@@ -6,6 +6,9 @@ class UserService:
 
     def __init__(self):
         self.users = DbService("users")
+        self.saleOperations = DbService("saleOperations")
+        self.checkOuts = DbService("checkOuts")
+        self.saleOrders = DbService("saleOrders")
         self.conn = getConnection()
 
     # 释放连接
@@ -35,7 +38,12 @@ class UserService:
         try:
             cursor = self.conn.cursor()
 
-            # 删除此用户的出货订单
+            # 删除此用户的出货订单、订单操作、账单
+            rows = cursor.execute(self.saleOrders.GetOperation("findByUser"), [id]).fetchall()
+            for row in rows:
+                cursor.execute(self.saleOperations.GetOperation("delete"), [row[0]])
+                cursor.execute(self.checkOuts.GetOperation("delete"), [row[0]])
+                cursor.execute(self.saleOrders.GetOperation("delete"), [row[0]])
 
             rows = cursor.execute(self.users.GetOperation("delete"), [id])
 

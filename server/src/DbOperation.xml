@@ -93,6 +93,10 @@
         <find>
             SELECT * FROM purchaseOperations WHERE purchaseOrderId = ?;
         </find>
+
+        <findByProduct>
+            SELECT * FROM purchaseOperations WHERE productId = ?;
+        </findByProduct>
     </purchaseOperations>
 
     <saleOrders>
@@ -111,6 +115,10 @@
         <find>
             SELECT * FROM saleOrders WHERE id = ?;
         </find>
+
+        <findByUser>
+            SELECT * FROM saleOrders WHERE userId = ?;
+        </findByUser>
 
         <list>
             SELECT * FROM saleOrders LIMIT ?,?;
@@ -137,6 +145,10 @@
         <find>
             SELECT * FROM saleOperations WHERE saleOrderId = ?;
         </find>
+
+        <findByProduct>
+            SELECT * FROM saleOperations WHERE productId = ?;
+        </findByProduct>
     </saleOperations>
 
     <checkOuts>
