@@ -129,6 +129,24 @@ class SaleService:
         except Exception as e:
             return None
 
+    # 按用户 id 查找销售订单
+    def findByUser(self, userId: str) -> list():
+
+        try:
+            cursor = self.conn.cursor()
+            
+             # 商品操作记录
+            rows = cursor.execute(self.saleOrders.GetOperation("findByUser"), [userId]).fetchall()
+
+            results = list()
+            for row in rows:
+                results.append(self.find(row[0]))
+
+            return results
+
+        except Exception as e:
+            return None
+
     # 销售订单列表
     def list(self, pageIndex: int, pageSize: int) -> list:
         

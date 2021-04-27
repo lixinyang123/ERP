@@ -48,5 +48,5 @@ class SaleOrder:
         for checkOut in dict["checkOuts"]:
             checkOutList.append(CheckOut.dict2Obj(checkOut))
 
-        SaleOrder(dict["id"], dict["time"], dict["state"], user, dict["selling"], operations, checkOutList)
-        return 
+        return SaleOrder(dict["id"], dict["time"], dict["state"], user, dict["selling"], operations, checkOutList)
+        

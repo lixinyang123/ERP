@@ -112,6 +112,10 @@
             SELECT * FROM saleOrders WHERE id = ?;
         </find>
 
+        <findByUser>
+            SELECT * FROM saleOrders WHERE userId = ?;
+        </findByUser>
+
         <list>
             SELECT * FROM saleOrders LIMIT ?,?;
         </list>

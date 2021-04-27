@@ -29,3 +29,32 @@ class SaleController:
             "lastIndex": lastIndex,
             "sales": result
         })
+
+    # 新增销售订单
+    def add(self):
+
+        if request.method != "POST":
+            return None
+
+        flag = False
+        
+        try:
+            order = SaleOrder.dict2Obj(json.loads(request.data))
+            order.id = str(uuid.uuid4())
+            order.time = str(datetime.now())
+            order.state = False
+            
+            for operation in order.saleOperations:
+                operation.id = str(uuid.uuid4())
+
+            for checkOut in order.checkOuts:
+                checkOut.id = str(uuid.uuid4())
+            
+            flag = self.saleService.add(order)
+        except Exception as e: {
+            print(e)
+        }
+
+        return json.dumps({
+            "successful": flag
+        })
