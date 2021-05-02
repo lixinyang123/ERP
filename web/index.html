@@ -26,32 +26,32 @@
         <div class="collapse navbar-collapse" id="navbar">
             <ul class="nav flex-column">
                 <li class="nav-item px-3">
-                    <a class="nav-link">
+                    <a class="nav-link" onclick="navigation('home')">
                         <span class="oi oi-home"></span> Home
                     </a>
                 </li>
                 <li class="nav-item px-3">
-                    <a class="nav-link">
+                    <a class="nav-link" onclick="navigation('product')">
                         <span class="oi oi-list-rich"></span> Product
                     </a>
                 </li>
                 <li class="nav-item px-3">
-                    <a class="nav-link">
+                    <a class="nav-link" onclick="navigation('user')">
                         <span class="oi oi-people"></span> User
                     </a>
                 </li>
                 <li class="nav-item px-3">
-                    <a class="nav-link">
+                    <a class="nav-link" onclick="navigation('purchase')">
                         <span class="oi oi-script"></span> Purchase
                     </a>
                 </li>
                 <li class="nav-item px-3">
-                    <a class="nav-link">
+                    <a class="nav-link" onclick="navigation('sale')">
                         <span class="oi oi-credit-card"></span> Sale
                     </a>
                 </li>
                 <li class="nav-item px-3">
-                    <a class="nav-link">
+                    <a class="nav-link" onclick="navigation('chart')">
                         <span class="oi oi-pie-chart"></span> Chart
                     </a>
                 </li>
@@ -60,5 +60,24 @@
 
     </div>
 
+    <!--body-->
+    <div id="content">
+        <div id="loading" class="container">
+            <div class="row"><div class="box box-6"></div></div>
+            <div class="row"><div class="box box-10"></div></div>
+            <div class="row"><div class="box box-4"></div></div>
+            <div class="row"><div class="box box-8"></div></div>
+            <div class="row"><div class="box box-3"></div></div>
+            <div class="row"><div class="box box-10"></div></div>
+            <div class="row"><div class="box box-4"></div></div>
+            <div class="row"><div class="box box-8"></div></div>
+            <div class="row"><div class="box box-3"></div></div>
+            <div class="row"><div class="box box-10"></div></div>
+            <div class="row"><div class="box box-6"></div></div>
+        </div>
+        <div id="main"></div>
+    </div>
+
+    <script src="/js/index.js"></script>
 </body>
 </html>

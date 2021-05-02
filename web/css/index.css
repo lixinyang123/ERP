@@ -1,3 +1,9 @@
+body {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
 #title {
     padding-top: 10px;
     font-size: 1.1rem;
@@ -54,6 +60,10 @@
 
 @media (min-width: 892px) {
 
+    body {
+        flex-direction: row;
+    }
+
     .sidebar {
         width: 250px;
         height: 100vh;
@@ -68,5 +78,60 @@
 
     .sidebar .collapse {
         display: block;
+    }
+}
+
+#content{
+    flex: 1;
+}
+
+#loading{
+    padding-top: 10rem;
+    padding-bottom: 1rem;
+}
+
+#loading .row {
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+#loading .box {
+    height: 15px;
+    margin-bottom: 20px;
+    background-color: whitesmoke;
+    background: linear-gradient( 
+        100deg,
+        rgba(255,255,255,0) 40%, 
+        rgba(255,255,255,0.8) 50%, 
+        rgba(255,255,255,0) 60% 
+    ) whitesmoke;
+    background-size: 200% 100%;
+    background-position-x: 120%;
+    animation: 1s loading ease-in-out infinite;
+}
+
+.box-3 {
+    width: 30%;
+}
+
+.box-4 {
+    width: 40%;
+}
+
+.box-6 {
+    width: 60%;
+}
+
+.box-8 {
+    width: 80%;
+}
+
+.box-10 {
+    width: 100%;
+}
+
+@keyframes loading {
+    to {
+        background-position-x: -20%;
     }
 }
