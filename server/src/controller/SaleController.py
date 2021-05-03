@@ -3,117 +3,116 @@ from flask import *
 from service.SaleService import *
 from util.Configuration import *
 
-class SaleController:
+sale = Blueprint('sale',__name__)
 
-    def __init__(self):
-        self.pageSize = Configuration().get("PageSize")
+pageSize = Configuration().get("PageSize")
 
-    # 销售订单列表
-    def index(self):
-        saleService = SaleService()
+# 销售订单列表
+@sale.route("index", methods=["get"])
+def index():
+    saleService = SaleService()
+    
+    currentIndex = request.args.get("page")
+    if currentIndex is None:
+        return ("forbidden", 403)
+
+    lastIndex = math.ceil(saleService.count() / float(self.pageSize))
+
+    sales = saleService.list(int(currentIndex) - 1, self.pageSize)
+
+    result = []
+    for sale in sales:
+        result.append(sale.dicted())
+
+    result = json.dumps({
+        "currentIndex": currentIndex,
+        "lastIndex": lastIndex,
+        "sales": result
+    })
+
+    saleService.dispose()
+    return (result, 200)
+
+# 新增销售订单
+@sale.route("add", methods=["post"])
+def add():
+    saleService = SaleService()
+
+    flag = False
+    
+    try:
+        order = SaleOrder.dict2Obj(json.loads(request.data))
+        order.id = str(uuid.uuid4())
+        order.time = str(datetime.now())
+        order.state = False
         
-        currentIndex = request.args.get("page")
-        if currentIndex is None:
-            return None
+        for operation in order.saleOperations:
+            operation.id = str(uuid.uuid4())
 
-        lastIndex = math.ceil(saleService.count() / float(self.pageSize))
-
-        sales = saleService.list(int(currentIndex) - 1, self.pageSize)
-
-        result = []
-        for sale in sales:
-            result.append(sale.dicted())
-
-        result = json.dumps({
-            "currentIndex": currentIndex,
-            "lastIndex": lastIndex,
-            "sales": result
-        })
-
-        saleService.dispose()
-        return result
-
-    # 新增销售订单
-    def add(self):
-        saleService = SaleService()
-
-        if request.method != "POST":
-            return None
-
-        flag = False
+        for checkOut in order.checkOuts:
+            checkOut.id = str(uuid.uuid4())
+            checkOut.time = str(datetime.now())
         
-        try:
-            order = SaleOrder.dict2Obj(json.loads(request.data))
-            order.id = str(uuid.uuid4())
-            order.time = str(datetime.now())
-            order.state = False
-            
-            for operation in order.saleOperations:
-                operation.id = str(uuid.uuid4())
+        flag = saleService.add(order)
 
-            for checkOut in order.checkOuts:
-                checkOut.id = str(uuid.uuid4())
-                checkOut.time = str(datetime.now())
-            
-            flag = saleService.add(order)
+    except: 
+        return ("forbidden", 403)
 
-        except Exception as e: {
-            print(e)
-        }
+    result = json.dumps({
+        "successful": flag
+    })
 
-        result = json.dumps({
-            "successful": flag
-        })
+    saleService.dispose()
+    return (result, 200)
 
-        saleService.dispose()
-        return result
+# 删除销售订单
+@sale.route("delete", methods=["get"])
+def delete():
+    saleService = SaleService()
 
-    # 删除销售订单
-    def delete(self):
-        saleService = SaleService()
+    orderId = request.args.get("id")
+    if orderId is None:
+        return ("forbidden", 403)
 
-        orderId = request.args.get("id")
-        if orderId is None:
-            return None
+    result = json.dumps({
+        "successful": saleService.delete(orderId)
+    })
 
-        result = json.dumps({
-            "successful": saleService.delete(orderId)
-        })
+    saleService.dispose()
+    return (result, 200)
 
-        saleService.dispose()
-        return result
+# 修改销售信息
+@sale.route("modify", methods=["post"])
+def modify():
+    saleService = SaleService()
 
-    # 修改销售信息
-    def modify(self):
-        saleService = SaleService()
+    flag = False
 
-        if request.method != "POST":
-            return None
+    try:
+        order = SaleOrder.dict2Obj(json.loads(request.data))
+        flag = saleService.modify(order)
+    except: 
+        return ("forbidden", 403)
 
-        flag = False
+    result = json.dumps({
+        "successful": flag
+    })
 
-        try:
-            order = SaleOrder.dict2Obj(json.loads(request.data))
-            flag = saleService.modify(order)
-        except: {}
+    saleService.dispose()
+    return (result, 200)
 
-        result = json.dumps({
-            "successful": flag
-        })
+# 查找销售信息
+@sale.route("find", methods=["get"])
+def find():
+    saleService = SaleService()
 
-        saleService.dispose()
-        return result
+    orderId = request.args.get("id")
+    if orderId is None:
+        return ("forbidden", 403)
 
-    # 查找销售信息
-    def find(self):
-        saleService = SaleService()
+    order = saleService.find(orderId)
+    result = json.dumps(order.dicted())
 
-        orderId = request.args.get("id")
-        if orderId is None:
-            return None
+    saleService.dispose()
 
-        order = saleService.find(orderId)
-
-        saleService.dispose()
-
-        return json.dumps(order.dicted())
+    return (result, 200)

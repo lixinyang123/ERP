@@ -4,112 +4,111 @@ from flask import *
 from service.PurchaseService import *
 from util.Configuration import *
 
-class PurchaseController:
+purchase = Blueprint('purchase',__name__)
 
-    def __init__(self):
-        self.pageSize = Configuration().get("PageSize")
+pageSize = Configuration().get("PageSize")
 
-    # 进货订单列表
-    def index(self):
-        purchaseService = PurchaseService()
+# 进货订单列表
+@purchase.route("index", methods=["get"])
+def index():
+    purchaseService = PurchaseService()
+    
+    currentIndex = request.args.get("page")
+    if currentIndex is None:
+        return ("forbidden", 403)
+
+    lastIndex = math.ceil(purchaseService.count() / float(self.pageSize))
+
+    purchases = purchaseService.list(int(currentIndex) - 1, self.pageSize)
+
+    result = []
+    for purchase in purchases:
+        result.append(purchase.dicted())
+
+    result = json.dumps({
+        "currentIndex": currentIndex,
+        "lastIndex": lastIndex,
+        "purchases": result
+    })
+
+    purchaseService.dispose()
+    return (result, 200)
+
+# 新增进货订单
+@purchase.route("add", methods=["post"])
+def add():
+    purchaseService = PurchaseService()
+
+    flag = False
+
+    try:
+        order = PurchaseOrder.dict2Obj(json.loads(request.data))
+        order.id = str(uuid.uuid4())
+        order.time = str(datetime.now())
+        order.state = False
         
-        currentIndex = request.args.get("page")
-        if currentIndex is None:
-            return None
-
-        lastIndex = math.ceil(purchaseService.count() / float(self.pageSize))
-
-        purchases = purchaseService.list(int(currentIndex) - 1, self.pageSize)
-
-        result = []
-        for purchase in purchases:
-            result.append(purchase.dicted())
-
-        result = json.dumps({
-            "currentIndex": currentIndex,
-            "lastIndex": lastIndex,
-            "purchases": result
-        })
-
-        purchaseService.dispose()
-        return result
-
-    # 新增进货订单
-    def add(self):
-        purchaseService = PurchaseService()
-
-        if request.method != "POST":
-            return None
-
-        flag = False
-
-        try:
-            order = PurchaseOrder.dict2Obj(json.loads(request.data))
-            order.id = str(uuid.uuid4())
-            order.time = str(datetime.now())
-            order.state = False
-            
-            for operation in order.purchaseOperations:
-                operation.id = str(uuid.uuid4())
-            
-            flag = purchaseService.add(order)
-        except Exception as e: {
-            print(e)
-        }
-
-        result = json.dumps({
-            "successful": flag
-        })
-
-        purchaseService.dispose()
-        return result
-
-    # 删除进货订单
-    def delete(self):
-        purchaseService = PurchaseService()
-
-        orderId = request.args.get("id")
-        if orderId is None:
-            return None
-
-        result = json.dumps({
-            "successful": purchaseService.delete(orderId)
-        })
-
-        purchaseService.dispose()
-        return result
-
-    # 修改进货信息
-    def modify(self):
-        purchaseService = PurchaseService()
-
-        if request.method != "POST":
-            return None
-
-        flag = False
-
-        try:
-            order = PurchaseOrder.dict2Obj(json.loads(request.data))
-            flag = purchaseService.modify(order)
-        except: {}
-
-        result = json.dumps({
-            "successful": flag
-        })
-
-        purchaseService.dispose()
-        return result
-
-    # 查找进货信息
-    def find(self):
-        purchaseService = PurchaseService()
-
-        orderId = request.args.get("id")
-        if orderId is None:
-            return None
+        for operation in order.purchaseOperations:
+            operation.id = str(uuid.uuid4())
         
-        order = purchaseService.find(orderId)
+        flag = purchaseService.add(order)
+    except:
+        return ("forbidden", 403)
 
-        purchaseService.dispose()
+    result = json.dumps({
+        "successful": flag
+    })
 
-        return json.dumps(order.dicted())
+    purchaseService.dispose()
+    return (result, 200)
+
+# 删除进货订单
+@purchase.route("delete", methods=["get"])
+def delete():
+    purchaseService = PurchaseService()
+
+    orderId = request.args.get("id")
+    if orderId is None:
+        return ("forbidden", 403)
+
+    result = json.dumps({
+        "successful": purchaseService.delete(orderId)
+    })
+
+    purchaseService.dispose()
+    return (result, 200)
+
+# 修改进货信息
+@purchase.route("modify", methods=["post"])
+def modify():
+    purchaseService = PurchaseService()
+
+    flag = False
+
+    try:
+        order = PurchaseOrder.dict2Obj(json.loads(request.data))
+        flag = purchaseService.modify(order)
+    except:
+        return ("forbidden", 403)
+
+    result = json.dumps({
+        "successful": flag
+    })
+
+    purchaseService.dispose()
+    return (result, 200)
+
+# 查找进货信息
+@purchase.route("find", methods=["get"])
+def find():
+    purchaseService = PurchaseService()
+
+    orderId = request.args.get("id")
+    if orderId is None:
+        return ("forbidden", 403)
+    
+    order = purchaseService.find(orderId)
+    result = json.dumps(order.dicted())
+
+    purchaseService.dispose()
+
+    return (result, 200)

@@ -3,108 +3,109 @@ from flask import *
 from service.UserService import *
 from util.Configuration import *
 
-class UserController:
+user = Blueprint('user',__name__)
 
-    def __init__(self):
-        self.pageSize = Configuration().get("PageSize")
+pageSize = Configuration().get("PageSize")
 
-    # 用户列表
-    def index(self):
-        userService = UserService()
+# 用户列表
+@user.route("index", methods=["get"])
+def index():
+    userService = UserService()
 
-        currentIndex = request.args.get("page")
-        if currentIndex is None:
-            return None
+    currentIndex = request.args.get("page")
+    if currentIndex is None:
+        return ("forbidden", 403)
 
-        lastIndex = math.ceil(userService.count() / float(self.pageSize))
+    lastIndex = math.ceil(userService.count() / float(pageSize))
 
-        users = userService.list(int(currentIndex) - 1, self.pageSize)
+    users = userService.list(int(currentIndex) - 1, pageSize)
 
-        result = []
-        for user in users:
-            result.append(user.dicted())
-        
-        result = json.dumps({
-            "currentIndex": currentIndex,
-            "lastIndex": lastIndex,
-            "users": result
-        })
+    result = []
+    for user in users:
+        result.append(user.dicted())
+    
+    result = json.dumps({
+        "currentIndex": currentIndex,
+        "lastIndex": lastIndex,
+        "users": result
+    })
 
-        userService.dispose()
-        return result
+    userService.dispose()
+    return (result, 200)
 
-    # 创建用户
-    def add(self):
+# 创建用户
+@user.route("add", methods=["post"])
+def add():
 
-        userService = UserService()
+    userService = UserService()
 
-        if request.method != "POST":
-            return None
+    flag = False
 
-        flag = False
+    try:
+        user = User.dict2Obj(json.loads(request.data))
+        user.id = str(uuid.uuid4())
+        flag = userService.add(user)
+    except:
+        return ("forbidden", 403)
 
-        try:
-            user = User.dict2Obj(json.loads(request.data))
-            user.id = str(uuid.uuid4())
-            flag = userService.add(user)
-        except: {}
+    result = json.dumps({
+        "successful": flag
+    })
 
-        result = json.dumps({
-            "successful": flag
-        })
+    userService.dispose()
+    return (result, 200)
 
-        userService.dispose()
-        return result
+# 删除用户
+@user.route("delete", methods=["get"])
+def delete():
 
-    # 删除用户
-    def delete(self):
+    userService = UserService()
 
-        userService = UserService()
+    userId = request.args.get("id")
+    if userId is None:
+        return ("forbidden", 403)
 
-        userId = request.args.get("id")
-        if userId is None:
-            return None
+    result = json.dumps({
+        "successful": userService.delete(userId)
+    })
 
-        result = json.dumps({
-            "successful": userService.delete(userId)
-        })
+    userService.dispose()
+    return (result, 200)
 
-        userService.dispose()
-        return result
+# 修改用户信息
+@user.route("modify", methods=["post"])
+def modify():
 
-    # 修改用户信息
-    def modify(self):
+    userService = UserService()
 
-        userService = UserService()
+    flag = False
 
-        if request.method != "POST":
-            return None
+    try:
+        user = User.dict2Obj(json.loads(request.data))
+        flag = userService.modify(user)
+    except: 
+        return ("forbidden", 403)
 
-        flag = False
+    result = json.dumps({
+        "successful": flag
+    })
 
-        try:
-            user = User.dict2Obj(json.loads(request.data))
-            flag = userService.modify(user)
-        except: {}
+    userService.dispose()
+    return (result, 200)
 
-        result = json.dumps({
-            "successful": flag
-        })
+# 查找指定用户
+@user.route("find", methods=["get"])
+def find():
 
-        userService.dispose()
-        return result
+    userService = UserService()
 
-    # 查找指定用户
-    def find(self):
+    userId = request.args.get("id")
+    if userId is None:
+        return ("forbidden", 403)
+    
+    user = userService.find(userId)
+    result = json.dumps(user.dicted())
 
-        userService = UserService()
+    userService.dispose()
 
-        userId = request.args.get("id")
-        if userId is None:
-            return None
-        
-        user = userService.find(userId)
-
-        userService.dispose()
-
-        return json.dumps(user.dicted())
+    return (result, 200)

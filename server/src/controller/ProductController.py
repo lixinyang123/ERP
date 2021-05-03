@@ -3,104 +3,105 @@ from flask import *
 from service.ProductService import *
 from util.Configuration import *
 
-class ProductController:
+product = Blueprint('product',__name__)
 
-    def __init__(self):
-        self.pageSize = Configuration().get("PageSize")
+pageSize = Configuration().get("PageSize")
 
-    # 产品列表
-    def index(self):
-        productService = ProductService()
-        
-        currentIndex = request.args.get("page")
-        if currentIndex is None:
-            return None
+# 产品列表
+@product.route("index", methods=["get"])
+def index():
+    productService = ProductService()
+    
+    currentIndex = request.args.get("page")
+    if currentIndex is None:
+        return ("forbidden", 403)
 
-        lastIndex = math.ceil(productService.count() / float(self.pageSize))
+    lastIndex = math.ceil(productService.count() / float(pageSize))
 
-        products = productService.list(int(currentIndex) - 1, self.pageSize)
+    products = productService.list(int(currentIndex) - 1, pageSize)
 
-        result = []
-        for product in products:
-            result.append(product.dicted())
+    result = []
+    for product in products:
+        result.append(product.dicted())
 
-        result = json.dumps({
-            "currentIndex": currentIndex,
-            "lastIndex": lastIndex,
-            "products": result
-        })
+    result = json.dumps({
+        "currentIndex": currentIndex,
+        "lastIndex": lastIndex,
+        "products": result
+    })
 
-        productService.dispose()
-        return result
+    productService.dispose()
+    return (result, 200)
 
-    # 新增产品
-    def add(self):
-        productService = ProductService()
+# 新增产品
+@product.route("add", methods=["post"])
+def add():
+    productService = ProductService()
 
-        if request.method != "POST":
-            return None
+    flag = False
 
-        flag = False
+    try:
+        product = Product.dict2Obj(json.loads(request.data))
+        product.id = str(uuid.uuid4())
+        flag = productService.add(product)
+    except: 
+        return ("forbidden", 403)
 
-        try:
-            product = Product.dict2Obj(json.loads(request.data))
-            product.id = str(uuid.uuid4())
-            flag = productService.add(product)
-        except: {}
+    result = json.dumps({
+        "successful": flag
+    })
 
-        result = json.dumps({
-            "successful": flag
-        })
+    productService.dispose()
+    return (result, 200)
 
-        productService.dispose()
-        return result
+# 删除产品
+@product.route("delete", methods=["get"])
+def delete():
+    productService = ProductService()
 
-    # 删除产品
-    def delete(self):
-        productService = ProductService()
+    productId = request.args.get("id")
+    if productId is None:
+        return ("forbidden", 403)
 
-        productId = request.args.get("id")
-        if productId is None:
-            return None
+    result = json.dumps({
+        "successful": productService.delete(productId)
+    })
 
-        result = json.dumps({
-            "successful": productService.delete(productId)
-        })
+    productService.dispose()
+    return (result, 200)
 
-        productService.dispose()
-        return result
+# 修改产品信息
+@product.route("modify", methods=["post"])
+def modify():
+    productService = ProductService()
 
-    # 修改产品信息
-    def modify(self):
-        productService = ProductService()
+    flag = False
 
-        if request.method != "POST":
-            return None
+    try:
+        product = Product.dict2Obj(json.loads(request.data))
+        flag = productService.modify(product)
+    except: 
+        return ("forbidden", 403)
 
-        flag = False
+    result = json.dumps({
+        "successful": flag
+    })
 
-        try:
-            product = Product.dict2Obj(json.loads(request.data))
-            flag = productService.modify(product)
-        except: {}
+    productService.dispose()
+    return (result, 200)
 
-        result = json.dumps({
-            "successful": flag
-        })
+# 查找指定产品
+@product.route("find", methods=["get"])
+def find():
+    productService = ProductService()
 
-        productService.dispose()
-        return result
+    productId = request.args.get("id")
+    if productId is None:
+        return None
+    
+    product = productService.find(productId)
+    result = json.dumps(product.dicted())
 
-    # 查找指定产品
-    def find(self):
-        productService = ProductService()
+    productService.dispose()
 
-        productId = request.args.get("id")
-        if productId is None:
-            return None
-        
-        product = productService.find(productId)
-
-        productService.dispose()
-
-        return json.dumps(product.dicted())
+    return (result, 200)
