@@ -23,11 +23,6 @@ const config = {
     options: {}
 };
 
-var myChart = new Chart(
-    document.querySelector('#myChart'),
-    config
-);
-
-function temp(){
-    console.log("myChart");
-}
+document.querySelectorAll(".myChart").forEach(element => {
+    new Chart(element, config);
+});
