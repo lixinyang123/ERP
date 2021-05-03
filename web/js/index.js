@@ -34,13 +34,14 @@ function loadingState(flag){
 }
 
 function inject(){
-    document.querySelectorAll("#main > script").forEach(element => {
+    document.querySelectorAll("#main > script").forEach(async(element) => {
         let src = element.getAttribute("src");
-        request(src,(data) => {});
+        let resp = await fetch(src);
+        eval(await resp.text());
     });
 }
 
-async function init(){
+function init(){
 
     //初始化导航
     window.onpopstate = (e)=>{
