@@ -1,5 +1,8 @@
 <div class="container animate__animated animate__bounceIn">
-    <h1 class="display-4">Sale</h1>
+
+    <h1 class="display-4 float-start">销售</h1>
+    <button class="btn btn-primary float-end" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">创建订单</button>
+
     <hr/>
 
     <div class="row">
@@ -7,15 +10,18 @@
         <div class="col-md-4">
             <div class="card text-center">
                 <div class="card-header">
-                    Featured
+                    订单ID
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <h5 class="card-title">订单用户</h5>
+                    <p class="card-text">订单地址</p>
+                    <a href="#" class="btn btn-info">详情</a>
+                    <a href="#" class="btn btn-success">完成</a>
+                    <a href="#" class="btn btn-warning">编辑</a>
+                    <a href="#" class="btn btn-danger">删除</a>
                 </div>
                 <div class="card-footer text-muted">
-                    2 days ago
+                    订单时间
                 </div>
             </div>
         </div>
@@ -23,15 +29,18 @@
         <div class="col-md-4">
             <div class="card text-center">
                 <div class="card-header">
-                    Featured
+                    订单ID
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <h5 class="card-title">订单用户</h5>
+                    <p class="card-text">订单地址</p>
+                    <a href="#" class="btn btn-info">详情</a>
+                    <a href="#" class="btn btn-success">完成</a>
+                    <a href="#" class="btn btn-warning">编辑</a>
+                    <a href="#" class="btn btn-danger">删除</a>
                 </div>
                 <div class="card-footer text-muted">
-                    2 days ago
+                    订单时间
                 </div>
             </div>
         </div>
@@ -39,15 +48,18 @@
         <div class="col-md-4">
             <div class="card text-center">
                 <div class="card-header">
-                    Featured
+                    订单ID
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <h5 class="card-title">订单用户</h5>
+                    <p class="card-text">订单地址</p>
+                    <a href="#" class="btn btn-info">详情</a>
+                    <a href="#" class="btn btn-success">完成</a>
+                    <a href="#" class="btn btn-warning">编辑</a>
+                    <a href="#" class="btn btn-danger">删除</a>
                 </div>
                 <div class="card-footer text-muted">
-                    2 days ago
+                    订单时间
                 </div>
             </div>
         </div>
@@ -55,15 +67,18 @@
         <div class="col-md-4">
             <div class="card text-center">
                 <div class="card-header">
-                    Featured
+                    订单ID
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <h5 class="card-title">订单用户</h5>
+                    <p class="card-text">订单地址</p>
+                    <a href="#" class="btn btn-info">详情</a>
+                    <a href="#" class="btn btn-success">完成</a>
+                    <a href="#" class="btn btn-warning">编辑</a>
+                    <a href="#" class="btn btn-danger">删除</a>
                 </div>
                 <div class="card-footer text-muted">
-                    2 days ago
+                    订单时间
                 </div>
             </div>
         </div>
@@ -73,7 +88,7 @@
     <div class="row">
         <ul class="pagination justify-content-center">
             <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">上一页</a>
             </li>
             <li class="page-item"><a class="page-link" href="#">1</a></li>
             <li class="page-item"><a class="page-link" href="#">2</a></li>
@@ -83,9 +98,20 @@
             <li class="page-item"><a class="page-link" href="#">4</a></li>
             <li class="page-item"><a class="page-link" href="#">5</a></li>
             <li class="page-item">
-                <a class="page-link" href="#">Next</a>
+                <a class="page-link" href="#">下一页</a>
             </li>
         </ul>
     </div>
 
 </div>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">创建订单</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        ...
+    </div>
+</div>
+  

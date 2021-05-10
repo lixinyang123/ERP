@@ -1,5 +1,8 @@
 <div class="container animate__animated animate__bounceIn">
-  <h1 class="display-4">Product</h1>
+  
+  <h1 class="display-4 float-start">产品</h1>
+  <button class="btn btn-primary float-end" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">新增产品</button>
+
   <hr/>
 
   <div class="row">
@@ -7,12 +10,16 @@
     <div class="col-md-4">
       <div class="card">
         <div class="card-header">
-          Featured
+          产品ID
         </div>
         <div class="card-body">
-          <h5 class="card-title">Special title treatment</h5>
-          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
+          <h5 class="card-title">产品名称</h5>
+          <hr/>
+          <p class="card-text">产品库存量</p>
+          <p class="card-text">产品规格</p>
+          <p class="card-text">产品备注</p>
+          <a href="#" class="btn btn-warning">编辑</a>
+          <a href="#" class="btn btn-danger">删除</a>
         </div>
       </div>
     </div>
@@ -20,12 +27,16 @@
     <div class="col-md-4">
       <div class="card">
         <div class="card-header">
-          Featured
+          产品ID
         </div>
         <div class="card-body">
-          <h5 class="card-title">Special title treatment</h5>
-          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
+          <h5 class="card-title">产品名称</h5>
+          <hr/>
+          <p class="card-text">产品库存量</p>
+          <p class="card-text">产品规格</p>
+          <p class="card-text">产品备注</p>
+          <a href="#" class="btn btn-warning">编辑</a>
+          <a href="#" class="btn btn-danger">删除</a>
         </div>
       </div>
     </div>
@@ -33,12 +44,16 @@
     <div class="col-md-4">
       <div class="card">
         <div class="card-header">
-          Featured
+          产品ID
         </div>
         <div class="card-body">
-          <h5 class="card-title">Special title treatment</h5>
-          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
+          <h5 class="card-title">产品名称</h5>
+          <hr/>
+          <p class="card-text">产品库存量</p>
+          <p class="card-text">产品规格</p>
+          <p class="card-text">产品备注</p>
+          <a href="#" class="btn btn-warning">编辑</a>
+          <a href="#" class="btn btn-danger">删除</a>
         </div>
       </div>
     </div>
@@ -46,12 +61,16 @@
     <div class="col-md-4">
       <div class="card">
         <div class="card-header">
-          Featured
+          产品ID
         </div>
         <div class="card-body">
-          <h5 class="card-title">Special title treatment</h5>
-          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
+          <h5 class="card-title">产品名称</h5>
+          <hr/>
+          <p class="card-text">产品库存量</p>
+          <p class="card-text">产品规格</p>
+          <p class="card-text">产品备注</p>
+          <a href="#" class="btn btn-warning">编辑</a>
+          <a href="#" class="btn btn-danger">删除</a>
         </div>
       </div>
     </div>
@@ -62,7 +81,7 @@
   <div class="row">
     <ul class="pagination justify-content-center">
         <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">上一页</a>
         </li>
         <li class="page-item"><a class="page-link" href="#">1</a></li>
         <li class="page-item"><a class="page-link" href="#">2</a></li>
@@ -72,9 +91,20 @@
         <li class="page-item"><a class="page-link" href="#">4</a></li>
         <li class="page-item"><a class="page-link" href="#">5</a></li>
         <li class="page-item">
-            <a class="page-link" href="#">Next</a>
+            <a class="page-link" href="#">下一页</a>
         </li>
     </ul>
   </div>
 
+</div>
+
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+  <div class="offcanvas-header">
+    <h5 id="offcanvasRightLabel">新增产品</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    ...
+  </div>
 </div>

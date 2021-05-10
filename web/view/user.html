@@ -1,12 +1,36 @@
 <div class="container animate__animated animate__bounceIn">
-    <h1 class="display-4">User</h1>
+
+    <h1 class="display-4 float-start">用户</h1>
+    <button class="btn btn-primary float-end" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">新增用户</button>
+
     <hr/>
 
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                  This is some text within a card body.
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>
+                                用户ID
+                            </p>
+                        </div>
+                        <div class="col-md-3">
+                            <p>
+                                用户名
+                            </p>
+                        </div>
+                        <div class="col-md-3">
+                            <p>
+                                电话
+                            </p>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-danger" style="border-radius: 50px; float: right; margin-left: 10px;">删除</button>
+                            <button class="btn btn-warning" style="border-radius: 50px; float: right; margin-left: 10px;">编辑</button>
+                            <button class="btn btn-info" style="border-radius: 50px; float: right; margin-left: 10px;">信息</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -14,7 +38,28 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                  This is some text within a card body.
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>
+                                用户ID
+                            </p>
+                        </div>
+                        <div class="col-md-3">
+                            <p>
+                                用户名
+                            </p>
+                        </div>
+                        <div class="col-md-3">
+                            <p>
+                                电话
+                            </p>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-danger" style="border-radius: 50px; float: right; margin-left: 10px;">删除</button>
+                            <button class="btn btn-warning" style="border-radius: 50px; float: right; margin-left: 10px;">编辑</button>
+                            <button class="btn btn-info" style="border-radius: 50px; float: right; margin-left: 10px;">信息</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -22,7 +67,28 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                  This is some text within a card body.
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>
+                                用户ID
+                            </p>
+                        </div>
+                        <div class="col-md-3">
+                            <p>
+                                用户名
+                            </p>
+                        </div>
+                        <div class="col-md-3">
+                            <p>
+                                电话
+                            </p>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-danger" style="border-radius: 50px; float: right; margin-left: 10px;">删除</button>
+                            <button class="btn btn-warning" style="border-radius: 50px; float: right; margin-left: 10px;">编辑</button>
+                            <button class="btn btn-info" style="border-radius: 50px; float: right; margin-left: 10px;">信息</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -32,7 +98,7 @@
     <div class="row">
         <ul class="pagination justify-content-center">
             <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">上一页</a>
             </li>
             <li class="page-item"><a class="page-link" href="#">1</a></li>
             <li class="page-item"><a class="page-link" href="#">2</a></li>
@@ -42,9 +108,20 @@
             <li class="page-item"><a class="page-link" href="#">4</a></li>
             <li class="page-item"><a class="page-link" href="#">5</a></li>
             <li class="page-item">
-                <a class="page-link" href="#">Next</a>
+                <a class="page-link" href="#">下一页</a>
             </li>
         </ul>
     </div>
 
 </div>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">新增用户</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        ...
+    </div>
+</div>
+  

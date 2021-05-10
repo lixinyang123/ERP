@@ -1,16 +1,16 @@
 const labels = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
+    '一月',
+    '二月',
+    '三月',
+    '四月',
+    '五月',
+    '六月',
 ];
 
 const data = {
     labels: labels,
     datasets: [{
-        label: 'My First dataset',
+        label: '销售图表',
         backgroundColor: 'rgb(255, 99, 132)',
         borderColor: 'rgb(255, 99, 132)',
         data: [0, 10, 5, 2, 20, 30, 45],
