@@ -15,6 +15,9 @@ app.register_blueprint(sale, url_prefix='/sale')
 @app.after_request
 def handlerResponse(response):
     response.content_type = "application/json"
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add("Access-Control-Allow-Methods", "*")
+    response.headers.add("Access-Control-Allow-Headers", "*")
     return response
 
 if __name__ == "__main__":

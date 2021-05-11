@@ -1,3 +1,32 @@
+let api = "http://localhost:5000";
+
+class ProductModel {
+    constructor(name, price, num, specifications, notes) {
+        this.id = "",
+        this.name = name,
+        this.price = Number(price),
+        this.num = Number(num),
+        this.specifications = specifications,
+        this.notes = notes;
+    }
+}
+
+class UserModel {
+    constructor(name, tel, address, notes) {
+        this.id = "",
+        this.name = name,
+        this.tel = tel,
+        this.address = address,
+        this.notes = notes;
+    }
+}
+
+function guid() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c) {
+        var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+        return v.toString(16);
+    });
+}
 
 async function navigation(name,isBack = false){
 
@@ -39,6 +68,32 @@ function inject(){
         let resp = await fetch(src);
         eval(await resp.text());
     });
+}
+
+function toast(title, content) {
+
+    let toastId = guid();
+    
+    let html = `
+        <div id="${toastId}" class="toast show mb-2 animate__animated animate__fadeIn" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="mr-auto">${title}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close" onclick="closeToast('${toastId}')"></button>
+            </div>
+            <div class="toast-body">
+                ${content}
+            </div>
+        </div>
+    `;
+    document.querySelector("#toastArea").innerHTML += html;
+
+    setTimeout(closeToast, 5000, toastId);
+}
+
+function closeToast(toastId) {
+    let toast = document.getElementById(toastId);
+    if(toast)
+        toast.remove();
 }
 
 function init(){

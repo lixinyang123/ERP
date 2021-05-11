@@ -140,6 +140,22 @@ body {
     padding: 3rem 0;
 }
 
+#toastArea {
+    position: fixed;
+    padding: 30px;
+    z-index: 2000;
+    right: 0;
+    bottom: 0;
+}
+
+.toast-header {
+    display: block;
+}
+
+.toast-header button {
+    float: right;
+}
+
 hr {
     margin-bottom: 2rem;
     clear: both;
