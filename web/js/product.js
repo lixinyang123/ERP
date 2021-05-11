@@ -37,6 +37,7 @@ async function getData() {
     let results = await res.json();
 
     lastIndex = results.lastIndex;
+    showPagination();
     showData(results.products)
 }
 
@@ -76,8 +77,50 @@ async function deleteProduct(id) {
     await getData();
 }
 
-function showPagination(lastIndex) {
+function showPagination() {
+    let list = document.querySelector(".pagination");
 
+    let isFirst = "";
+    if(currentIndex <= 1)
+        isFirst = "disabled"
+    
+    list.innerHTML = `
+        <li class="page-item ${isFirst}">
+            <button class="page-link">上一页</button>
+        </li>
+    `;
+
+    let startIndex = currentIndex - 2 <= 1 ? 1 : currentIndex - 2;
+    let endIndex = startIndex + 5 < lastIndex ? startIndex + 5 : lastIndex;
+
+    console.log(startIndex + " " + endIndex);
+
+    for(let i = startIndex; i <= endIndex; i++){
+
+        let html = `
+            <li class="page-item"><button class="page-link">${i}</button></li>
+        `;
+
+        if(i == currentIndex){
+            html = `
+                <li class="page-item active" aria-current="page">
+                    <button class="page-link">${i}</button>
+                </li>
+            `;
+        }
+
+        list.innerHTML += html;
+    }
+
+    let isLast = "";
+    if(currentIndex >= lastIndex)
+        isLast = "disabled"
+
+    list.innerHTML += `
+        <li class="page-item ${isLast}">
+            <button class="page-link">下一页</button>
+        </li>
+    `;
 }
 
 function verify(product) {
