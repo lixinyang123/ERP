@@ -65,8 +65,13 @@ function loadingState(flag){
 function inject(){
     document.querySelectorAll("#main > script").forEach(async(element) => {
         let src = element.getAttribute("src");
-        let resp = await fetch(src);
-        eval(await resp.text());
+
+        let script = document.createElement("script");
+        script.type = "text\/javascript";
+        script.src = src;
+        document.querySelector("#main").appendChild(script);
+
+        element.remove();
     });
 }
 
