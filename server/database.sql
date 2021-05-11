@@ -1,9 +1,11 @@
 -- 产品表
 CREATE TABLE products (
     -- ID
-    id CHAR(36) PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT ,
+    -- ProductID
+    productid CHAR(36) NOT NULL ,
     -- 名称
-    name VARCHAR(10) NOT NULL,
+    name VARCHAR(10) NOT NULL ,
     -- 价格
     price DOUBLE NOT NULL ,
     -- 库存数量
@@ -18,7 +20,9 @@ CREATE TABLE products (
 -- 用户表
 CREATE TABLE users (
     -- ID
-    id CHAR(36) PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT ,
+    -- UserID
+    userid CHAR(36) NOT NULL ,
     -- 姓名
     name VARCHAR(10) NOT NULL ,
     -- 电话
@@ -33,7 +37,9 @@ CREATE TABLE users (
 -- 采购订单
 CREATE TABLE purchaseOrders (
     -- ID
-    id CHAR(36) PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT ,
+    -- PurchaseOrderID
+    purchaseorderid CHAR(36) NOT NULL ,
     -- 时间
     time DATETIME NOT NULL ,
     -- 状态（订单完成状态）
@@ -44,7 +50,9 @@ CREATE TABLE purchaseOrders (
 -- 进库操作
 CREATE TABLE purchaseOperations (
     -- ID
-    id CHAR(36) PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT ,
+    -- PurchaseOperationID
+    purchaseoperationid CHAR(36) NOT NULL ,
     -- 订单ID
     purchaseOrderId CHAR(36) NOT NULL ,
     -- 商品ID
@@ -60,7 +68,9 @@ CREATE TABLE purchaseOperations (
 -- 出售订单
 CREATE TABLE saleOrders (
     -- ID
-    id CHAR(36) PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT ,
+    -- SaleOrderID
+    saleorderid CHAR(36) NOT NULL ,
     -- 时间
     time DATETIME NOT NULL ,
     -- 状态（订单完成状态）
@@ -77,7 +87,9 @@ CREATE TABLE saleOrders (
 -- 出库操作
 CREATE TABLE saleOperations (
     -- ID
-    id CHAR(36) PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT ,
+    -- SaleOperationID
+    saleoperationid CHAR(36) NOT NULL ,
     -- 订单ID
     saleOrderId CHAR(36) NOT NULL ,
     -- 商品ID
@@ -93,7 +105,9 @@ CREATE TABLE saleOperations (
 -- 结账记录
 CREATE TABLE checkOuts (
     -- ID
-    id CHAR(36) PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT ,
+    -- CheckOutID
+    checkoutid CHAR(36) NOT NULL ,
     -- 订单ID
     saleOrderId CHAR(36) NOT NULL ,
     -- 时间

@@ -1,23 +1,23 @@
 <tables>
     <products>
         <add>
-            INSERT INTO products (id, name, price, num, specifications, notes) VALUES (?, ?, ?, ?, ?, ?);
+            INSERT INTO products (productid, name, price, num, specifications, notes) VALUES (?, ?, ?, ?, ?, ?);
         </add>
 
         <delete>
-            DELETE FROM products WHERE id = ?;
+            DELETE FROM products WHERE productid = ?;
         </delete>
 
         <modify>
-            UPDATE products SET name = ?, price = ?, num = ?, specifications = ?, notes = ? WHERE id = ?;
+            UPDATE products SET name = ?, price = ?, num = ?, specifications = ?, notes = ? WHERE productid = ?;
         </modify>
 
         <find>
-            SELECT * FROM products WHERE id = ?;
+            SELECT * FROM products WHERE productid = ?;
         </find>
 
         <list>
-            SELECT * FROM products LIMIT ?,?;
+            SELECT * FROM products order by id desc LIMIT ?,?;
         </list>
 
         <count>
@@ -27,23 +27,23 @@
 
      <users>
         <add>
-            INSERT INTO users (id, name, tel, address, notes) VALUES (?, ?, ?, ?, ?);
+            INSERT INTO users (userid, name, tel, address, notes) VALUES (?, ?, ?, ?, ?);
         </add>
 
         <delete>
-            DELETE FROM users WHERE id = ?;
+            DELETE FROM users WHERE userid = ?;
         </delete>
 
         <modify>
-            UPDATE users SET name = ?, tel = ?, address = ?, notes = ? WHERE id = ?;
+            UPDATE users SET name = ?, tel = ?, address = ?, notes = ? WHERE userid = ?;
         </modify>
 
         <find>
-            SELECT * FROM users WHERE id = ?;
+            SELECT * FROM users WHERE userid = ?;
         </find>
 
         <list>
-            SELECT * FROM users LIMIT ?,?;
+            SELECT * FROM users order by id desc LIMIT ?,?;
         </list>
 
         <count>
@@ -53,23 +53,23 @@
 
     <purchaseOrders>
         <add>
-            INSERT INTO purchaseOrders (id, time, state) VALUES (?, ?, ?);
+            INSERT INTO purchaseOrders (purchaseorderid, time, state) VALUES (?, ?, ?);
         </add>
 
         <delete>
-            DELETE FROM purchaseOrders WHERE id = ?;
+            DELETE FROM purchaseOrders WHERE purchaseorderid = ?;
         </delete>
 
         <modify>
-            UPDATE purchaseOrders SET state = ? WHERE id = ?;
+            UPDATE purchaseOrders SET state = ? WHERE purchaseorderid = ?;
         </modify>
 
         <find>
-            SELECT * FROM purchaseOrders WHERE id = ?;
+            SELECT * FROM purchaseOrders WHERE purchaseorderid = ?;
         </find>
 
         <list>
-            SELECT * FROM purchaseOrders LIMIT ?,?;
+            SELECT * FROM purchaseOrders order by id desc LIMIT ?,?;
         </list>
 
         <count>
@@ -79,7 +79,7 @@
 
     <purchaseOperations>
         <add>
-            INSERT INTO purchaseOperations (id, purchaseOrderId, productId, num) VALUES (?, ?, ?, ?);
+            INSERT INTO purchaseOperations (purchaseoperationid, purchaseOrderId, productId, num) VALUES (?, ?, ?, ?);
         </add>
 
         <delete>
@@ -87,7 +87,7 @@
         </delete>
 
         <modify>
-            UPDATE purchaseOperations SET productId = ?, num = ? WHERE id = ?;
+            UPDATE purchaseOperations SET productId = ?, num = ? WHERE purchaseoperationid = ?;
         </modify>
 
         <find>
@@ -101,19 +101,19 @@
 
     <saleOrders>
         <add>
-            INSERT INTO saleOrders (id, time, state, userId, selling) VALUES (?, ?, ?, ?, ?);
+            INSERT INTO saleOrders (saleorderid, time, state, userId, selling) VALUES (?, ?, ?, ?, ?);
         </add>
 
         <delete>
-            DELETE FROM saleOrders WHERE id = ?;
+            DELETE FROM saleOrders WHERE saleorderid = ?;
         </delete>
 
         <modify>
-            UPDATE saleOrders SET state = ?, selling = ? WHERE id = ?;
+            UPDATE saleOrders SET state = ?, selling = ? WHERE saleorderid = ?;
         </modify>
 
         <find>
-            SELECT * FROM saleOrders WHERE id = ?;
+            SELECT * FROM saleOrders WHERE saleorderid = ?;
         </find>
 
         <findByUser>
@@ -121,7 +121,7 @@
         </findByUser>
 
         <list>
-            SELECT * FROM saleOrders LIMIT ?,?;
+            SELECT * FROM saleOrders order by id desc LIMIT ?,?;
         </list>
 
         <count>
@@ -131,7 +131,7 @@
 
     <saleOperations>
         <add>
-            INSERT INTO saleOperations (id, saleOrderId, productId, num) VALUES (?, ?, ?, ?);
+            INSERT INTO saleOperations (saleoperationid, saleOrderId, productId, num) VALUES (?, ?, ?, ?);
         </add>
         
         <delete>
@@ -139,7 +139,7 @@
         </delete>
 
         <modify>
-            UPDATE saleOperations SET productId = ?, num = ? WHERE id = ?;
+            UPDATE saleOperations SET productId = ?, num = ? WHERE saleoperationid = ?;
         </modify>
 
         <find>
@@ -153,7 +153,7 @@
 
     <checkOuts>
         <add>
-            INSERT INTO checkOuts (id, saleOrderId, time, amount) VALUES (?, ?, ?, ?);
+            INSERT INTO checkOuts (checkoutid, saleOrderId, time, amount) VALUES (?, ?, ?, ?);
         </add>
 
         <delete>
@@ -161,7 +161,7 @@
         </delete>
 
         <modify>
-            UPDATE checkOuts SET amount = ? WHERE id = ?;
+            UPDATE checkOuts SET amount = ? WHERE checkoutid = ?;
         </modify>
 
         <find>

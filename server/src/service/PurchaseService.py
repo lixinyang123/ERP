@@ -83,19 +83,19 @@ class PurchaseService:
 
             operations = list()
             for row in rows:
-                results = cursor.execute(self.products.GetOperation("find"), [row[2]])
+                results = cursor.execute(self.products.GetOperation("find"), [row[3]])
                 product = None
 
                 for result in results:
-                    product = Product(result[0], result[1], float(result[2]), int(result[3]), result[4], result[5])
+                    product = Product(result[1], result[2], float(result[3]), int(result[4]), result[5], result[6])
                     break
 
-                operations.append(ProductOperation(row[0], product, row[3]))
+                operations.append(ProductOperation(row[1], product, row[4]))
 
             orders = cursor.execute(self.purchaseOrders.GetOperation("find"), [id])
 
             for order in orders:
-                return PurchaseOrder(order[0], order[1], order[2], operations)
+                return PurchaseOrder(order[1], order[2], order[3], operations)
 
             raise "can't find order"
             
@@ -111,7 +111,7 @@ class PurchaseService:
 
             results = []
             for row in rows:
-                results.append(self.find(row[0]))
+                results.append(self.find(row[1]))
             
             return results
 

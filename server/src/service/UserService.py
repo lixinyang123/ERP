@@ -41,9 +41,9 @@ class UserService:
             # 删除此用户的出货订单、订单操作、账单
             rows = cursor.execute(self.saleOrders.GetOperation("findByUser"), [id]).fetchall()
             for row in rows:
-                cursor.execute(self.saleOperations.GetOperation("delete"), [row[0]])
-                cursor.execute(self.checkOuts.GetOperation("delete"), [row[0]])
-                cursor.execute(self.saleOrders.GetOperation("delete"), [row[0]])
+                cursor.execute(self.saleOperations.GetOperation("delete"), [row[1]])
+                cursor.execute(self.checkOuts.GetOperation("delete"), [row[1]])
+                cursor.execute(self.saleOrders.GetOperation("delete"), [row[1]])
 
             rows = cursor.execute(self.users.GetOperation("delete"), [id])
 
@@ -79,7 +79,7 @@ class UserService:
             cursor = self.conn.cursor()
             rows = cursor.execute(self.users.GetOperation("find"), [id])
             for row in rows:
-                return User(row[0], row[1], int(row[2]), row[3], row[4])
+                return User(row[1], row[2], int(row[3]), row[4], row[5])
             raise "can't find user"
 
         except:
@@ -94,7 +94,7 @@ class UserService:
             results = list()
             rows = cursor.execute(self.users.GetOperation("list"), [pageIndex*pageSize, pageSize]).fetchall()
             for row in rows:
-                results.append(User(row[0], row[1], int(row[2]), row[3], row[4]))
+                results.append(User(row[1], row[2], int(row[3]), row[4], row[5]))
 
             return results
         

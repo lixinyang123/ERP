@@ -100,13 +100,13 @@ class SaleService:
 
                 # 操作产品信息
                 product = None
-                results = cursor.execute(self.products.GetOperation("find"), [row[2]])
+                results = cursor.execute(self.products.GetOperation("find"), [row[3]])
 
                 for result in results:
-                    product = Product(result[0], result[1], float(result[2]), int(result[3]), result[4], result[5])
+                    product = Product(result[1], result[2], float(result[3]), int(result[4]), result[5], result[6])
                     break
 
-                operations.append(ProductOperation(row[0], product, row[3]))
+                operations.append(ProductOperation(row[1], product, row[4]))
             
 
             # 订单付款记录
@@ -114,7 +114,7 @@ class SaleService:
 
             checkOutList = list()
             for row in rows:
-                checkOutList.append(CheckOut(row[0], row[2], row[3]))
+                checkOutList.append(CheckOut(row[1], row[3], row[4]))
             
             # 订单
             rows = cursor.execute(self.saleOrders.GetOperation("find"), [id])
@@ -122,13 +122,13 @@ class SaleService:
 
                 # 订单用户信息
                 user = None
-                results = cursor.execute(self.users.GetOperation("find"), [row[3]])
+                results = cursor.execute(self.users.GetOperation("find"), [row[4]])
 
                 for result in results:
-                    user = User(row[0], row[1], int(row[2]), row[3], row[4])
+                    user = User(row[1], row[2], int(row[3]), row[4], row[5])
                     break
 
-                return SaleOrder(row[0], row[1], row[2], user, row[4], operations, checkOutList)
+                return SaleOrder(row[1], row[2], row[3], user, row[5], operations, checkOutList)
 
             raise "can't find order"
 
@@ -144,7 +144,7 @@ class SaleService:
 
             results = []
             for row in rows:
-                results.append(self.find(row[0]))
+                results.append(self.find(row[1]))
             
             return results
 

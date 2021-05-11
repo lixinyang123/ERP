@@ -46,15 +46,15 @@ class ProductService:
             # 删除此商品的进货订单
             rows = cursor.execute(self.purchaseOperations.GetOperation("findByProduct"), [id]).fetchall()
             for row in rows:
-                cursor.execute(self.purchaseOperations.GetOperation("delete"), [row[1]])
-                cursor.execute(self.purchaseOrders.GetOperation("delete"), [row[1]])
+                cursor.execute(self.purchaseOperations.GetOperation("delete"), [row[2]])
+                cursor.execute(self.purchaseOrders.GetOperation("delete"), [row[2]])
 
             # 删除此商品的出货订单
             rows = cursor.execute(self.saleOperations.GetOperation("findByProduct"), [id])
             for row in rows:
-                cursor.execute(self.saleOperations.GetOperation("delete"), [row[1]])
-                cursor.execute(self.checkOuts.GetOperation("delete"), [row[1]])
-                cursor.execute(self.saleOrders.GetOperation("delete"), [row[1]])
+                cursor.execute(self.saleOperations.GetOperation("delete"), [row[2]])
+                cursor.execute(self.checkOuts.GetOperation("delete"), [row[2]])
+                cursor.execute(self.saleOrders.GetOperation("delete"), [row[2]])
 
             # 删除此商品
             rows = cursor.execute(self.products.GetOperation("delete"), [id])
@@ -91,7 +91,7 @@ class ProductService:
             cursor = self.conn.cursor()
             rows = cursor.execute(self.products.GetOperation("find"), [id])
             for row in rows:
-                return Product(row[0], row[1], float(row[2]), int(row[3]), row[4], row[5])
+                return Product(row[1], row[2], float(row[3]), int(row[4]), row[5], row[6])
             raise "can't find product"
                 
         except:
@@ -106,7 +106,7 @@ class ProductService:
             results = list()
             rows = cursor.execute(self.products.GetOperation("list"), [pageIndex*pageSize, pageSize]).fetchall()
             for row in rows:
-                results.append(Product(row[0], row[1], float(row[2]), int(row[3]), row[4], row[5]))
+                results.append(Product(row[1], row[2], float(row[3]), int(row[4]), row[5], row[6]))
 
             return results
         
