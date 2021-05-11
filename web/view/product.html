@@ -3,7 +3,7 @@
 <div class="container animate__animated animate__bounceIn">
   
   <h1 class="display-4 float-start">产品</h1>
-  <button class="btn btn-primary float-end" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">新增产品</button>
+  <button class="btn btn-primary float-end" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" onclick="addProduct()" >新增产品</button>
 
   <hr/>
 
@@ -29,35 +29,11 @@
 
 </div>
 
-
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
   <div class="offcanvas-header">
-    <h5 id="offcanvasRightLabel">新增产品</h5>
+    <h5 id="offcanvasRightLabel">产品信息</h5>
     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   
-  <div class="offcanvas-body">
-    <div class="mb-3">
-      <label for="exampleFormControlInput1" class="form-label">名称</label>
-      <input id="product-name" type="text" class="form-control" placeholder="输入产品名称">
-    </div>
-    <div class="mb-3">
-      <label for="exampleFormControlTextarea1" class="form-label">价格</label>
-      <input id="product-price" type="number" class="form-control" placeholder="0">
-    </div>
-    <div class="mb-3">
-      <label for="exampleFormControlTextarea1" class="form-label">初始库存数量</label>
-      <input id="product-num" type="number" class="form-control" placeholder="0">
-    </div>
-    <div class="mb-3">
-      <label for="exampleFormControlTextarea1" class="form-label">规格</label>
-      <input id="product-specifications" type="text" class="form-control" placeholder="输入产品规格">
-    </div>
-    <div class="mb-3">
-      <label for="exampleFormControlTextarea1" class="form-label">备注</label>
-      <input id="product-notes" type="text" class="form-control" placeholder="输入产品备注信息">
-    </div>
-    
-    <button id="submit" class="btn btn-primary" onclick="submit()">提交</button>
-  </div>
+  <div class="offcanvas-body"></div>
 </div>

@@ -1,6 +1,37 @@
 var currentIndex = 1;
 var lastIndex = 0;
 
+function addProduct() {
+    let html = `
+        <div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">名称</label>
+                <input id="product-name" type="text" class="form-control" placeholder="输入产品名称">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">价格</label>
+                <input id="product-price" type="number" class="form-control" placeholder="0">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">初始库存数量</label>
+                <input id="product-num" type="number" class="form-control" placeholder="0">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">规格</label>
+                <input id="product-specifications" type="text" class="form-control" placeholder="输入产品规格">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">备注</label>
+                <input id="product-notes" type="text" class="form-control" placeholder="输入产品备注信息">
+            </div>
+            
+            <button class="btn btn-primary" onclick="submit()">提交</button>
+        </div>
+    `;
+
+    document.querySelector(".offcanvas-body").innerHTML = html;
+}
+
 async function getData() {
     let res = await fetch(api + "/product/index?page=" + currentIndex);
     let results = await res.json();
@@ -27,7 +58,7 @@ function showData(products) {
                         <p class="card-text">价格：${product.price}</p>
                         <p class="card-text">规格：${product.specifications}</p>
                         <p class="card-text">备注：${product.notes}</p>
-                        <button class="btn btn-warning">编辑</button>
+                        <button class="btn btn-warning" onclick="modifyProduct('${product.id}')" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">编辑</button>
                         <button class="btn btn-danger" onclick="deleteProduct('${product.id}')">删除</button>
                     </div>
                 </div>
@@ -55,7 +86,7 @@ function verify(product) {
     return true
 }
 
-async function submit() {
+async function submit(id) {
 
     let name = document.querySelector("#product-name").value;
     let price = document.querySelector("#product-price").value;
@@ -69,8 +100,14 @@ async function submit() {
         toast("信息不完整", "请完善产品信息");
         return;
     }
+
+    let url = "/product/add";
+    if(id) {
+        url = "/product/modify";
+        product.id = id;
+    }
     
-    let res = await fetch(api + "/product/add", {
+    let res = await fetch(api + url, {
         method: "POST",
         body: JSON.stringify(product)
     });
@@ -78,17 +115,47 @@ async function submit() {
     let result = await res.json();
     
     if(!result.successful) {
-        toast("提交失败", JSON.stringify(result));
+        toast("保存失败", JSON.stringify(result));
         return
     }
         
-    toast("提交成功", JSON.stringify(result));
+    toast("保存成功", JSON.stringify(result));
     getData();
 }
 
-function temp() {
-    console.log(123);
+async function modifyProduct(id) {
+
+    let res = await fetch(api + "/product/find?id=" + id);
+    let product = await res.json()
+
+    let html = `
+        <div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">名称</label>
+                <input id="product-name" type="text" class="form-control" placeholder="输入产品名称" value="${product.name}">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">价格</label>
+                <input id="product-price" type="number" class="form-control" placeholder="0" value="${product.price}">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">初始库存数量</label>
+                <input id="product-num" type="number" class="form-control" placeholder="0" value="${product.num}">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">规格</label>
+                <input id="product-specifications" type="text" class="form-control" placeholder="输入产品规格" value="${product.specifications}">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">备注</label>
+                <input id="product-notes" type="text" class="form-control" placeholder="输入产品备注信息" value="${product.notes}">
+            </div>
+            
+            <button class="btn btn-primary" onclick="submit('${id}')">保存</button>
+        </div>
+    `;
+
+    document.querySelector(".offcanvas-body").innerHTML = html;
 }
 
 getData();
-console.log(123);
