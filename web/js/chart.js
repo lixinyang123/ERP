@@ -1,4 +1,4 @@
-const labels = [
+var labels = [
     '一月',
     '二月',
     '三月',
@@ -7,7 +7,7 @@ const labels = [
     '六月',
 ];
 
-const data = {
+var data = {
     labels: labels,
     datasets: [{
         label: '销售图表',
@@ -17,7 +17,7 @@ const data = {
     }]
 };
 
-const config = {
+var config = {
     type: 'line',
     data,
     options: {}

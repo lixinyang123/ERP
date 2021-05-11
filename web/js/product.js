@@ -1,5 +1,5 @@
-let currentIndex = 1;
-let lastIndex = 0;
+var currentIndex = 1;
+var lastIndex = 0;
 
 async function getData() {
     let res = await fetch(api + "/product/index?page=" + currentIndex);
@@ -27,8 +27,8 @@ function showData(products) {
                         <p class="card-text">价格：${product.price}</p>
                         <p class="card-text">规格：${product.specifications}</p>
                         <p class="card-text">备注：${product.notes}</p>
-                        <a href="#" class="btn btn-warning">编辑</a>
-                        <a href="#" class="btn btn-danger">删除</a>
+                        <button class="btn btn-warning">编辑</button>
+                        <button class="btn btn-danger" onclick="deleteProduct('${product.id}')">删除</button>
                     </div>
                 </div>
             </div>
@@ -36,6 +36,13 @@ function showData(products) {
 
         document.querySelector("#products").innerHTML += html;
     });
+}
+
+async function deleteProduct(id) {
+    let res = await fetch(api + "/product/delete?id=" + id);
+    let result = await res.json();
+    console.log(result);
+    await getData();
 }
 
 function showPagination(lastIndex) {
@@ -79,5 +86,9 @@ async function submit() {
     getData();
 }
 
-document.querySelector("#submit").onclick = submit;
+function temp() {
+    console.log(123);
+}
+
 getData();
+console.log(123);
