@@ -16,9 +16,9 @@ def index():
     if currentIndex is None:
         return ("forbidden", 403)
 
-    lastIndex = math.ceil(saleService.count() / float(self.pageSize))
+    lastIndex = math.ceil(saleService.count() / float(pageSize))
 
-    sales = saleService.list(int(currentIndex) - 1, self.pageSize)
+    sales = saleService.list(int(currentIndex) - 1, pageSize)
 
     result = []
     for sale in sales:
