@@ -86,25 +86,23 @@ function showPagination() {
     
     list.innerHTML = `
         <li class="page-item ${isFirst}">
-            <button class="page-link">上一页</button>
+            <button class="page-link" onclick="previousPage()">上一页</button>
         </li>
     `;
 
     let startIndex = currentIndex - 2 <= 1 ? 1 : currentIndex - 2;
     let endIndex = startIndex + 5 < lastIndex ? startIndex + 5 : lastIndex;
 
-    console.log(startIndex + " " + endIndex);
-
     for(let i = startIndex; i <= endIndex; i++){
 
         let html = `
-            <li class="page-item"><button class="page-link">${i}</button></li>
+            <li class="page-item"><button class="page-link" onclick="jumpToIndex('${i}')">${i}</button></li>
         `;
 
         if(i == currentIndex){
             html = `
                 <li class="page-item active" aria-current="page">
-                    <button class="page-link">${i}</button>
+                    <button class="page-link disabled">${i}</button>
                 </li>
             `;
         }
@@ -118,9 +116,24 @@ function showPagination() {
 
     list.innerHTML += `
         <li class="page-item ${isLast}">
-            <button class="page-link">下一页</button>
+            <button class="page-link" onclick="nextPage()">下一页</button>
         </li>
     `;
+}
+
+function nextPage() {
+    currentIndex++;
+    getData();
+}
+
+function previousPage() {
+    currentIndex--;
+    getData();
+}
+
+function jumpToIndex(index) {
+    currentIndex = index;
+    getData();
 }
 
 function verify(product) {
