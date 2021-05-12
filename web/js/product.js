@@ -77,65 +77,6 @@ async function deleteProduct(id) {
     await getData();
 }
 
-function showPagination() {
-    let list = document.querySelector(".pagination");
-
-    let isFirst = "";
-    if(currentIndex <= 1)
-        isFirst = "disabled"
-    
-    list.innerHTML = `
-        <li class="page-item ${isFirst}">
-            <button class="page-link" onclick="previousPage()">上一页</button>
-        </li>
-    `;
-
-    let startIndex = currentIndex - 2 <= 1 ? 1 : currentIndex - 2;
-    let endIndex = startIndex + 5 < lastIndex ? startIndex + 5 : lastIndex;
-
-    for(let i = startIndex; i <= endIndex; i++){
-
-        let html = `
-            <li class="page-item"><button class="page-link" onclick="jumpToIndex('${i}')">${i}</button></li>
-        `;
-
-        if(i == currentIndex){
-            html = `
-                <li class="page-item active" aria-current="page">
-                    <button class="page-link disabled">${i}</button>
-                </li>
-            `;
-        }
-
-        list.innerHTML += html;
-    }
-
-    let isLast = "";
-    if(currentIndex >= lastIndex)
-        isLast = "disabled"
-
-    list.innerHTML += `
-        <li class="page-item ${isLast}">
-            <button class="page-link" onclick="nextPage()">下一页</button>
-        </li>
-    `;
-}
-
-function nextPage() {
-    currentIndex++;
-    getData();
-}
-
-function previousPage() {
-    currentIndex--;
-    getData();
-}
-
-function jumpToIndex(index) {
-    currentIndex = index;
-    getData();
-}
-
 function verify(product) {
     if(!product.name || !product.price || !product.num || !product.specifications || !product.notes)
         return false

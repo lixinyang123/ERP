@@ -1,144 +1,27 @@
+<link rel="stylesheet" href="/css/user.css" />
+<script src="/js/user.js"></script>
+
 <div class="container animate__animated animate__bounceIn">
 
     <h1 class="display-4 float-start">用户</h1>
-    <button class="btn btn-primary float-end" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">新增用户</button>
+    <button class="btn btn-primary float-end" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" onclick="addUser()">新增用户</button>
 
     <hr/>
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <p>
-                                用户ID
-                            </p>
-                        </div>
-                        <div class="col-md-3">
-                            <p>
-                                用户名
-                            </p>
-                        </div>
-                        <div class="col-md-3">
-                            <p>
-                                电话
-                            </p>
-                        </div>
-                        <div class="col-md-3">
-                            <button class="btn btn-danger" style="border-radius: 50px; float: right; margin-left: 10px;">删除</button>
-                            <button class="btn btn-warning" style="border-radius: 50px; float: right; margin-left: 10px;">编辑</button>
-                            <button class="btn btn-info" style="border-radius: 50px; float: right; margin-left: 10px;">信息</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <p>
-                                用户ID
-                            </p>
-                        </div>
-                        <div class="col-md-3">
-                            <p>
-                                用户名
-                            </p>
-                        </div>
-                        <div class="col-md-3">
-                            <p>
-                                电话
-                            </p>
-                        </div>
-                        <div class="col-md-3">
-                            <button class="btn btn-danger" style="border-radius: 50px; float: right; margin-left: 10px;">删除</button>
-                            <button class="btn btn-warning" style="border-radius: 50px; float: right; margin-left: 10px;">编辑</button>
-                            <button class="btn btn-info" style="border-radius: 50px; float: right; margin-left: 10px;">信息</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <p>
-                                用户ID
-                            </p>
-                        </div>
-                        <div class="col-md-3">
-                            <p>
-                                用户名
-                            </p>
-                        </div>
-                        <div class="col-md-3">
-                            <p>
-                                电话
-                            </p>
-                        </div>
-                        <div class="col-md-3">
-                            <button class="btn btn-danger" style="border-radius: 50px; float: right; margin-left: 10px;">删除</button>
-                            <button class="btn btn-warning" style="border-radius: 50px; float: right; margin-left: 10px;">编辑</button>
-                            <button class="btn btn-info" style="border-radius: 50px; float: right; margin-left: 10px;">信息</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <div id="users" class="row"></div>
 
     <div class="row">
-        <ul class="pagination justify-content-center">
-            <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">上一页</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item active" aria-current="page">
-                <a class="page-link" href="#">3</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">4</a></li>
-            <li class="page-item"><a class="page-link" href="#">5</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#">下一页</a>
-            </li>
-        </ul>
+        <ul class="pagination justify-content-center"></ul>
     </div>
 
 </div>
 
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
     <div class="offcanvas-header">
-        <h5 id="offcanvasRightLabel">新增用户</h5>
+        <h5 id="offcanvasRightLabel">用户信息</h5>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
-    <div class="offcanvas-body">
-        <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">姓名</label>
-            <input type="text" class="form-control" placeholder="输入用户姓名">
-        </div>
-        <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">电话</label>
-            <input type="tel" class="form-control" placeholder="用户电话号码">
-        </div>
-        <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">地址</label>
-            <input type="text" class="form-control" placeholder="输入用户地址信息">
-        </div>
-        <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">备注</label>
-            <input type="text" class="form-control" placeholder="输入用户备注信息">
-        </div>
-        
-        <button class="btn btn-primary">提交</button>
-    </div>
+
+    <div class="offcanvas-body"></div>
 </div>
   
