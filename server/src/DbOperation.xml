@@ -86,10 +86,6 @@
             DELETE FROM purchaseOperations WHERE purchaseOrderId = ?;
         </delete>
 
-        <modify>
-            UPDATE purchaseOperations SET productId = ?, num = ? WHERE purchaseoperationid = ?;
-        </modify>
-
         <find>
             SELECT * FROM purchaseOperations WHERE purchaseOrderId = ?;
         </find>

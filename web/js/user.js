@@ -88,7 +88,7 @@ async function submit(id) {
     let user = new User(name, tel, address, notes);
         
     if(!verify(user)){
-        toast("信息不完整", "请完善产品信息");
+        toast("信息不完整", "请完善用户信息");
         return;
     }
 
