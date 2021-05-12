@@ -29,7 +29,9 @@ class PurchaseOrder {
 }
 
 class PurchaseOperation {
-    constructor() {
-        
+    constructor(product, num) {
+        this.id = "",
+        this.product = product,
+        this.num = num
     }
 }
