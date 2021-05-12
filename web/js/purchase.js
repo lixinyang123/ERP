@@ -84,16 +84,15 @@ async function addOperations() {
         <div id="${id}" class="col-md-4 purchaseOperation animate__animated animate__fadeIn">
             <div>
                 <div class="mb-3">
-                    <input id="purchase-id" type="hidden" value="" />
                     <label for="exampleFormControlInput1" class="form-label">产品</label>
-                    <select id="purchase-product" class="form-select" aria-label="Default select example">
+                    <select class="form-select" aria-label="Default select example">
                         <option selected value="">选择产品</option>
                         ${options}
                     </select>
                 </div>
                 <div class="mb-3">
                     <label for="exampleFormControlTextarea1" class="form-label">数量</label>
-                    <input id="purchase-num" type="number" class="form-control" placeholder="进货产品数量">
+                    <input type="number" class="form-control" placeholder="进货产品数量">
                 </div>
                 <div>
                     <button class="btn btn-danger" onclick="deleteOperation('${id}')">删除</button>
@@ -123,8 +122,8 @@ async function submit(id) {
 
     document.querySelectorAll(".purchaseOperation").forEach(element => {
 
-        let productId = element.querySelector("#purchase-product").value;
-        let num = element.querySelector("#purchase-num").value;
+        let productId = element.querySelector("select").value;
+        let num = element.querySelector("input").value;
 
         let product = new Product("", 0, 0, "", "");
         product.id = productId;
@@ -132,9 +131,6 @@ async function submit(id) {
         let operation = new PurchaseOperation(product, num);
         if(!verifyOperation(operation))
             return;
-        
-        if(id) 
-            operation.id = element.querySelector("#purchase-id").value;
 
         operations.push(operation);
     });
@@ -151,8 +147,6 @@ async function submit(id) {
         url = "/purchase/modify";
         order.id = id;
     }
-
-    console.warn(order);
 
     let res = await fetch(api + url, {
         method: "POST",
@@ -209,16 +203,15 @@ async function modifyOrder(id) {
             <div id="${id}" class="col-md-4 purchaseOperation animate__animated animate__fadeIn">
                 <div>
                     <div class="mb-3">
-                        <input id="purchase-id" type="hidden" value="${operation.id}" />
                         <label for="exampleFormControlInput1" class="form-label">产品</label>
-                        <select id="purchase-product" class="form-select" aria-label="Default select example">
+                        <select class="form-select" aria-label="Default select example">
                             <option value="">选择产品</option>
                             ${options}
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">数量</label>
-                        <input id="purchase-num" type="number" class="form-control" placeholder="进货产品数量" value="${operation.num}">
+                        <input type="number" class="form-control" placeholder="进货产品数量" value="${operation.num}">
                     </div>
                     <div>
                         <button class="btn btn-danger" onclick="deleteOperation('${id}')">删除</button>
