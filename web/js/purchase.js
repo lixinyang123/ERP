@@ -43,10 +43,10 @@ function showData(purchases) {
                         ID：${purchase.id}
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">订单产品</h5>
+                        <h5 class="card-title">状态：${purchase.state == 0 ? "未完成" : "已完成"}</h5>
                         ${detail}
                         <p class="card-text">总价：${price}</p>
-                        <button class="btn btn-success">完成</button>
+                        <button class="btn btn-success" onclick="completeOrder('${purchase.id}')">完成</button>
                         <button class="btn btn-warning" onclick="modifyOrder('${purchase.id}')" data-bs-toggle="modal" data-bs-target="#staticBackdrop">编辑</button>
                         <button class="btn btn-danger" onclick="deleteOrder('${purchase.id}')">删除</button>
                     </div>
@@ -61,10 +61,17 @@ function showData(purchases) {
     });
 }
 
+async function completeOrder(id) {
+    let res = await fetch(api + "/purchase/complete?id=" + id);
+    let result = await res.text();
+    toast("订单已完成", result);
+    await getData();
+}
+
 async function deleteOrder(id) {
     let res = await fetch(api + "/purchase/delete?id=" + id);
-    let result = await res.json();
-    console.log(result);
+    let result = await res.text();
+    toast("删除成功", result);
     await getData();
 }
 

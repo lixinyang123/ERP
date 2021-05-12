@@ -67,8 +67,8 @@ function showData(users) {
 
 async function deleteUser(id) {
     let res = await fetch(api + "/user/delete?id=" + id);
-    let result = await res.json();
-    console.log(result);
+    let result = await res.text();
+    toast("删除成功", result);
     await getData();
 }
 

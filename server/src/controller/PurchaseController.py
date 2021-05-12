@@ -112,3 +112,19 @@ def find():
     purchaseService.dispose()
 
     return (result, 200)
+
+# 完成进货订单
+@purchase.route("complete", methods=["get"])
+def complete():
+    purchaseService = PurchaseService()
+
+    orderId = request.args.get("id")
+    if orderId is None:
+        return ("forbidden", 403)
+
+    result = json.dumps({
+        "successful": purchaseService.complete(orderId)
+    })
+
+    purchaseService.dispose()
+    return (result, 200)

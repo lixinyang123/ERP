@@ -132,3 +132,35 @@ class PurchaseService:
 
         except:
             return 0
+
+    # 完成采购订单
+    def complete(self, id: str) -> bool:
+
+        cursor = self.conn.cursor()
+
+        try:
+            order = self.find(id)
+            if order == None or order.state:
+                return False
+
+            flag = True
+            for operation in order.purchaseOperations:
+                product = operation.product
+                num = product.num + operation.num
+
+                paras = [product.name, product.price, num, product.specifications, product.notes, product.id]
+                rows = cursor.execute(self.products.GetOperation("modify"), paras)
+
+                if rows.rowcount == 0:
+                    flag = False
+
+            rows = cursor.execute(self.purchaseOrders.GetOperation("modify"), [True, id]);
+            if rows.rowcount == 0:
+                flag = False
+
+            if flag:
+                self.conn.commit()
+            return flag
+
+        except:
+            return False

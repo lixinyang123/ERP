@@ -72,13 +72,13 @@ function showData(products) {
 
 async function deleteProduct(id) {
     let res = await fetch(api + "/product/delete?id=" + id);
-    let result = await res.json();
-    console.log(result);
+    let result = await res.text();
+    toast("删除成功", result);
     await getData();
 }
 
 function verify(product) {
-    if(!product.name || !product.price || !product.num || !product.specifications || !product.notes)
+    if(!product.name || product.price < 0 || product.num < 0 || !product.specifications || !product.notes)
         return false
     return true
 }
@@ -136,7 +136,7 @@ async function modifyProduct(id) {
                 <input id="product-price" type="number" class="form-control" placeholder="0" value="${product.price}">
             </div>
             <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label">初始库存数量</label>
+                <label for="exampleFormControlTextarea1" class="form-label">当前库存数量</label>
                 <input id="product-num" type="number" class="form-control" placeholder="0" value="${product.num}">
             </div>
             <div class="mb-3">
