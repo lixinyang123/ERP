@@ -17,9 +17,9 @@ def index():
     if currentIndex is None:
         return ("forbidden", 403)
 
-    lastIndex = math.ceil(purchaseService.count() / float(self.pageSize))
+    lastIndex = math.ceil(purchaseService.count() / float(pageSize))
 
-    purchases = purchaseService.list(int(currentIndex) - 1, self.pageSize)
+    purchases = purchaseService.list(int(currentIndex) - 1, pageSize)
 
     result = []
     for purchase in purchases:
