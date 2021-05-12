@@ -85,7 +85,7 @@ async function submit(id) {
     let address = document.querySelector("#user-address").value;
     let notes = document.querySelector("#user-notes").value;
 
-    let user = new UserModel(name, tel, address, notes);
+    let user = new User(name, tel, address, notes);
         
     if(!verify(user)){
         toast("信息不完整", "请完善产品信息");

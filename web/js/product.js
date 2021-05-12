@@ -91,7 +91,7 @@ async function submit(id) {
     let specifications = document.querySelector("#product-specifications").value;
     let notes = document.querySelector("#product-notes").value;
     
-    let product = new ProductModel(name, price, num, specifications, notes);
+    let product = new Product(name, price, num, specifications, notes);
     
     if(!verify(product)){
         toast("信息不完整", "请完善产品信息");
