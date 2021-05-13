@@ -121,6 +121,10 @@ async function addOperations() {
     document.querySelector("#purchaseOperations").innerHTML += html
 }
 
+function deleteOperation(id) {
+    document.getElementById(id).remove();
+}
+
 function verifyOperation(operation) {
     if(!operation.product || !operation.num)
         return false;
@@ -238,10 +242,6 @@ async function modifyOrder(id) {
         `;
         document.querySelector("#purchaseOperations").innerHTML += html;
     });
-}
-
-function deleteOperation(id) {
-    document.getElementById(id).remove();
 }
 
 getData();
