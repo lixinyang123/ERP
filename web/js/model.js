@@ -5,7 +5,7 @@ class Product {
         this.price = Number(price),
         this.num = Number(num),
         this.specifications = specifications,
-        this.notes = notes;
+        this.notes = notes
     }
 }
 
@@ -15,23 +15,35 @@ class User {
         this.name = name,
         this.tel = tel,
         this.address = address,
-        this.notes = notes;
+        this.notes = notes
     }
 }
 
-class PurchaseOrder {
-    constructor(purchaseOperations) {
-        this.id = "",
-        this.time = "",
-        this.state = "",
-        this.purchaseOperations = purchaseOperations;
-    }
-}
-
-class PurchaseOperation {
+class ProductOperation {
     constructor(product, num) {
         this.id = "",
         this.product = product,
         this.num = num
+    }
+}
+
+class PurchaseOrder {
+    constructor(productOperations) {
+        this.id = "",
+        this.time = "",
+        this.state = "",
+        this.purchaseOperations = productOperations
+    }
+}
+
+class SaleOrder {
+    constructor(user, selling, productOperations, checkOuts) {
+        this.id = "",
+        this.time = "",
+        this.state = "",
+        this.user = user,
+        this.selling = selling,
+        this.saleOperations = productOperations,
+        this.checkOuts = checkOuts
     }
 }
