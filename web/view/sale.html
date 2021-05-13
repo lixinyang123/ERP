@@ -1,7 +1,9 @@
+<script src="/js/sale.js"></script>
+
 <div class="container animate__animated animate__fadeIn">
 
     <h1 class="display-4 float-start">销售</h1>
-    <button class="btn btn-primary float-end" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">创建订单</button>
+    <button class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="addOrder()">创建订单</button>
 
     <hr/>
 
@@ -105,13 +107,14 @@
 
 </div>
 
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-    <div class="offcanvas-header">
-        <h5 id="offcanvasRightLabel">创建订单</h5>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-        ...
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">订单信息</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div id="modal-body"></div>
+        </div>
     </div>
 </div>
-  

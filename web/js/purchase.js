@@ -37,8 +37,15 @@ function showData(purchases) {
         });
 
         let isComplete = "alert alert-danger";
-        if(purchase.state != 0)
+        let completeBtn = `
+            <button class="btn btn-success" onclick="completeOrder('${purchase.id}')">完成</button>
+            <button class="btn btn-warning" onclick="modifyOrder('${purchase.id}')" data-bs-toggle="modal" data-bs-target="#staticBackdrop">编辑</button>
+        `;
+
+        if(purchase.state != 0){
+            completeBtn = "";
             isComplete = "alert alert-success";
+        }
 
         let html = `
             <div class="col-md-4 animate__animated animate__bounceIn">
@@ -50,8 +57,7 @@ function showData(purchases) {
                         <h5 class="card-title">状态：${purchase.state == 0 ? "未完成" : "已完成"}</h5>
                         ${detail}
                         <p class="card-text">总价：${price}</p>
-                        <button class="btn btn-success" onclick="completeOrder('${purchase.id}')">完成</button>
-                        <button class="btn btn-warning" onclick="modifyOrder('${purchase.id}')" data-bs-toggle="modal" data-bs-target="#staticBackdrop">编辑</button>
+                        ${completeBtn}
                         <button class="btn btn-danger" onclick="deleteOrder('${purchase.id}')">删除</button>
                     </div>
                     <div class="card-footer text-muted">
