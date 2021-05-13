@@ -36,7 +36,7 @@ function showData(purchases) {
             price += ele.product.price * ele.num;
         });
 
-        let isComplete = "";
+        let isComplete = "alert alert-danger";
         if(purchase.state != 0)
             isComplete = "alert alert-success";
 
