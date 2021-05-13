@@ -36,10 +36,14 @@ function showData(purchases) {
             price += ele.product.price * ele.num;
         });
 
+        let isComplete = "";
+        if(purchase.state != 0)
+            isComplete = "alert alert-success";
+
         let html = `
             <div class="col-md-4 animate__animated animate__bounceIn">
                 <div class="card text-center">
-                    <div class="card-header">
+                    <div class="card-header ${isComplete}">
                         ID：${purchase.id}
                     </div>
                     <div class="card-body">
