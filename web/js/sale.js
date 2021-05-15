@@ -24,10 +24,22 @@ function showData(sales) {
             price += ele.product.price * ele.num;
         });
 
+        // Get Amount
+        let amounted = 0
+        sale.checkOuts.forEach(ele => {
+            amounted += ele.amount;
+        });
+
+        let payOrComplete = "";
+        if(price > amounted)
+            payOrComplete = `<button class="btn btn-info" onclick="pay('${sale.id}')">支付</button>`;
+        else
+            payOrComplete = `<button class="btn btn-success" onclick="completeOrder('${sale.id}')">完成</button>`;
+
         // Get State
         let isComplete = "alert alert-danger";
         let completeBtn = `
-            <button class="btn btn-success" onclick="completeOrder('${sale.id}')">完成</button>
+            ${payOrComplete}
             <button class="btn btn-warning" onclick="modifyOrder('${sale.id}')" data-bs-toggle="modal" data-bs-target="#staticBackdrop">编辑</button>
         `;
 
@@ -35,12 +47,6 @@ function showData(sales) {
             completeBtn = "";
             isComplete = "alert alert-success";
         }
-
-        // Get Amount
-        let amounted = 0
-        sale.checkOuts.forEach(ele => {
-            amounted += ele.amount;
-        });
 
         let html = `
             <div class="col-md-4 animate__animated animate__bounceIn">
@@ -116,8 +122,6 @@ async function modifyOrder(id) {
 
     let userOptions = "";
     users.users.forEach(user => {
-        console.log(sale.user.id + "===" + user.id);
-
         if(sale.user.id == user.id)
             userOptions += `<option selected value="${user.id}">${user.name}</option>`;
         else
@@ -134,7 +138,6 @@ async function modifyOrder(id) {
                 ${userOptions}
             </select>
             <input id="selling" type="text" class="form-control" placeholder="售价">
-            <input id="preAmount" type="text" class="form-control" placeholder="已付金额">
             <button class="btn btn-success" onclick="addOperations()">新增产品</button>
             <button class="btn btn-primary" onclick="submit('${id}')">保存</button>
         </div>
@@ -147,7 +150,6 @@ async function modifyOrder(id) {
     sale.checkOuts.forEach(ele => {
         amounted += ele.amount;
     });
-    document.querySelector("#preAmount").value = amounted;
 
     document.querySelector("#saleOperations").innerHTML = null;
 
@@ -160,9 +162,9 @@ async function modifyOrder(id) {
         let options = "";
         results.products.forEach(async product => {
             if(operation.product.id == product.id)
-                options += `<option selected value="${product.id}">${product.name}</option>`;
+                options += `<option selected value="${product.id}" price="${product.price}">${product.name}</option>`;
             else
-                options += `<option value="${product.id}">${product.name}</option>`;
+                options += `<option value="${product.id}" price="${product.price}">${product.name}</option>`;
         });
 
         let html = `
@@ -170,14 +172,14 @@ async function modifyOrder(id) {
                 <div>
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">产品</label>
-                        <select class="form-select" aria-label="Default select example">
+                        <select onchange="countSelling()" class="form-select" aria-label="Default select example">
                             <option value="">选择产品</option>
                             ${options}
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">数量</label>
-                        <input type="number" class="form-control" placeholder="进货产品数量" value="${operation.num}">
+                        <input onchange="countSelling()" type="number" class="form-control" placeholder="进货产品数量" value="${operation.num}">
                     </div>
                     <div>
                         <button class="btn btn-danger" onclick="deleteOperation('${id}')">删除</button>
@@ -221,11 +223,13 @@ async function addOperations() {
         </div>
     `;
 
-    document.querySelector("#saleOperations").innerHTML += html
+    document.querySelector("#saleOperations").innerHTML += html;
+    countSelling();
 }
 
 function deleteOperation(id) {
     document.getElementById(id).remove();
+    countSelling();
 }
 
 function verifyOperation(operation) {
@@ -238,6 +242,10 @@ function verifyOrder(order) {
     if(order.saleOperations.length > 0 && order.checkOuts.length > 0 && order.selling && order.user)
         return true;
     return false;
+}
+
+async function pay(id) {
+    alert(id);
 }
 
 async function submit(id) {
@@ -269,9 +277,15 @@ async function submit(id) {
 
     // Get Checkout
     let checkOuts = new Array();
-    let preAmount = document.querySelector("#preAmount").value;
-    if(preAmount)
-        checkOuts.push(new CheckOut(preAmount));
+
+    if(!id) {
+        let preAmount = document.querySelector("#preAmount").value;
+        if(preAmount)
+            checkOuts.push(new CheckOut(preAmount));
+    }
+    else{
+        checkOuts.push(new CheckOut(new CheckOut(0)));
+    }
 
     let order = new SaleOrder(user, selling, operations, checkOuts);
 

@@ -67,13 +67,11 @@ class SaleService:
         try:
             cursor = self.conn.cursor()
 
+            cursor.execute(self.saleOperations.GetOperation("delete"), [order.id])
+            
             for operation in order.saleOperations:
-                paras = [operation.product.id, operation.num, operation.id]
-                cursor.execute(self.saleOperations.GetOperation("modify"), paras)
-
-            for checkOut in order.checkOuts:
-                paras = [checkOut.amount, checkOut.id]
-                cursor.execute(self.checkOuts.GetOperation("modify"), paras)
+                paras = [operation.id, order.id, operation.product.id, operation.num]
+                cursor.execute(self.saleOperations.GetOperation("add"), paras)
 
             paras = [order.state, order.selling, order.id]
             rows = cursor.execute(self.saleOrders.GetOperation("modify"), paras)
@@ -178,6 +176,9 @@ class SaleService:
             for operation in order.saleOperations:
                 product = operation.product
                 num = product.num - operation.num
+
+                if num < 0:
+                    return False
 
                 paras = [product.name, product.price, num, product.specifications, product.notes, product.id]
                 rows = cursor.execute(self.products.GetOperation("modify"), paras)
