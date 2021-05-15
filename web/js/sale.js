@@ -274,7 +274,7 @@ async function pay(id) {
     } 
 
     let result = await (await fetch(`${api}/sale/pay?id=${id}&amount=${amount}`)).text();
-    toast("订单已完成", result);
+    toast("发起支付", result);
     await getData();
 }
 

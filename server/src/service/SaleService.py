@@ -45,7 +45,7 @@ class SaleService:
 
             # 记录预付
             for checkOut in order.checkOuts:
-                if checkOut.amount > 0:
+                if int(checkOut.amount) > 0:
                     paras = [checkOut.id, order.id, checkOut.time, checkOut.amount]
                     cursor.execute(self.checkOuts.GetOperation("add"), paras)
 
