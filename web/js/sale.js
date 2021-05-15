@@ -32,7 +32,8 @@ function showData(sales) {
 
         let payOrComplete = "";
         if(price > amounted)
-            payOrComplete = `<button class="btn btn-info" onclick="payment('${sale.id}')">支付</button>`;
+            payOrComplete = `<button class="btn btn-info" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" 
+                aria-controls="offcanvasRight" onclick="payment('${sale.id}', '${sale.user.name}')">支付</button>`;
         else
             payOrComplete = `<button class="btn btn-success" onclick="completeOrder('${sale.id}')">完成</button>`;
 
@@ -245,8 +246,36 @@ function verifyOrder(order) {
     return false;
 }
 
-async function payment(id) {
-    alert(id);
+function payment(id, name) {
+    let html = `
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">支付订单</label>
+            <input id="paymentOrderId" type="text" class="form-control" placeholder="订单ID" value="${id}" disabled />
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">付款用户</label>
+            <input type="text" class="form-control" placeholder="用户名" value="${name}" disabled />
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">支付金额</label>
+            <input id="payment" type="number" class="form-control" placeholder="0" />
+        </div>
+
+        <button class="btn btn-primary" onclick="pay('${id}')">提交支付</button>
+    `;
+    document.querySelector(".offcanvas-body").innerHTML = html;
+}
+
+async function pay(id) {
+    let amount = document.querySelector("#payment").value;
+    if(amount < 0) {
+        toast("注意", "支付金额不能为零");
+        return;
+    } 
+
+    let result = await (await fetch(`${api}/sale/pay?id=${id}&amount=${amount}`)).text();
+    toast("订单已完成", result);
+    await getData();
 }
 
 async function submit(id) {

@@ -1,3 +1,4 @@
+import uuid
 from service.DbService import *
 from model import *
 
@@ -44,8 +45,9 @@ class SaleService:
 
             # 记录预付
             for checkOut in order.checkOuts:
-                paras = [checkOut.id, order.id, checkOut.time, checkOut.amount]
-                cursor.execute(self.checkOuts.GetOperation("add"), paras)
+                if checkOut.amount > 0:
+                    paras = [checkOut.id, order.id, checkOut.time, checkOut.amount]
+                    cursor.execute(self.checkOuts.GetOperation("add"), paras)
 
             # 新增订单
             paras = [order.id, order.time, order.state, order.user.id, order.selling]
@@ -228,7 +230,7 @@ class SaleService:
 
         try:
             order = self.find(id)
-            if order == None or order.state:
+            if order.state:
                 return False
 
             rows = cursor.execute(self.saleOrders.GetOperation("modify"), [True, order.selling, id])
@@ -237,6 +239,23 @@ class SaleService:
 
             self.conn.commit()
             return True
+
+        except:
+            return False
+
+    # 支付订单
+    def pay(self, id: str, amount: int) -> bool:
+
+        cursor = self.conn.cursor()
+
+        try:
+            paras = [str(uuid.uuid4()), id, str(datetime.now()), amount]
+            rows = cursor.execute(self.checkOuts.GetOperation("add"), paras)
+            if rows.rowcount != 0:
+                self.conn.commit()
+                return True
+
+            return False
 
         except:
             return False

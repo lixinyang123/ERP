@@ -132,3 +132,21 @@ def complete():
 
     saleService.dispose()
     return (result, 200)
+
+# 支付订单
+@sale.route("pay", methods=["get"])
+def pay():
+    saleService = SaleService()
+
+    orderId = request.args.get("id")
+    amount = request.args.get("amount")
+
+    if orderId is None or amount is None:
+        return ("forbidden", 403)
+
+    result = json.dumps({
+        "successful": saleService.pay(orderId, amount)
+    })
+
+    saleService.dispose()
+    return (result, 200)
