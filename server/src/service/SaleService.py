@@ -125,7 +125,7 @@ class SaleService:
                 results = cursor.execute(self.users.GetOperation("find"), [row[4]])
 
                 for result in results:
-                    user = User(row[1], row[2], int(row[3]), row[4], row[5])
+                    user = User(result[1], result[2], int(result[3]), result[4], result[5])
                     break
 
                 return SaleOrder(row[1], row[2], row[3], user, row[5], operations, checkOutList)

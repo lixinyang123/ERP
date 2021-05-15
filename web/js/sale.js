@@ -95,6 +95,100 @@ async function addOrder() {
     addOperations();
 }
 
+// async function completeOrder(id) {
+//     let res = await fetch(api + "/sale/complete?id=" + id);
+//     let result = await res.text();
+//     toast("订单已完成", result);
+//     await getData();
+// }
+
+async function deleteOrder(id) {
+    let res = await fetch(api + "/sale/delete?id=" + id);
+    let result = await res.text();
+    toast("删除成功", result);
+    await getData();
+}
+
+async function modifyOrder(id) {
+
+    let users = await (await fetch(api + "/user/index?page=1")).json();
+    let sale = await (await fetch(api + "/sale/find?id=" + id)).json();
+
+    let userOptions = "";
+    users.users.forEach(user => {
+        console.log(sale.user.id + "===" + user.id);
+
+        if(sale.user.id == user.id)
+            userOptions += `<option selected value="${user.id}">${user.name}</option>`;
+        else
+            userOptions += `<option value="${user.id}">${user.name}</option>`;
+    });
+
+    let html = `
+        <div class="modal-body">
+            <div id="saleOperations" class="row"></div>
+        </div>
+        <div class="modal-footer">
+            <select id="user" class="form-select" aria-label="Default select example">
+                <option selected value="">选择用户</option>
+                ${userOptions}
+            </select>
+            <input id="selling" type="text" class="form-control" placeholder="售价">
+            <input id="preAmount" type="text" class="form-control" placeholder="已付金额">
+            <button class="btn btn-success" onclick="addOperations()">新增产品</button>
+            <button class="btn btn-primary" onclick="submit('${id}')">保存</button>
+        </div>
+    `;
+    document.querySelector("#modal-body").innerHTML = html;
+
+    document.querySelector("#selling").value = sale.selling;
+
+    let amounted = 0
+    sale.checkOuts.forEach(ele => {
+        amounted += ele.amount;
+    });
+    document.querySelector("#preAmount").value = amounted;
+
+    document.querySelector("#saleOperations").innerHTML = null;
+
+    sale.saleOperations.forEach(async operation => {
+
+        let id = guid();
+
+        let results = await (await fetch(api + "/product/index?page=1")).json();
+
+        let options = "";
+        results.products.forEach(async product => {
+            if(operation.product.id == product.id)
+                options += `<option selected value="${product.id}">${product.name}</option>`;
+            else
+                options += `<option value="${product.id}">${product.name}</option>`;
+        });
+
+        let html = `
+            <div id="${id}" class="saleOperation col-md-4 animate__animated animate__fadeIn">
+                <div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">产品</label>
+                        <select class="form-select" aria-label="Default select example">
+                            <option value="">选择产品</option>
+                            ${options}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">数量</label>
+                        <input type="number" class="form-control" placeholder="进货产品数量" value="${operation.num}">
+                    </div>
+                    <div>
+                        <button class="btn btn-danger" onclick="deleteOperation('${id}')">删除</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.querySelector("#saleOperations").innerHTML += html;
+    });
+}
+
 async function addOperations() {
 
     let id = guid();
