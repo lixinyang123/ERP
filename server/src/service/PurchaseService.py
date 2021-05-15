@@ -59,6 +59,10 @@ class PurchaseService:
         try:
             cursor = self.conn.cursor()
 
+            currentOrder = self.find(order.id)
+            if currentOrder.state:
+                return False
+
             cursor.execute(self.purchaseOperations.GetOperation("delete"), [order.id])
 
             for operation in order.purchaseOperations:

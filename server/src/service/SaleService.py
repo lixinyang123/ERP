@@ -23,13 +23,31 @@ class SaleService:
             cursor = self.conn.cursor()
 
             for operation in order.saleOperations:
+
+                # 新增操作
                 paras = [operation.id, order.id, operation.product.id, operation.num]
                 cursor.execute(self.saleOperations.GetOperation("add"), paras)
+                
+                # 产品出库
+                product = None
+                rows = cursor.execute(self.products.GetOperation("find"), [operation.product.id])
+                for row in rows:
+                    product = Product(row[1], row[2], float(row[3]), int(row[4]), row[5], row[6])
+                    break
 
+                num = product.num - int(operation.num)
+                if num < 0:
+                    return False
+
+                paras = [product.name, product.price, num, product.specifications, product.notes, product.id]
+                rows = cursor.execute(self.products.GetOperation("modify"), paras)
+
+            # 记录预付
             for checkOut in order.checkOuts:
                 paras = [checkOut.id, order.id, checkOut.time, checkOut.amount]
                 cursor.execute(self.checkOuts.GetOperation("add"), paras)
 
+            # 新增订单
             paras = [order.id, order.time, order.state, order.user.id, order.selling]
             rows = cursor.execute(self.saleOrders.GetOperation("add"), paras)
 
@@ -46,11 +64,23 @@ class SaleService:
         
         try:
             cursor = self.conn.cursor()
+
+            # 订单未完成 退还库存
+            order = self.find(id)
+            if not order.state:
+            
+                for operation in order.saleOperations:
+                    product = operation.product
+                    num = product.num + operation.num
+
+                    paras = [product.name, product.price, num, product.specifications, product.notes, product.id]
+                    rows = cursor.execute(self.products.GetOperation("modify"), paras)
             
             # 删除此订单的进出库和结账记录
             cursor.execute(self.checkOuts.GetOperation("delete"), [id])
             cursor.execute(self.saleOperations.GetOperation("delete"), [id])
 
+            # 删除订单
             rows = cursor.execute(self.saleOrders.GetOperation("delete"), [id])
 
             if rows.rowcount != 0:
@@ -67,12 +97,41 @@ class SaleService:
         try:
             cursor = self.conn.cursor()
 
+            currentOrder = self.find(order.id)
+            if currentOrder.state:
+                return False
+
+            # 删除操作
             cursor.execute(self.saleOperations.GetOperation("delete"), [order.id])
-            
+
+            # 重新进库
+            for operation in currentOrder.saleOperations:
+                product = operation.product
+                num = product.num + operation.num
+
+                paras = [product.name, product.price, num, product.specifications, product.notes, product.id]
+                rows = cursor.execute(self.products.GetOperation("modify"), paras)
+
             for operation in order.saleOperations:
+                # 加入新操作
                 paras = [operation.id, order.id, operation.product.id, operation.num]
                 cursor.execute(self.saleOperations.GetOperation("add"), paras)
 
+                # 重新出库
+                product = None
+                rows = cursor.execute(self.products.GetOperation("find"), [operation.product.id])
+                for row in rows:
+                    product = Product(row[1], row[2], float(row[3]), int(row[4]), row[5], row[6])
+                    break
+
+                num = product.num - int(operation.num)
+                if num < 0:
+                    return False
+
+                paras = [product.name, product.price, num, product.specifications, product.notes, product.id]
+                rows = cursor.execute(self.products.GetOperation("modify"), paras)
+
+            # 修改订单
             paras = [order.state, order.selling, order.id]
             rows = cursor.execute(self.saleOrders.GetOperation("modify"), paras)
 
@@ -172,27 +231,12 @@ class SaleService:
             if order == None or order.state:
                 return False
 
-            flag = True
-            for operation in order.saleOperations:
-                product = operation.product
-                num = product.num - operation.num
-
-                if num < 0:
-                    return False
-
-                paras = [product.name, product.price, num, product.specifications, product.notes, product.id]
-                rows = cursor.execute(self.products.GetOperation("modify"), paras)
-
-                if rows.rowcount == 0:
-                    flag = False
-
             rows = cursor.execute(self.saleOrders.GetOperation("modify"), [True, order.selling, id])
             if rows.rowcount == 0:
-                flag = False
+                return False
 
-            if flag:
-                self.conn.commit()
-            return flag
+            self.conn.commit()
+            return True
 
         except:
             return False

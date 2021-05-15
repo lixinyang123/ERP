@@ -32,7 +32,7 @@ function showData(sales) {
 
         let payOrComplete = "";
         if(price > amounted)
-            payOrComplete = `<button class="btn btn-info" onclick="pay('${sale.id}')">支付</button>`;
+            payOrComplete = `<button class="btn btn-info" onclick="payment('${sale.id}')">支付</button>`;
         else
             payOrComplete = `<button class="btn btn-success" onclick="completeOrder('${sale.id}')">完成</button>`;
 
@@ -57,6 +57,7 @@ function showData(sales) {
                     <div class="card-body">
                         <h5 class="card-title">状态：${sale.state == 0 ? "未完成" : "已完成"}</h5>
                         ${detail}
+                        <p class="card-text">用户：${sale.user.name}</p>
                         <p class="card-text">已付：${amounted}</p>
                         <p class="card-text">总价：${price}</p>
                         ${completeBtn}
@@ -244,7 +245,7 @@ function verifyOrder(order) {
     return false;
 }
 
-async function pay(id) {
+async function payment(id) {
     alert(id);
 }
 
