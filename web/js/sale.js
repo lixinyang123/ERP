@@ -7,7 +7,64 @@ async function getData() {
 
     lastIndex = results.lastIndex;
     showPagination();
-    //showData(results.purchases)
+    showData(results.sales)
+}
+
+function showData(sales) {
+
+    document.querySelector("#sales").innerHTML = null;
+
+    sales.forEach(sale => {
+
+        // Get Price
+        let price = 0
+        let detail = ""
+        sale.saleOperations.forEach(ele => {
+            detail += `<p class="card-text"><strong>${ele.product.name}</strong> * ${ele.num}</p>`;
+            price += ele.product.price * ele.num;
+        });
+
+        // Get State
+        let isComplete = "alert alert-danger";
+        let completeBtn = `
+            <button class="btn btn-success" onclick="completeOrder('${sale.id}')">完成</button>
+            <button class="btn btn-warning" onclick="modifyOrder('${sale.id}')" data-bs-toggle="modal" data-bs-target="#staticBackdrop">编辑</button>
+        `;
+
+        if(sale.state != 0){
+            completeBtn = "";
+            isComplete = "alert alert-success";
+        }
+
+        // Get Amount
+        let amounted = 0
+        sale.checkOuts.forEach(ele => {
+            amounted += ele.amount;
+        });
+
+        let html = `
+            <div class="col-md-4 animate__animated animate__bounceIn">
+                <div class="card text-center">
+                    <div class="card-header ${isComplete}">
+                        ID：${sale.id}
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">状态：${sale.state == 0 ? "未完成" : "已完成"}</h5>
+                        ${detail}
+                        <p class="card-text">已付：${amounted}</p>
+                        <p class="card-text">总价：${price}</p>
+                        ${completeBtn}
+                        <button class="btn btn-danger" onclick="deleteOrder('${sale.id}')">删除</button>
+                    </div>
+                    <div class="card-footer text-muted">
+                        ${sale.time.substring(0,19)}
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.querySelector("#sales").innerHTML += html;
+    });
 }
 
 async function addOrder() {
@@ -24,11 +81,12 @@ async function addOrder() {
             <div id="saleOperations" class="row"></div>
         </div>
         <div class="modal-footer">
-            <select class="form-select" aria-label="Default select example">
+            <select id="user" class="form-select" aria-label="Default select example">
                 <option selected value="">选择用户</option>
                 ${userOptions}
             </select>
             <input id="selling" type="text" class="form-control" placeholder="售价">
+            <input id="preAmount" type="text" class="form-control" placeholder="预付金额">
             <button class="btn btn-success" onclick="addOperations()">新增产品</button>
             <button class="btn btn-primary" onclick="submit()">保存</button>
         </div>
@@ -49,7 +107,7 @@ async function addOperations() {
     });
 
     let html = `
-        <div id="${id}" class="operation col-md-4 saleOperation animate__animated animate__fadeIn">
+        <div id="${id}" class="saleOperation col-md-4 animate__animated animate__fadeIn">
             <div>
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">产品</label>
@@ -76,11 +134,88 @@ function deleteOperation(id) {
     document.getElementById(id).remove();
 }
 
+function verifyOperation(operation) {
+    if(!operation.product || !operation.num)
+        return false;
+    return true;
+}
+
+function verifyOrder(order) {
+    if(order.saleOperations.length > 0 && order.checkOuts.length > 0 && order.selling && order.user)
+        return true;
+    return false;
+}
+
+async function submit(id) {
+
+    // Get User
+    let user = new User("", 0, "", "");
+    user.id = document.querySelector("#user").value;
+
+    // Get Operation
+    let operations = new Array();
+
+    document.querySelectorAll(".saleOperation").forEach(element => {
+
+        let productId = element.querySelector("select").value;
+        let num = element.querySelector("input").value;
+
+        let product = new Product("", 0, 0, "", "");
+        product.id = productId;
+
+        let operation = new ProductOperation(product, num);
+        if(!verifyOperation(operation))
+            return;
+
+        operations.push(operation);
+    });
+
+    // Get Selling
+    let selling = document.querySelector("#selling").value
+
+    // Get Checkout
+    let checkOuts = new Array();
+    let preAmount = document.querySelector("#preAmount").value;
+    if(preAmount)
+        checkOuts.push(new CheckOut(preAmount));
+
+    let order = new SaleOrder(user, selling, operations, checkOuts);
+
+    if(!verifyOrder(order)) {
+        toast("信息不完整", "请完善订单信息");
+        return;
+    }
+
+    let url = "/sale/add";
+    if(id) {
+        url = "/sale/modify";
+        order.id = id;
+    }
+
+    let res = await fetch(api + url, {
+        method: "POST",
+        body: JSON.stringify(order)
+    });
+    
+    let result = await res.json();
+    
+    if(!result.successful) {
+        toast("保存失败", JSON.stringify(result));
+        return
+    }
+        
+    toast("保存成功", JSON.stringify(result));
+
+    // 关闭模态框
+    document.querySelector(".modal-header button").click();
+    getData();
+}
+
 function countSelling() {
 
     let selling = 0;
 
-    document.querySelectorAll(".operation").forEach(ele => {
+    document.querySelectorAll(".saleOperation").forEach(ele => {
 
         let productId = ele.querySelector("select").value;
         let num = ele.querySelector("input").value;
@@ -93,3 +228,5 @@ function countSelling() {
 
     document.querySelector("#selling").value = selling;
 }
+
+getData();

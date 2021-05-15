@@ -47,3 +47,11 @@ class SaleOrder {
         this.checkOuts = checkOuts
     }
 }
+
+class CheckOut {
+    constructor(amount) {
+        this.id = "",
+        this.time = "",
+        this.amount = amount
+    }
+}

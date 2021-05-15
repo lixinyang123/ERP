@@ -121,6 +121,62 @@ async function addOperations() {
     document.querySelector("#purchaseOperations").innerHTML += html
 }
 
+async function modifyOrder(id) {
+
+    let html = `
+        <div class="modal-body">
+            <div id="purchaseOperations" class="row"></div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-success" onclick="addOperations()">新增产品</button>
+            <button class="btn btn-primary" onclick="submit('${id}')">保存</button>
+        </div>
+    `;
+    document.querySelector("#modal-body").innerHTML = html;
+
+    document.querySelector("#purchaseOperations").innerHTML = null;
+    let res = await fetch(api + "/purchase/find?id=" + id);
+    let purchase = await res.json()
+
+    purchase.purchaseOperations.forEach(async operation => {
+
+        let id = guid();
+
+        let res = await fetch(api + "/product/index?page=1");
+        let results = await res.json();    
+
+        let options = "";
+        results.products.forEach(async product => {
+            if(operation.product.id == product.id)
+                options += `<option selected value="${product.id}">${product.name}</option>`;
+            else
+                options += `<option value="${product.id}">${product.name}</option>`;
+        });
+
+        let html = `
+            <div id="${id}" class="col-md-4 purchaseOperation animate__animated animate__fadeIn">
+                <div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">产品</label>
+                        <select class="form-select" aria-label="Default select example">
+                            <option value="">选择产品</option>
+                            ${options}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">数量</label>
+                        <input type="number" class="form-control" placeholder="进货产品数量" value="${operation.num}">
+                    </div>
+                    <div>
+                        <button class="btn btn-danger" onclick="deleteOperation('${id}')">删除</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.querySelector("#purchaseOperations").innerHTML += html;
+    });
+}
+
 function deleteOperation(id) {
     document.getElementById(id).remove();
 }
@@ -186,62 +242,6 @@ async function submit(id) {
     // 关闭模态框
     document.querySelector(".modal-header button").click();
     getData();
-}
-
-async function modifyOrder(id) {
-
-    let html = `
-        <div class="modal-body">
-            <div id="purchaseOperations" class="row"></div>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-success" onclick="addOperations()">新增产品</button>
-            <button class="btn btn-primary" onclick="submit('${id}')">保存</button>
-        </div>
-    `;
-    document.querySelector("#modal-body").innerHTML = html;
-
-    document.querySelector("#purchaseOperations").innerHTML = null;
-    let res = await fetch(api + "/purchase/find?id=" + id);
-    let purchase = await res.json()
-
-    purchase.purchaseOperations.forEach(async operation => {
-
-        let id = guid();
-
-        let res = await fetch(api + "/product/index?page=1");
-        let results = await res.json();    
-
-        let options = "";
-        results.products.forEach(async product => {
-            if(operation.product.id == product.id)
-                options += `<option selected value="${product.id}">${product.name}</option>`;
-            else
-                options += `<option value="${product.id}">${product.name}</option>`;
-        });
-
-        let html = `
-            <div id="${id}" class="col-md-4 purchaseOperation animate__animated animate__fadeIn">
-                <div>
-                    <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">产品</label>
-                        <select class="form-select" aria-label="Default select example">
-                            <option value="">选择产品</option>
-                            ${options}
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleFormControlTextarea1" class="form-label">数量</label>
-                        <input type="number" class="form-control" placeholder="进货产品数量" value="${operation.num}">
-                    </div>
-                    <div>
-                        <button class="btn btn-danger" onclick="deleteOperation('${id}')">删除</button>
-                    </div>
-                </div>
-            </div>
-        `;
-        document.querySelector("#purchaseOperations").innerHTML += html;
-    });
 }
 
 getData();
