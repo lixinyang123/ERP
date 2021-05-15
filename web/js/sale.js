@@ -95,12 +95,12 @@ async function addOrder() {
     addOperations();
 }
 
-// async function completeOrder(id) {
-//     let res = await fetch(api + "/sale/complete?id=" + id);
-//     let result = await res.text();
-//     toast("订单已完成", result);
-//     await getData();
-// }
+async function completeOrder(id) {
+    let res = await fetch(api + "/sale/complete?id=" + id);
+    let result = await res.text();
+    toast("订单已完成", result);
+    await getData();
+}
 
 async function deleteOrder(id) {
     let res = await fetch(api + "/sale/delete?id=" + id);

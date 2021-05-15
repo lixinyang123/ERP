@@ -116,3 +116,19 @@ def find():
     saleService.dispose()
 
     return (result, 200)
+
+# 完成进货订单
+@sale.route("complete", methods=["get"])
+def complete():
+    saleService = SaleService()
+
+    orderId = request.args.get("id")
+    if orderId is None:
+        return ("forbidden", 403)
+
+    result = json.dumps({
+        "successful": saleService.complete(orderId)
+    })
+
+    saleService.dispose()
+    return (result, 200)
