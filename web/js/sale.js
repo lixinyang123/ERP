@@ -76,23 +76,14 @@ function showData(sales) {
 }
 
 async function addOrder() {
-
-    let users = await (await fetch(api + "/user/index?page=1")).json();
-
-    let userOptions = "";
-    users.users.forEach(user => {
-        userOptions += `<option value="${user.id}">${user.name}</option>`;
-    });
-
     let html = `
         <div class="modal-body">
             <div id="saleOperations" class="row"></div>
         </div>
         <div class="modal-footer">
-            <select id="user" class="form-select" aria-label="Default select example">
-                <option selected value="">选择用户</option>
-                ${userOptions}
-            </select>
+            <button id="userInfo" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productSelector" 
+                onclick="showUsers()" >选择用户</button>
+            <input id="userId" type="hidden" />
             <input id="selling" type="text" class="form-control" placeholder="售价">
             <input id="preAmount" type="text" class="form-control" placeholder="预付金额">
             <button class="btn btn-success" onclick="addOperations()">新增产品</button>
@@ -147,7 +138,12 @@ async function addOperations() {
     countSelling();
 }
 
-function select(id, productId, name, num, price, notes) {
+function selectUser(id, name, notes) {
+    document.querySelector("#userId").value = id;
+    document.querySelector("#userInfo").innerText = `${name}（${notes}）`;
+}
+
+function selectProduct(id, productId, name, num, price, notes) {
     let operation = document.getElementById(id);
     operation.querySelector(".product > input").value = productId;
     operation.querySelector(".product > input").setAttribute("price", price)
@@ -156,26 +152,17 @@ function select(id, productId, name, num, price, notes) {
 
 async function modifyOrder(id) {
 
-    let users = await (await fetch(api + "/user/index?page=1")).json();
     let sale = await (await fetch(api + "/sale/find?id=" + id)).json();
-
-    let userOptions = "";
-    users.users.forEach(user => {
-        if(sale.user.id == user.id)
-            userOptions += `<option selected value="${user.id}">${user.name}</option>`;
-        else
-            userOptions += `<option value="${user.id}">${user.name}</option>`;
-    });
+    let user = sale.user;
 
     let html = `
         <div class="modal-body">
             <div id="saleOperations" class="row"></div>
         </div>
         <div class="modal-footer">
-            <select id="user" class="form-select" aria-label="Default select example">
-                <option selected value="">选择用户</option>
-                ${userOptions}
-            </select>
+            <button id="userInfo" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productSelector" 
+                onclick="showUsers()" disabled >${user.name}（${user.notes}）</button>
+            <input id="userId" type="hidden" value="${user.id}"/>
             <input id="selling" type="text" class="form-control" placeholder="售价" disabled>
             <button class="btn btn-success" onclick="addOperations()">新增产品</button>
             <button class="btn btn-primary" onclick="submit('${id}')">保存</button>
@@ -287,7 +274,7 @@ async function submit(id) {
 
     // Get User
     let user = new User("", 0, "", "");
-    user.id = document.querySelector("#user").value;
+    user.id = document.querySelector("#userId").value;
 
     // Get Operation
     let operations = new Array();

@@ -113,7 +113,7 @@ async function addOperations() {
     document.querySelector("#purchaseOperations").innerHTML += html
 }
 
-function select(id, productId, name, num, price, notes) {
+function selectProduct(id, productId, name, num, price, notes) {
     let operation = document.getElementById(id);
     operation.querySelector(".product > input").value = productId;
     operation.querySelector(".product > button").innerText = `${name} / ${notes}（剩余库存：${num}）`;
