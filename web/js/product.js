@@ -33,10 +33,9 @@ function addProduct() {
 }
 
 async function getData() {
-    let res = await fetch(api + "/product/index?page=" + currentIndex);
-    let results = await res.json();
-
+    let results = await (await fetch(api + "/product/index?page=" + currentIndex)).json();
     lastIndex = results.lastIndex;
+    
     showPagination();
     showData(results.products)
 }

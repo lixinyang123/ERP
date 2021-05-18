@@ -102,14 +102,15 @@ async function addOperations() {
             <div>
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">产品</label>
-                    <select onchange="showNum('${id}')" class="form-select" aria-label="Default select example">
-                        <option selected value="">选择产品</option>
-                        ${options}
-                    </select>
+                    <div class="product" class="row">
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productSelector" 
+                            onclick="showProducts('${id}')" >选择产品</button>
+                        <input type="hidden" />
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label for="exampleFormControlTextarea1" class="form-label">数量<span></span></label>
-                    <input type="number" class="form-control" placeholder="进货产品数量">
+                    <input class="productNum form-control" type="number" class="form-control" placeholder="进货产品数量">
                 </div>
                 <div>
                     <button class="btn btn-danger" onclick="deleteOperation('${id}')">删除</button>
@@ -121,15 +122,10 @@ async function addOperations() {
     document.querySelector("#purchaseOperations").innerHTML += html
 }
 
-async function showNum(id) {
+function select(id, productId, name, num, notes) {
     let operation = document.getElementById(id);
-    let productId = operation.querySelector("select").value;
-    if(!productId){
-        operation.querySelector("span").innerText = "";
-        return;
-    }
-    let product = await (await fetch(api + "/product/find?id=" + productId)).json();
-    operation.querySelector("span").innerText = `（剩余库存：${product.num}）`;
+    operation.querySelector(".product > input").value = productId;
+    operation.querySelector(".product > button").innerText = `${name}/${notes}（剩余库存：${num}）`;
 }
 
 async function modifyOrder(id) {
@@ -152,31 +148,22 @@ async function modifyOrder(id) {
     purchase.purchaseOperations.forEach(async operation => {
 
         let id = guid();
-
-        let res = await fetch(api + "/product/index?page=1");
-        let results = await res.json();    
-
-        let options = "";
-        results.products.forEach(async product => {
-            if(operation.product.id == product.id)
-                options += `<option selected value="${product.id}">${product.name}（${product.notes}）</option>`;
-            else
-                options += `<option value="${product.id}">${product.name}（${product.notes}）</option>`;
-        });
+        let product = operation.product;
 
         let html = `
             <div id="${id}" class="col-md-4 purchaseOperation animate__animated animate__fadeIn">
                 <div>
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">产品</label>
-                        <select onchange="showNum('${id}')" class="form-select" aria-label="Default select example">
-                            <option value="">选择产品</option>
-                            ${options}
-                        </select>
+                        <div class="product" class="row">
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productSelector" 
+                                onclick="showProducts('${id}')" >${product.name}/${product.notes}（剩余库存：${product.num}）</button>
+                            <input type="hidden" value="${product.id}" />
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">数量<span>（剩余库存：${operation.product.num}）</span></label>
-                        <input type="number" class="form-control" placeholder="进货产品数量" value="${operation.num}">
+                        <input class="productNum form-control" type="number" class="form-control" placeholder="进货产品数量" value="${operation.num}">
                     </div>
                     <div>
                         <button class="btn btn-danger" onclick="deleteOperation('${id}')">删除</button>
@@ -210,8 +197,8 @@ async function submit(id) {
 
     document.querySelectorAll(".purchaseOperation").forEach(element => {
 
-        let productId = element.querySelector("select").value;
-        let num = element.querySelector("input").value;
+        let productId = element.querySelector(".product > input").value;
+        let num = element.querySelector(".productNum").value;
 
         let product = new Product("", 0, 0, "", "");
         product.id = productId;

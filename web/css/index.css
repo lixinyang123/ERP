@@ -177,3 +177,11 @@ hr {
 #pagination {
     margin: 0;
 }
+
+#productSelector {
+    z-index: 2000;
+}
+
+#selector-list {
+    padding: 2rem;
+}
