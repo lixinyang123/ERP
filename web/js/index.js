@@ -139,6 +139,19 @@ function jumpToIndex(index) {
     getData();
 }
 
+function switchTheme() {
+    let isDark = localStorage.getItem("isDark");
+    if(!isDark) {
+        DarkReader.setFetchMethod(window.fetch);
+        DarkReader.enable();
+        localStorage.setItem("isDark", "true");
+    }
+    else{
+        DarkReader.disable();
+        localStorage.removeItem("isDark");
+    }
+}
+
 function init(){
 
     //初始化导航
@@ -155,6 +168,11 @@ function init(){
     }
     else{
         navigation("home");
+    }
+
+    if(localStorage.getItem("isDark")) {
+        DarkReader.setFetchMethod(window.fetch);
+        DarkReader.enable();
     }
 }
 
