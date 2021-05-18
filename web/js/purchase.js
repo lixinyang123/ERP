@@ -169,13 +169,13 @@ async function modifyOrder(id) {
                 <div>
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">产品</label>
-                        <select class="form-select" aria-label="Default select example">
+                        <select onchange="showNum('${id}')" class="form-select" aria-label="Default select example">
                             <option value="">选择产品</option>
                             ${options}
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="exampleFormControlTextarea1" class="form-label">数量</label>
+                        <label for="exampleFormControlTextarea1" class="form-label">数量（剩余库存：${operation.product.num}）</label>
                         <input type="number" class="form-control" placeholder="进货产品数量" value="${operation.num}">
                     </div>
                     <div>
