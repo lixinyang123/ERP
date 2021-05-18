@@ -113,8 +113,12 @@
         </find>
 
         <findByUser>
-            SELECT * FROM saleOrders WHERE userId = ?;
+            SELECT * FROM saleOrders WHERE userId = ? order by id desc;
         </findByUser>
+
+        <findByUserWithState>
+            SELECT * FROM saleOrders WHERE userId = ? and state is False order by id desc;
+        </findByUserWithState>
 
         <list>
             SELECT * FROM saleOrders order by id desc LIMIT ?,?;

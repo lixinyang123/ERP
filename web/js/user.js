@@ -29,19 +29,32 @@ function addUser() {
 }
 
 async function getData() {
-    let res = await fetch(api + "/user/index?page=" + currentIndex);
-    let results = await res.json();
-
+    let results = await (await fetch(api + "/user/index?page=" + currentIndex)).json();
     lastIndex = results.lastIndex;
+
     showPagination();
-    showData(results.users)
+    await showData(results.users)
 }
 
 function showData(users) {
 
     document.querySelector("#users").innerHTML = null;
 
-    users.forEach(user => {
+    users.forEach(async user => {
+
+        let sales = await (await fetch(api + "/sale/findByUserWithState?id=" + user.id)).json();
+        
+        let price = 0, amounted = 0
+
+        sales.forEach(sale => {
+            price += sale.selling;
+
+            // Get Amount
+            sale.checkOuts.forEach(ele => {
+                amounted += ele.amount;
+            });
+        });
+
         let html = `
             <div class="col-md-12 animate__animated animate__bounceIn">
                 <div class="card">
@@ -49,8 +62,9 @@ function showData(users) {
                         <div class="row">
                             <div class="col-md-2"><p>姓名：${user.name}</p></div>
                             <div class="col-md-2"><p>电话：${user.tel}</p></div>
-                            <div class="col-md-3"><p>地址：${user.address}</p></div>
-                            <div class="col-md-3"><p>备注：${user.notes}</p></div>
+                            <div class="col-md-2"><p>地址：${user.address}</p></div>
+                            <div class="col-md-1"><p>备注：${user.notes}</p></div>
+                            <div class="col-md-3"><p>未完成订单：${sales.length}（待付：${price - amounted}）</p></div>
                             <div class="col-md-2">
                                 <button class="btn btn-danger" onclick="deleteUser('${user.id}')">删除</button>
                                 <button class="btn btn-warning" onclick="modifyUser('${user.id}')" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">编辑</button>

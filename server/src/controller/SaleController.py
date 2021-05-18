@@ -117,6 +117,26 @@ def find():
 
     return (result, 200)
 
+# 按用户查找销售信息
+@sale.route("findByUserWithState", methods=["get"])
+def findByUserWithState():
+    saleService = SaleService()
+
+    userId = request.args.get("id")
+    if userId is None:
+        return ("forbidden", 403)
+
+    sales = saleService.findByUserWithState(userId)
+
+    results = []
+    for sale in sales:
+        results.append(sale.dicted())
+
+    saleService.dispose()
+
+    return (json.dumps(results), 200)
+
+
 # 完成进货订单
 @sale.route("complete", methods=["get"])
 def complete():

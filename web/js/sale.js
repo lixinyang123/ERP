@@ -16,22 +16,20 @@ function showData(sales) {
 
     sales.forEach(sale => {
 
-        // Get Price
-        let price = 0
-        let detail = ""
+        // Get Detail
+        let detail = "";
         sale.saleOperations.forEach(ele => {
             detail += `<p class="card-text"><strong>${ele.product.name}</strong> * ${ele.num}</p>`;
-            price += ele.product.price * ele.num;
         });
 
         // Get Amount
-        let amounted = 0
+        let amounted = 0;
         sale.checkOuts.forEach(ele => {
             amounted += ele.amount;
         });
 
         let payOrComplete = "";
-        if(price > amounted)
+        if(sale.selling > amounted)
             payOrComplete = `<button class="btn btn-info" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" 
                 aria-controls="offcanvasRight" onclick="payment('${sale.id}', '${sale.user.name}')">支付</button>`;
         else
@@ -60,7 +58,7 @@ function showData(sales) {
                         ${detail}
                         <p class="card-text">用户：${sale.user.name}</p>
                         <p class="card-text">已付：${amounted}</p>
-                        <p class="card-text">总价：${price}</p>
+                        <p class="card-text">总价：${sale.selling}</p>
                         ${completeBtn}
                         <button class="btn btn-danger" onclick="deleteOrder('${sale.id}')">删除</button>
                     </div>

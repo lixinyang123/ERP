@@ -210,6 +210,22 @@ class SaleService:
         except:
             return[]
 
+    # 按用户查找销售订单
+    def findByUserWithState(self, id: str) -> list:
+
+        try:
+            cursor = self.conn.cursor()
+            rows = cursor.execute(self.saleOrders.GetOperation("findByUserWithState"), [id]).fetchall()
+
+            results = []
+            for row in rows:
+                results.append(self.find(row[1]))
+            
+            return results
+            
+        except:
+            return []
+
     # 获取销售订单数量
     def count(self) -> int:
 
