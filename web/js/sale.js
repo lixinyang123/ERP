@@ -139,7 +139,7 @@ async function modifyOrder(id) {
                 <option selected value="">选择用户</option>
                 ${userOptions}
             </select>
-            <input id="selling" type="text" class="form-control" placeholder="售价">
+            <input id="selling" type="text" class="form-control" placeholder="售价" disabled>
             <button class="btn btn-success" onclick="addOperations()">新增产品</button>
             <button class="btn btn-primary" onclick="submit('${id}')">保存</button>
         </div>
@@ -157,9 +157,9 @@ async function modifyOrder(id) {
         let options = "";
         results.products.forEach(async product => {
             if(operation.product.id == product.id)
-                options += `<option selected value="${product.id}" price="${product.price}">${product.name}</option>`;
+                options += `<option selected value="${product.id}" price="${product.price}">${product.name}（${product.notes}）</option>`;
             else
-                options += `<option value="${product.id}" price="${product.price}">${product.name}</option>`;
+                options += `<option value="${product.id}" price="${product.price}">${product.name}（${product.notes}）</option>`;
         });
 
         let html = `
@@ -194,7 +194,7 @@ async function addOperations() {
 
     let productOptions = "";
     products.products.forEach(product => {
-        productOptions += `<option value="${product.id}" price="${product.price}">${product.name}</option>`;
+        productOptions += `<option value="${product.id}" price="${product.price}">${product.name}（${product.notes}）</option>`;
     });
 
     let html = `

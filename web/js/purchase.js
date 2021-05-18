@@ -94,7 +94,7 @@ async function addOperations() {
 
     let options = "";
     results.products.forEach(product => {
-        options += `<option value="${product.id}">${product.name}</option>`;
+        options += `<option value="${product.id}">${product.name}（${product.notes}）</option>`;
     });
 
     let html = `
@@ -159,9 +159,9 @@ async function modifyOrder(id) {
         let options = "";
         results.products.forEach(async product => {
             if(operation.product.id == product.id)
-                options += `<option selected value="${product.id}">${product.name}</option>`;
+                options += `<option selected value="${product.id}">${product.name}（${product.notes}）</option>`;
             else
-                options += `<option value="${product.id}">${product.name}</option>`;
+                options += `<option value="${product.id}">${product.name}（${product.notes}）</option>`;
         });
 
         let html = `
@@ -175,7 +175,7 @@ async function modifyOrder(id) {
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="exampleFormControlTextarea1" class="form-label">数量（剩余库存：${operation.product.num}）</label>
+                        <label for="exampleFormControlTextarea1" class="form-label">数量<span>（剩余库存：${operation.product.num}）</span></label>
                         <input type="number" class="form-control" placeholder="进货产品数量" value="${operation.num}">
                     </div>
                     <div>
