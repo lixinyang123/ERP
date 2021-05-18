@@ -145,16 +145,9 @@ async function modifyOrder(id) {
         </div>
     `;
     document.querySelector("#modal-body").innerHTML = html;
-
     document.querySelector("#selling").value = sale.selling;
 
-    let amounted = 0
-    sale.checkOuts.forEach(ele => {
-        amounted += ele.amount;
-    });
-
     document.querySelector("#saleOperations").innerHTML = null;
-
     sale.saleOperations.forEach(async operation => {
 
         let id = guid();
@@ -246,16 +239,35 @@ function verifyOrder(order) {
     return false;
 }
 
-function payment(id, name) {
+async function payment(id, name) {
+
+    let sale = await (await fetch(api + "/sale/find?id=" + id)).json();
+
+    let amounted = 0
+    sale.checkOuts.forEach(ele => {
+        amounted += ele.amount;
+    });
+
+    let paymentInfo = "";
+    if(sale.selling - amounted > 0) {
+        paymentInfo = `
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">待付金额</label>
+                <input type="text" class="form-control" value="${sale.selling - amounted}" disabled />
+            </div>
+        `;
+    }
+
     let html = `
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">支付订单</label>
-            <input id="paymentOrderId" type="text" class="form-control" placeholder="订单ID" value="${id}" disabled />
+            <input id="paymentOrderId" type="text" class="form-control" value="${id}" disabled />
         </div>
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">付款用户</label>
-            <input type="text" class="form-control" placeholder="用户名" value="${name}" disabled />
+            <input type="text" class="form-control" value="${name}" disabled />
         </div>
+        ${paymentInfo}
         <div class="mb-3">
             <label for="exampleFormControlTextarea1" class="form-label">支付金额</label>
             <input id="payment" type="number" class="form-control" placeholder="0" />
