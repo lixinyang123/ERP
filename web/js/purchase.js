@@ -88,15 +88,6 @@ async function deleteOrder(id) {
 async function addOperations() {
 
     let id = guid();
-
-    let res = await fetch(api + "/product/index?page=1");
-    let results = await res.json();
-
-    let options = "";
-    results.products.forEach(product => {
-        options += `<option value="${product.id}">${product.name}（${product.notes}）</option>`;
-    });
-
     let html = `
         <div id="${id}" class="purchaseOperation col-md-4 animate__animated animate__fadeIn">
             <div>
@@ -122,10 +113,10 @@ async function addOperations() {
     document.querySelector("#purchaseOperations").innerHTML += html
 }
 
-function select(id, productId, name, num, notes) {
+function select(id, productId, name, num, price, notes) {
     let operation = document.getElementById(id);
     operation.querySelector(".product > input").value = productId;
-    operation.querySelector(".product > button").innerText = `${name}/${notes}（剩余库存：${num}）`;
+    operation.querySelector(".product > button").innerText = `${name} / ${notes}（剩余库存：${num}）`;
 }
 
 async function modifyOrder(id) {
@@ -142,9 +133,8 @@ async function modifyOrder(id) {
     document.querySelector("#modal-body").innerHTML = html;
 
     document.querySelector("#purchaseOperations").innerHTML = null;
-    let res = await fetch(api + "/purchase/find?id=" + id);
-    let purchase = await res.json()
-
+    let purchase = await (await fetch(api + "/purchase/find?id=" + id)).json();
+    
     purchase.purchaseOperations.forEach(async operation => {
 
         let id = guid();

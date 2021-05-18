@@ -117,6 +117,43 @@ async function deleteOrder(id) {
     await getData();
 }
 
+async function addOperations() {
+
+    let id = guid();
+
+    let html = `
+        <div id="${id}" class="saleOperation col-md-4 animate__animated animate__fadeIn">
+            <div>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">产品</label>
+                    <div class="product" class="row">
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productSelector" 
+                            onclick="showProducts('${id}')" >选择产品</button>
+                        <input type="hidden" />
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label">数量<span></span></label>
+                    <input class="productNum form-control" onchange="countSelling()" type="number" placeholder="进货产品数量" />
+                </div>
+                <div>
+                    <button class="btn btn-danger" onclick="deleteOperation('${id}')">删除</button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    document.querySelector("#saleOperations").innerHTML += html;
+    countSelling();
+}
+
+function select(id, productId, name, num, price, notes) {
+    let operation = document.getElementById(id);
+    operation.querySelector(".product > input").value = productId;
+    operation.querySelector(".product > input").setAttribute("price", price)
+    operation.querySelector(".product > button").innerText = `${name}/${notes}（剩余库存：${num}）`;
+}
+
 async function modifyOrder(id) {
 
     let users = await (await fetch(api + "/user/index?page=1")).json();
@@ -151,30 +188,22 @@ async function modifyOrder(id) {
     sale.saleOperations.forEach(async operation => {
 
         let id = guid();
-
-        let results = await (await fetch(api + "/product/index?page=1")).json();
-
-        let options = "";
-        results.products.forEach(async product => {
-            if(operation.product.id == product.id)
-                options += `<option selected value="${product.id}" price="${product.price}">${product.name}（${product.notes}）</option>`;
-            else
-                options += `<option value="${product.id}" price="${product.price}">${product.name}（${product.notes}）</option>`;
-        });
+        let product = operation.product;
 
         let html = `
             <div id="${id}" class="saleOperation col-md-4 animate__animated animate__fadeIn">
                 <div>
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">产品</label>
-                        <select onchange="showOperationInfo('${id}')" class="form-select" aria-label="Default select example">
-                            <option value="">选择产品</option>
-                            ${options}
-                        </select>
+                        <div class="product" class="row">
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productSelector" 
+                                onclick="showProducts('${id}')" >${product.name}/${product.notes}（剩余库存：${product.num}）</button>
+                            <input type="hidden" value="${product.id}" price="${product.price}" />
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">数量<span>（剩余库存：${operation.product.num}）</span></label>
-                        <input onchange="showOperationInfo('${id}')" type="number" class="form-control" placeholder="进货产品数量" value="${operation.num}">
+                        <input class="productNum form-control" onchange="countSelling()" type="number" placeholder="进货产品数量" value="${operation.num}" />
                     </div>
                     <div>
                         <button class="btn btn-danger" onclick="deleteOperation('${id}')">删除</button>
@@ -184,42 +213,6 @@ async function modifyOrder(id) {
         `;
         document.querySelector("#saleOperations").innerHTML += html;
     });
-}
-
-async function addOperations() {
-
-    let id = guid();
-
-    let products = await (await fetch(api + "/product/index?page=1")).json()
-
-    let productOptions = "";
-    products.products.forEach(product => {
-        productOptions += `<option value="${product.id}" price="${product.price}">${product.name}（${product.notes}）</option>`;
-    });
-
-    let html = `
-        <div id="${id}" class="saleOperation col-md-4 animate__animated animate__fadeIn">
-            <div>
-                <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">产品</label>
-                    <select onchange="showOperationInfo('${id}')" class="form-select" aria-label="Default select example">
-                        <option selected value="">选择产品</option>
-                        ${productOptions}
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="exampleFormControlTextarea1" class="form-label">数量<span></span></label>
-                    <input onchange="showOperationInfo('${id}')" type="number" class="form-control" placeholder="进货产品数量">
-                </div>
-                <div>
-                    <button class="btn btn-danger" onclick="deleteOperation('${id}')">删除</button>
-                </div>
-            </div>
-        </div>
-    `;
-
-    document.querySelector("#saleOperations").innerHTML += html;
-    countSelling();
 }
 
 function deleteOperation(id) {
@@ -301,8 +294,8 @@ async function submit(id) {
 
     document.querySelectorAll(".saleOperation").forEach(element => {
 
-        let productId = element.querySelector("select").value;
-        let num = element.querySelector("input").value;
+        let productId = element.querySelector(".product > input").value;
+        let num = element.querySelector(".productNum").value;
 
         let product = new Product("", 0, 0, "", "");
         product.id = productId;
@@ -361,37 +354,13 @@ async function submit(id) {
     getData();
 }
 
-async function showOperationInfo(id) {
-    showNum(id);
-    countSelling();
-}
-
-async function showNum(id) {
-    let operation = document.getElementById(id);
-    let productId = operation.querySelector("select").value;
-    if(!productId){
-        operation.querySelector("span").innerText = "";
-        return;
-    }
-    let product = await (await fetch(api + "/product/find?id=" + productId)).json();
-    operation.querySelector("span").innerText = `（剩余库存：${product.num}）`;
-}
-
 function countSelling() {
-
     let selling = 0;
-
     document.querySelectorAll(".saleOperation").forEach(ele => {
-
-        let productId = ele.querySelector("select").value;
-        let num = ele.querySelector("input").value;
-
-        ele.querySelectorAll("option").forEach(option => {
-            if(productId == option.value)
-                selling += Number(option.getAttribute("price")) * num;
-        });
+        let price = ele.querySelector(".product > input").getAttribute("price");
+        let num = ele.querySelector(".productNum").value;
+        selling += Number(price) * Number(num);
     });
-
     document.querySelector("#selling").value = selling;
 }
 
