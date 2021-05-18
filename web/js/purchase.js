@@ -98,17 +98,17 @@ async function addOperations() {
     });
 
     let html = `
-        <div id="${id}" class="col-md-4 purchaseOperation animate__animated animate__fadeIn">
+        <div id="${id}" class="purchaseOperation col-md-4 animate__animated animate__fadeIn">
             <div>
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">产品</label>
-                    <select class="form-select" aria-label="Default select example">
+                    <select onchange="showNum('${id}')" class="form-select" aria-label="Default select example">
                         <option selected value="">选择产品</option>
                         ${options}
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label for="exampleFormControlTextarea1" class="form-label">数量</label>
+                    <label for="exampleFormControlTextarea1" class="form-label">数量<span></span></label>
                     <input type="number" class="form-control" placeholder="进货产品数量">
                 </div>
                 <div>
@@ -119,6 +119,17 @@ async function addOperations() {
     `;
 
     document.querySelector("#purchaseOperations").innerHTML += html
+}
+
+async function showNum(id) {
+    let operation = document.getElementById(id);
+    let productId = operation.querySelector("select").value;
+    if(!productId){
+        operation.querySelector("span").innerText = "";
+        return;
+    }
+    let product = await (await fetch(api + "/product/find?id=" + productId)).json();
+    operation.querySelector("span").innerText = `（剩余库存：${product.num}）`;
 }
 
 async function modifyOrder(id) {

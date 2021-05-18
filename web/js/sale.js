@@ -174,14 +174,14 @@ async function modifyOrder(id) {
                 <div>
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">产品</label>
-                        <select onchange="countSelling()" class="form-select" aria-label="Default select example">
+                        <select onchange="showOperationInfo('${id}')" class="form-select" aria-label="Default select example">
                             <option value="">选择产品</option>
                             ${options}
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="exampleFormControlTextarea1" class="form-label">数量</label>
-                        <input onchange="countSelling()" type="number" class="form-control" placeholder="进货产品数量" value="${operation.num}">
+                        <label for="exampleFormControlTextarea1" class="form-label">数量<span>（剩余库存：${operation.product.num}）</span></label>
+                        <input onchange="showOperationInfo('${id}')" type="number" class="form-control" placeholder="进货产品数量" value="${operation.num}">
                     </div>
                     <div>
                         <button class="btn btn-danger" onclick="deleteOperation('${id}')">删除</button>
@@ -209,14 +209,14 @@ async function addOperations() {
             <div>
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">产品</label>
-                    <select onchange="countSelling()" class="form-select" aria-label="Default select example">
+                    <select onchange="showOperationInfo('${id}')" class="form-select" aria-label="Default select example">
                         <option selected value="">选择产品</option>
                         ${productOptions}
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label for="exampleFormControlTextarea1" class="form-label">数量</label>
-                    <input onchange="countSelling()" type="number" class="form-control" placeholder="进货产品数量">
+                    <label for="exampleFormControlTextarea1" class="form-label">数量<span></span></label>
+                    <input onchange="showOperationInfo('${id}')" type="number" class="form-control" placeholder="进货产品数量">
                 </div>
                 <div>
                     <button class="btn btn-danger" onclick="deleteOperation('${id}')">删除</button>
@@ -347,6 +347,22 @@ async function submit(id) {
     // 关闭模态框
     document.querySelector(".modal-header button").click();
     getData();
+}
+
+async function showOperationInfo(id) {
+    showNum(id);
+    countSelling();
+}
+
+async function showNum(id) {
+    let operation = document.getElementById(id);
+    let productId = operation.querySelector("select").value;
+    if(!productId){
+        operation.querySelector("span").innerText = "";
+        return;
+    }
+    let product = await (await fetch(api + "/product/find?id=" + productId)).json();
+    operation.querySelector("span").innerText = `（剩余库存：${product.num}）`;
 }
 
 function countSelling() {
