@@ -210,7 +210,7 @@ class SaleService:
         except:
             return[]
 
-    # 按用户查找销售订单
+    # 按用户查找未完成订单
     def findByUserWithState(self, id: str) -> list:
 
         try:

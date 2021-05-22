@@ -117,7 +117,7 @@ def find():
 
     return (result, 200)
 
-# 按用户查找销售信息
+# 按用户查找未完成订单
 @sale.route("findByUserWithState", methods=["get"])
 def findByUserWithState():
     saleService = SaleService()

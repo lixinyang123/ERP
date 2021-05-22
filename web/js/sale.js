@@ -2,10 +2,9 @@ var currentIndex = 1;
 var lastIndex = 0;
 
 async function getData() {
-    let res = await fetch(api + "/sale/index?page=" + currentIndex);
-    let results = await res.json();
-
+    let results = await (await fetch(api + "/sale/index?page=" + currentIndex)).json();
     lastIndex = results.lastIndex;
+
     showPagination();
     showData(results.sales)
 }
