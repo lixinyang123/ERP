@@ -26,7 +26,7 @@ class SaleService:
             for operation in order.saleOperations:
 
                 # 新增操作
-                paras = [operation.id, order.id, operation.product.id, operation.num]
+                paras = [operation.id, order.id, operation.product.id, operation.salePrice, operation.num]
                 cursor.execute(self.saleOperations.GetOperation("add"), paras)
                 
                 # 产品出库
@@ -116,7 +116,7 @@ class SaleService:
 
             for operation in order.saleOperations:
                 # 加入新操作
-                paras = [operation.id, order.id, operation.product.id, operation.num]
+                paras = [operation.id, order.id, operation.product.id, operation.salePrice, operation.num]
                 cursor.execute(self.saleOperations.GetOperation("add"), paras)
 
                 # 重新出库
@@ -165,8 +165,7 @@ class SaleService:
                     product = Product(result[1], result[2], float(result[3]), int(result[4]), result[5], result[6])
                     break
 
-                operations.append(ProductOperation(row[1], product, row[4]))
-            
+                operations.append(ProductOperation(row[1], product, row[4], row[5]))
 
             # 订单付款记录
             rows = cursor.execute(self.checkOuts.GetOperation("find"), [id]).fetchall()

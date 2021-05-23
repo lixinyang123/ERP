@@ -121,8 +121,12 @@ async function addOperations() {
                     </div>
                 </div>
                 <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label">售价<span></span></label>
+                    <input class="salePrice form-control" onchange="countSelling()" type="number" placeholder="产品销售单价" />
+                </div>
+                <div class="mb-3">
                     <label for="exampleFormControlTextarea1" class="form-label">数量<span></span></label>
-                    <input class="productNum form-control" onchange="countSelling()" type="number" placeholder="进货产品数量" />
+                    <input class="productNum form-control" onchange="countSelling()" type="number" placeholder="销售数量" />
                 </div>
                 <div>
                     <button class="btn btn-danger" onclick="deleteOperation('${id}')">删除</button>
@@ -143,7 +147,7 @@ function selectUser(id, name, notes) {
 function selectProduct(id, productId, name, num, price, notes) {
     let operation = document.getElementById(id);
     operation.querySelector(".product > input").value = productId;
-    operation.querySelector(".product > input").setAttribute("price", price)
+    operation.querySelector(".salePrice").value = price;
     operation.querySelector(".product > button").innerText = `${name}/${notes}（剩余库存：${num}）`;
 }
 
@@ -186,6 +190,10 @@ async function modifyOrder(id) {
                         </div>
                     </div>
                     <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">售价<span></span></label>
+                        <input class="salePrice form-control" onchange="countSelling()" type="number" placeholder="产品销售单价" value="${operation.salePrice}" />
+                    </div>
+                    <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">数量<span>（剩余库存：${operation.product.num}）</span></label>
                         <input class="productNum form-control" onchange="countSelling()" type="number" placeholder="进货产品数量" value="${operation.num}" />
                     </div>
@@ -205,7 +213,7 @@ function deleteOperation(id) {
 }
 
 function verifyOperation(operation) {
-    if(!operation.product || !operation.num)
+    if(!operation.product || !operation.salePrice || !operation.num)
         return false;
     return true;
 }
@@ -279,12 +287,13 @@ async function submit(id) {
     document.querySelectorAll(".saleOperation").forEach(element => {
 
         let productId = element.querySelector(".product > input").value;
+        let salePrice = element.querySelector(".salePrice").value;
         let num = element.querySelector(".productNum").value;
 
         let product = new Product("", 0, 0, "", "");
         product.id = productId;
 
-        let operation = new ProductOperation(product, num);
+        let operation = new ProductOperation(product, salePrice, num);
         if(!verifyOperation(operation))
             return;
 
@@ -341,7 +350,7 @@ async function submit(id) {
 function countSelling() {
     let selling = 0;
     document.querySelectorAll(".saleOperation").forEach(ele => {
-        let price = ele.querySelector(".product > input").getAttribute("price");
+        let price = ele.querySelector(".salePrice").value;
         let num = ele.querySelector(".productNum").value;
         selling += Number(price) * Number(num);
     });

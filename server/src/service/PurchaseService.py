@@ -21,7 +21,7 @@ class PurchaseService:
             cursor = self.conn.cursor()
 
             for operation in order.purchaseOperations:
-                paras = [operation.id, order.id, operation.product.id, operation.num]
+                paras = [operation.id, order.id, operation.product.id, operation.salePrice, operation.num]
                 cursor.execute(self.purchaseOperations.GetOperation("add"), paras)
 
             paras = [order.id, order.time, order.state]
@@ -66,7 +66,7 @@ class PurchaseService:
             cursor.execute(self.purchaseOperations.GetOperation("delete"), [order.id])
 
             for operation in order.purchaseOperations:
-                paras = [operation.id, order.id, operation.product.id, operation.num]
+                paras = [operation.id, order.id, operation.product.id, operation.salePrice, operation.num]
                 cursor.execute(self.purchaseOperations.GetOperation("add"), paras)
 
             paras = [order.state, order.id]
@@ -96,7 +96,7 @@ class PurchaseService:
                     product = Product(result[1], result[2], float(result[3]), int(result[4]), result[5], result[6])
                     break
 
-                operations.append(ProductOperation(row[1], product, row[4]))
+                operations.append(ProductOperation(row[1], product, row[4], row[5]))
 
             orders = cursor.execute(self.purchaseOrders.GetOperation("find"), [id])
 

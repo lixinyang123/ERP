@@ -79,7 +79,7 @@
 
     <purchaseOperations>
         <add>
-            INSERT INTO purchaseOperations (purchaseoperationid, purchaseOrderId, productId, num) VALUES (?, ?, ?, ?);
+            INSERT INTO purchaseOperations (purchaseoperationid, purchaseOrderId, productId, salePrice, num) VALUES (?, ?, ?, ?, ?);
         </add>
 
         <delete>
@@ -131,7 +131,7 @@
 
     <saleOperations>
         <add>
-            INSERT INTO saleOperations (saleoperationid, saleOrderId, productId, num) VALUES (?, ?, ?, ?);
+            INSERT INTO saleOperations (saleoperationid, saleOrderId, productId, salePrice, num) VALUES (?, ?, ?, ?, ?);
         </add>
         
         <delete>

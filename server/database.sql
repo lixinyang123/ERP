@@ -6,8 +6,8 @@ CREATE TABLE products (
     productid CHAR(36) NOT NULL ,
     -- 名称
     name VARCHAR(10) NOT NULL ,
-    -- 价格
-    price DOUBLE NOT NULL ,
+    -- 进价
+    price FLOAT NOT NULL ,
     -- 库存数量
     num INTEGER NOT NULL ,
     -- 规格
@@ -57,6 +57,8 @@ CREATE TABLE purchaseOperations (
     purchaseOrderId CHAR(36) NOT NULL ,
     -- 商品ID
     productId CHAR(36) NOT NULL ,
+    -- 售价
+    salePrice FLOAT NOT NULL ,
     -- 操作数量
     num INTEGER NOT NULL ,
     -- 外键
@@ -78,7 +80,7 @@ CREATE TABLE saleOrders (
     -- 用户ID
     userId CHAR(36) NOT NULL ,
     -- 售价
-    selling DOUBLE NOT NULL ,
+    selling FLOAT NOT NULL ,
     -- 外键
     FOREIGN KEY (userId) REFERENCES users(id) 
 );
@@ -94,6 +96,8 @@ CREATE TABLE saleOperations (
     saleOrderId CHAR(36) NOT NULL ,
     -- 商品ID
     productId CHAR(36) NOT NULL ,
+    -- 售价
+    salePrice FLOAT NOT NULL ,
     -- 操作数量
     num INTEGER NOT NULL ,
     -- 外键
@@ -113,7 +117,7 @@ CREATE TABLE checkOuts (
     -- 时间
     time DATETIME NOT NULL ,
     -- 付款金额
-    amount DOUBLE NOT NULL ,
+    amount FLOAT NOT NULL ,
     -- 外键
     FOREIGN KEY (saleOrderId) REFERENCES saleOrders(id) 
 );

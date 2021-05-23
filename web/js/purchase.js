@@ -193,7 +193,7 @@ async function submit(id) {
         let product = new Product("", 0, 0, "", "");
         product.id = productId;
 
-        let operation = new ProductOperation(product, num);
+        let operation = new ProductOperation(product, 0, num);
         if(!verifyOperation(operation))
             return;
 

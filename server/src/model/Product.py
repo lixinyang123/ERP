@@ -6,7 +6,7 @@ class Product:
         self.id: str = id
         # 名称
         self.name: str = name
-        # 价格
+        # 进价
         self.price: float = price
         # 库存数量
         self.num: int = num

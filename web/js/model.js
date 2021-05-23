@@ -20,9 +20,10 @@ class User {
 }
 
 class ProductOperation {
-    constructor(product, num) {
+    constructor(product, salePrice, num) {
         this.id = "",
         this.product = product,
+        this.salePrice = salePrice,
         this.num = num
     }
 }
