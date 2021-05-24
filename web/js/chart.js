@@ -11,7 +11,7 @@ async function showCharts() {
     showMoney(sales, purchases);
 }
 
-function getData(sales, purchases) {
+function getDates(sales, purchases) {
     let labels = [];
     sales.forEach(sale => {
         let time = sale.time.substring(0, 10);
@@ -94,7 +94,7 @@ function getSaleData(sales, labels) {
 
 function showMoney(sales, purchases) {
 
-    let dates = getData(sales, purchases);
+    let dates = getDates(sales, purchases);
 
     let config = {
         type: 'line',
