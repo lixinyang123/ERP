@@ -121,7 +121,7 @@ class SaleService:
 
             for operation in order.saleOperations:
                 # 加入新操作
-                paras = [operation.id, order.id, operation.product.id, operation.salePrice, operation.num]
+                paras = [str(uuid.uuid4()), order.id, operation.product.id, operation.salePrice, operation.num]
                 cursor.execute(self.saleOperations.GetOperation("add"), paras)
 
                 # 重新出库

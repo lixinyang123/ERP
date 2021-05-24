@@ -1,3 +1,4 @@
+import uuid
 from service.DbService import *
 from model import *
 
@@ -66,7 +67,7 @@ class PurchaseService:
             cursor.execute(self.purchaseOperations.GetOperation("delete"), [order.id])
 
             for operation in order.purchaseOperations:
-                paras = [operation.id, order.id, operation.product.id, operation.salePrice, operation.num]
+                paras = [str(uuid.uuid4()), order.id, operation.product.id, operation.salePrice, operation.num]
                 cursor.execute(self.purchaseOperations.GetOperation("add"), paras)
 
             paras = [order.state, order.id]
