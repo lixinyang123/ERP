@@ -145,10 +145,12 @@ function switchTheme() {
         DarkReader.setFetchMethod(window.fetch);
         DarkReader.enable();
         localStorage.setItem("isDark", "true");
+        document.querySelector("#darkMode label").innerText = "关闭";
     }
     else{
         DarkReader.disable();
         localStorage.removeItem("isDark");
+        document.querySelector("#darkMode label").innerText = "开启";
     }
 }
 
@@ -173,6 +175,7 @@ function init(){
     if(localStorage.getItem("isDark")) {
         DarkReader.setFetchMethod(window.fetch);
         DarkReader.enable();
+        document.querySelector("#darkMode label").innerText = "关闭";
     }
 }
 
