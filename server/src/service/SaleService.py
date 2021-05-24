@@ -72,12 +72,14 @@ class SaleService:
             if not order.state:
             
                 for operation in order.saleOperations:
-                    product = operation.product
-                    num = product.num + operation.num
+                    product = None
+                    rows = cursor.execute(self.products.GetOperation("find"), [operation.product.id])
+                    for row in rows:
+                        product = Product(row[1], row[2], float(row[3]), int(row[4]) + operation.num, row[5], row[6])
 
-                    paras = [product.name, product.price, num, product.specifications, product.notes, product.id]
+                    paras = [product.name, product.price, product.num, product.specifications, product.notes, product.id]
                     rows = cursor.execute(self.products.GetOperation("modify"), paras)
-            
+
             # 删除此订单的进出库和结账记录
             cursor.execute(self.checkOuts.GetOperation("delete"), [id])
             cursor.execute(self.saleOperations.GetOperation("delete"), [id])
@@ -108,10 +110,13 @@ class SaleService:
 
             # 重新进库
             for operation in currentOrder.saleOperations:
-                product = operation.product
-                num = product.num + operation.num
 
-                paras = [product.name, product.price, num, product.specifications, product.notes, product.id]
+                product = None
+                rows = cursor.execute(self.products.GetOperation("find"), [operation.product.id])
+                for row in rows:
+                    product = Product(row[1], row[2], float(row[3]), int(row[4]) + operation.num, row[5], row[6])
+
+                paras = [product.name, product.price, product.num, product.specifications, product.notes, product.id]
                 rows = cursor.execute(self.products.GetOperation("modify"), paras)
 
             for operation in order.saleOperations:
