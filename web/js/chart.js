@@ -7,8 +7,9 @@ function randomColor() {
 async function showCharts() {
     let sales = (await (await fetch(api + "/sale/index?page=1")).json()).sales;
     let purchases = (await (await fetch(api + "/purchase/index?page=1")).json()).purchases;
-    showProduct(sales);
     showMoney(sales, purchases);
+    showProduct(sales);
+    showUser(sales);
 }
 
 function getDates(sales, purchases) {
@@ -54,7 +55,7 @@ function getPurchaseData(purchases, labels) {
     }
 
     return {
-        label: '支出',
+        label: "支出",
         backgroundColor: "green",
         borderColor: "green",
         data: datas,
@@ -85,7 +86,7 @@ function getSaleData(sales, labels) {
     }
 
     return {
-        label: '销售',
+        label: "销售",
         backgroundColor: "red",
         borderColor: "red",
         data: datas,
@@ -97,7 +98,7 @@ function showMoney(sales, purchases) {
     let dates = getDates(sales, purchases);
 
     let config = {
-        type: 'line',
+        type: "line",
         data: {
             labels: dates,
             datasets: [
@@ -135,11 +136,11 @@ function showProduct(sales) {
     });
 
     let config = {
-        type: 'doughnut',
+        type: "doughnut",
         data: {
             labels: labels,
             datasets: [{
-                label: '产品销售状况',
+                label: "产品销售状况",
                 data: datas,
                 backgroundColor: backgroundColors,
                 hoverOffset: 4
@@ -148,6 +149,42 @@ function showProduct(sales) {
     };
 
     new Chart(document.querySelector("#product"), config);
+}
+
+function showUser(sales) {
+
+    let labels = [];
+    let datas = [];
+    let backgroundColors = [];
+
+    for(let i=0; i<sales.length; i++) {
+        let sale = sales[i];
+        let index = labels.indexOf(sale.user.name);
+
+        if(index < 0) {
+            labels.push(sale.user.name);
+            datas.push(getAmounted(sale.checkOuts));
+            backgroundColors.push(randomColor());
+        }
+        else {
+            datas[index] += getAmounted(sale.checkOuts);
+        }
+    }
+
+    let config = {
+        type: "bar",
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "用户消费情况",
+                data: datas,
+                backgroundColor: backgroundColors,
+                hoverOffset: 4
+            }]
+        },
+    };
+
+    new Chart(document.querySelector("#user"), config);
 }
 
 showCharts();

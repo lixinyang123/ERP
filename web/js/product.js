@@ -9,7 +9,7 @@ function addProduct() {
                 <input id="product-name" type="text" class="form-control" placeholder="输入产品名称">
             </div>
             <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label">价格</label>
+                <label for="exampleFormControlTextarea1" class="form-label">进价</label>
                 <input id="product-price" type="number" class="form-control" placeholder="0">
             </div>
             <div class="mb-3">
@@ -55,7 +55,7 @@ function showData(products) {
                         <h5 class="card-title">名称：${product.name}</h5>
                         <hr/>
                         <p class="card-text">库存：${product.num}</p>
-                        <p class="card-text">价格：${product.price}</p>
+                        <p class="card-text">进价：${product.price}</p>
                         <p class="card-text">规格：${product.specifications}</p>
                         <p class="card-text">备注：${product.notes}</p>
                         <button class="btn btn-warning" onclick="modifyProduct('${product.id}')" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">编辑</button>
@@ -131,7 +131,7 @@ async function modifyProduct(id) {
                 <input id="product-name" type="text" class="form-control" placeholder="输入产品名称" value="${product.name}">
             </div>
             <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label">价格</label>
+                <label for="exampleFormControlTextarea1" class="form-label">进价</label>
                 <input id="product-price" type="number" class="form-control" placeholder="0" value="${product.price}">
             </div>
             <div class="mb-3">
