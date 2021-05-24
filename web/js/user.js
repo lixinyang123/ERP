@@ -58,7 +58,7 @@ function showData(users) {
         let html = `
             <div class="col-md-12 animate__animated animate__bounceIn">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body text-center">
                         <div class="row">
                             <div class="col-md-4"><p>姓名：${user.name}</p></div>
                             <div class="col-md-4"><p>电话：${user.tel}</p></div>
