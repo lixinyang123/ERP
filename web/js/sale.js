@@ -2,11 +2,18 @@ var currentIndex = 1;
 var lastIndex = 0;
 
 async function getData() {
+    let paras = location.href.substring(location.href.indexOf("#"), location.href.length).split("/");
+
+    if (paras.length == 2) {
+        let results = await (await fetch(api + "/sale/findByUserWithState?id=" + paras[1])).json();
+        showData(results);
+        return;
+    }
+
     let results = await (await fetch(api + "/sale/index?page=" + currentIndex)).json();
     lastIndex = results.lastIndex;
-
     showPagination();
-    showData(results.sales)
+    showData(results.sales);
 }
 
 function showData(sales) {

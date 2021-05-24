@@ -60,12 +60,19 @@ function showData(users) {
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-2"><p>姓名：${user.name}</p></div>
-                            <div class="col-md-2"><p>电话：${user.tel}</p></div>
-                            <div class="col-md-2"><p>地址：${user.address}</p></div>
-                            <div class="col-md-1"><p>备注：${user.notes}</p></div>
-                            <div class="col-md-3"><p>未完成订单：${sales.length}（待付：${price - amounted}）</p></div>
-                            <div class="col-md-2">
+                            <div class="col-md-4"><p>姓名：${user.name}</p></div>
+                            <div class="col-md-4"><p>电话：${user.tel}</p></div>
+                            <div class="col-md-4"><p>地址：${user.address}</p></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <p>未完成订单：${sales.length}（待付：${price - amounted}）</p>
+                            </div>
+                            <div class="col-md-4">
+                                <p>备注：${user.notes}</p>
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn btn-info" onclick="navigation('sale/${user.id}')">订单</button>    
                                 <button class="btn btn-danger" onclick="deleteUser('${user.id}')">删除</button>
                                 <button class="btn btn-warning" onclick="modifyUser('${user.id}')" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">编辑</button>
                             </div>
