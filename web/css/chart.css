@@ -1,11 +1,18 @@
 .myChart {
-    max-height: 20rem;
-    padding: 20px;
     margin-bottom: 30px;
+}
+
+.myChart div {
+    height: 100%;
+    padding: 20px;
     border: 1px solid rgba(0, 0, 0, 0.125);
     border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0px 0px;
 }
 
-.myChart:hover {
+.myChart canvas {
+    max-height: 20rem;
+}
+
+.myChart div:hover {
     box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.25);
 }

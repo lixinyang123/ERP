@@ -139,30 +139,13 @@ function jumpToIndex(index) {
     getData();
 }
 
-function switchTheme() {
-    let isDark = localStorage.getItem("isDark");
-    if(!isDark) {
-        DarkReader.setFetchMethod(window.fetch);
-        DarkReader.enable();
-        localStorage.setItem("isDark", "true");
-        document.querySelector("#darkMode label").innerText = "关闭";
-    }
-    else{
-        DarkReader.disable();
-        localStorage.removeItem("isDark");
-        document.querySelector("#darkMode label").innerText = "开启";
-    }
-}
-
 function init(){
-
     //初始化导航
     window.onpopstate = (e)=>{
         navigation(e.state.page, true);
     }
 
     let href = window.location.href;
-
     //导航到指定页面
     if(href.includes("#")){
         let page = href.substring(href.indexOf("#")+1);
@@ -170,12 +153,6 @@ function init(){
     }
     else{
         navigation("home");
-    }
-
-    if(localStorage.getItem("isDark")) {
-        DarkReader.setFetchMethod(window.fetch);
-        DarkReader.enable();
-        document.querySelector("#darkMode label").innerText = "关闭";
     }
 }
 
