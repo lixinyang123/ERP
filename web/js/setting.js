@@ -9,13 +9,26 @@ function switchTheme() {
         DarkReader.disable();
         localStorage.removeItem("isDark");
     }
+    toast("保存成功", "主题保存成功");
 }
 
-function initSettings() {
-    if(localStorage.getItem("isDark")) {
-        DarkReader.setFetchMethod(window.fetch);
-        DarkReader.enable();
+function setProductWarning() {
+    let warningNum = document.querySelector("#productWarning").value;
+
+    if(!warningNum || isNaN(warningNum)) {
+        toast("保存失败", "库存警告不合法");
+        return;
     }
+
+    localStorage.setItem("productWarning", warningNum);
+    toast("保存成功", "库存警告保存成功");
 }
 
-initSettings();
+function getSettings() {
+    let productWarning = localStorage.getItem("productWarning");
+    if(!productWarning) {
+        productWarning = 10;
+        localStorage.setItem("productWarning", productWarning);
+    }
+    document.querySelector("#productWarning").value = productWarning;
+}

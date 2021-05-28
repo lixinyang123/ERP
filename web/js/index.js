@@ -154,6 +154,12 @@ function init(){
     else{
         navigation("home");
     }
+
+    // 初始化主题
+    if(localStorage.getItem("isDark")) {
+        DarkReader.setFetchMethod(window.fetch);
+        DarkReader.enable();
+    }
 }
 
 init();

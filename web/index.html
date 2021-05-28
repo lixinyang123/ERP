@@ -59,7 +59,7 @@
                     </a>
                 </li>
                 <li class="nav-item px-3">
-                    <a class="nav-link" data-bs-toggle="offcanvas" data-bs-target="#settings" aria-controls="offcanvasRight">
+                    <a class="nav-link" data-bs-toggle="offcanvas" data-bs-target="#settings" aria-controls="offcanvasRight" onclick="getSettings()">
                         <span class="oi oi-cog"></span> 设置
                     </a>
                 </li>
@@ -139,7 +139,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">库存过低警告</label>
-                    <input type="number" class="form-control" placeholder="库存最低数量" />
+                    <input id="productWarning" type="number" class="form-control" placeholder="库存最低数量" onchange="setProductWarning()"/>
                 </div>
             </div>
         </div>
