@@ -1,0 +1,24 @@
+{
+  "name": "erp.web",
+  "version": "1.0.0",
+  "description": "erp web client",
+  "main": "index.js",
+  "scripts": {
+    "run": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lixinyang123/ERP.git"
+  },
+  "keywords": [
+    "erp",
+    "web",
+    "client"
+  ],
+  "author": "lllxy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lixinyang123/ERP/issues"
+  },
+  "homepage": "https://github.com/lixinyang123/ERP#readme"
+}

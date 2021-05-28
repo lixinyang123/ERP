@@ -12,7 +12,7 @@ async function navigation(name,isBack = false){
     window.scrollTo(0,0);
     loadingState(true);
     document.querySelector("#main").innerHTML = "";
-    let url = "/view/" + name.split("/")[0] + ".html";
+    let url = "./view/" + name.split("/")[0] + ".html";
 
     let response = await fetch(url);
 
