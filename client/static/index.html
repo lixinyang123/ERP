@@ -20,7 +20,7 @@
     <div class="sidebar">
 
         <div class="top-row pl-4 navbar fix-top navbar-light bg-light p-3">
-            <h1 id="title">Enterprise Resource Planning</h1>
+            <h1 id="title" class="themeColor">Enterprise Resource Planning</h1>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -29,32 +29,32 @@
         <div class="collapse navbar-collapse" id="navbar">
             <ul class="nav flex-column">
                 <li class="nav-item px-3">
-                    <a class="nav-link" onclick="navigation('home')">
+                    <a class="nav-link themeColor home" onclick="navigation('home')">
                         <span class="oi oi-home"></span> 主页
                     </a>
                 </li>
                 <li class="nav-item px-3">
-                    <a class="nav-link" onclick="navigation('product')">
+                    <a class="nav-link themeColor product" onclick="navigation('product')">
                         <span class="oi oi-list-rich"></span> 产品
                     </a>
                 </li>
                 <li class="nav-item px-3">
-                    <a class="nav-link" onclick="navigation('user')">
+                    <a class="nav-link themeColor user" onclick="navigation('user')">
                         <span class="oi oi-people"></span> 用户
                     </a>
                 </li>
                 <li class="nav-item px-3">
-                    <a class="nav-link" onclick="navigation('purchase')">
+                    <a class="nav-link themeColor purchase" onclick="navigation('purchase')">
                         <span class="oi oi-script"></span> 进货
                     </a>
                 </li>
                 <li class="nav-item px-3">
-                    <a class="nav-link" onclick="navigation('sale')">
+                    <a class="nav-link themeColor sale" onclick="navigation('sale')">
                         <span class="oi oi-credit-card"></span> 销售
                     </a>
                 </li>
                 <li class="nav-item px-3">
-                    <a class="nav-link" data-bs-toggle="offcanvas" data-bs-target="#settings" aria-controls="offcanvasRight" onclick="getSettings()">
+                    <a class="nav-link themeColor" data-bs-toggle="offcanvas" data-bs-target="#settings" aria-controls="offcanvasRight" onclick="getSettings()">
                         <span class="oi oi-cog"></span> 设置
                     </a>
                 </li>
@@ -135,12 +135,12 @@
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">主题色</label>
                     <div class="row">
-                        <div class="col themeColor themeColor-red"></div>
-                        <div class="col themeColor themeColor-yellow"></div>
-                        <div class="col themeColor themeColor-blue"></div>
-                        <div class="col themeColor themeColor-green"></div>
-                        <div class="col themeColor themeColor-purple"></div>
-                        <div class="col themeColor themeColor-orange"></div>
+                        <div class="col colorPicker colorPicker-red" onclick="changeColor('orangered')"></div>
+                        <div class="col colorPicker colorPicker-yellow" onclick="changeColor('yellow')"></div>
+                        <div class="col colorPicker colorPicker-blue" onclick="changeColor('blue')"></div>
+                        <div class="col colorPicker colorPicker-green" onclick="changeColor('green')"></div>
+                        <div class="col colorPicker colorPicker-purple" onclick="changeColor('purple')"></div>
+                        <div class="col colorPicker colorPicker-orange" onclick="changeColor('orange')"></div>
                     </div>
                 </div>
                 <div class="mb-3">

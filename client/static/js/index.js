@@ -24,11 +24,19 @@ async function navigation(name,isBack = false){
         if(!isBack)
             history.pushState({page: name}, name, url);
         loadingState(false);
+        showNavState();
     }
     else{
         navigation("notfound");
         loadingState(false);
     }
+}
+
+function showNavState() {
+    let themeColor = localStorage.getItem("themeColor");
+    if(!themeColor)
+        themeColor = "blue";
+    setThemeColor(themeColor);
 }
 
 function loadingState(flag){

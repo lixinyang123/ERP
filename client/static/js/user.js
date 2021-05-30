@@ -56,7 +56,7 @@ async function showData(users) {
 
         let warningLevel = "alert-success";
         if(sales.length > 0)
-            warningLevel = "alert-danger";
+            warningLevel = "alert-warning";
 
         let html = `
             <div class="col-md-12 animate__animated animate__bounceIn">
