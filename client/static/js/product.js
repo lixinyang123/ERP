@@ -47,9 +47,11 @@ function showData(products) {
 
     products.forEach(product => {
 
-        let warningLevel = "alert-warning";
+        let warningLevel = "alert-success";
         if(product.num <= Math.floor(warningNum/2))
             warningLevel = "alert-danger";
+        else if(product.num <= warningNum)
+            warningLevel = "alert-warning";
 
         let html = `
             <div class="col-md-4 animate__animated animate__bounceIn">
