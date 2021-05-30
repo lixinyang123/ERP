@@ -133,6 +133,17 @@
                     <button class="btn btn-primary" onclick="switchTheme()">切换夜间模式</button>
                 </div>
                 <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">主题色</label>
+                    <div class="row">
+                        <div class="col themeColor themeColor-red"></div>
+                        <div class="col themeColor themeColor-yellow"></div>
+                        <div class="col themeColor themeColor-blue"></div>
+                        <div class="col themeColor themeColor-green"></div>
+                        <div class="col themeColor themeColor-purple"></div>
+                        <div class="col themeColor themeColor-orange"></div>
+                    </div>
+                </div>
+                <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">库存过低警告</label>
                     <input id="productWarning" type="number" class="form-control" placeholder="库存最低数量" onchange="setProductWarning()"/>
                 </div>

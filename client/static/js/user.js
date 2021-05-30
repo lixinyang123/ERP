@@ -33,49 +33,50 @@ async function getData() {
     lastIndex = results.lastIndex;
 
     showPagination();
-    await showData(results.users)
+    showData(results.users)
 }
 
-function showData(users) {
+async function showData(users) {
 
     document.querySelector("#users").innerHTML = null;
-
-    users.forEach(async user => {
-
+    
+    for (let i=0; i<users.length; i++) {
+        
+        let user = users[i];
         let sales = await (await fetch(api + "/sale/findByUserWithState?id=" + user.id)).json();
         
         let price = 0, amounted = 0
-
         sales.forEach(sale => {
             price += sale.selling;
-
             // Get Amount
             sale.checkOuts.forEach(ele => {
                 amounted += ele.amount;
             });
         });
 
+        let warningLevel = "alert-success";
+        if(sales.length > 0)
+            warningLevel = "alert-danger";
+
         let html = `
             <div class="col-md-12 animate__animated animate__bounceIn">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <div class="row">
-                            <div class="col-md-4"><p>姓名：${user.name}</p></div>
-                            <div class="col-md-4"><p>电话：${user.tel}</p></div>
-                            <div class="col-md-4"><p>地址：${user.address}</p></div>
+                <div class="alert ${warningLevel}">
+                    <div class="row">
+                        <div class="col-md-4"><p>姓名：${user.name}</p></div>
+                        <div class="col-md-4"><p>电话：${user.tel}</p></div>
+                        <div class="col-md-4"><p>地址：${user.address}</p></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p>未完成订单：${sales.length}（待付：${price - amounted}）</p>
                         </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <p>未完成订单：${sales.length}（待付：${price - amounted}）</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p>备注：${user.notes}</p>
-                            </div>
-                            <div class="col-md-4">
-                                <button class="btn btn-info" onclick="navigation('sale/${user.id}')">订单</button>    
-                                <button class="btn btn-danger" onclick="deleteUser('${user.id}')">删除</button>
-                                <button class="btn btn-warning" onclick="modifyUser('${user.id}')" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">编辑</button>
-                            </div>
+                        <div class="col-md-4">
+                            <p>备注：${user.notes}</p>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-info" onclick="navigation('sale/${user.id}')">订单</button>    
+                            <button class="btn btn-danger" onclick="deleteUser('${user.id}')">删除</button>
+                            <button class="btn btn-warning" onclick="modifyUser('${user.id}')" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">编辑</button>
                         </div>
                     </div>
                 </div>
@@ -83,7 +84,7 @@ function showData(users) {
         `;
 
         document.querySelector("#users").innerHTML += html;
-    });
+    }
 }
 
 async function deleteUser(id) {

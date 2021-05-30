@@ -43,12 +43,18 @@ async function getData() {
 function showData(products) {
 
     document.querySelector("#products").innerHTML = null;
+    let warningNum = Number(localStorage.getItem("productWarning"));
 
     products.forEach(product => {
+
+        let warningLevel = "alert-warning";
+        if(product.num <= Math.floor(warningNum/2))
+            warningLevel = "alert-danger";
+
         let html = `
             <div class="col-md-4 animate__animated animate__bounceIn">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header alert ${warningLevel}">
                         ID：${product.id}
                     </div>
                     <div class="card-body">
