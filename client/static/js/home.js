@@ -1,3 +1,24 @@
+async function getWarning() {
+    let warningNum = Number(localStorage.getItem("productWarning"));
+    let products = (await (await fetch(api + `/product/findWarning?num=${warningNum}`)).json());
+
+    products.forEach(product => {
+        let warningLevel = "alert-warning";
+        if(product.num <= Math.floor(warningNum/2))
+            warningLevel = "alert-danger";
+
+        let html = `
+            <div class="alert ${warningLevel}">
+                <div class="row text-center">
+                    <div class="col-md-6"><p>名称：${product.name}</p></div>
+                    <div class="col-md-6"><p>数量：${product.num}</p></div>
+                </div>
+            </div>
+        `;
+        document.querySelector("#warningProducts").innerHTML += html;
+    });
+}
+
 function randomColor() {
     let colors = ["red", "yellow", "blue", "green", "pink", "orange", "grey", "purple", "orangered"];
     let index = Math.round(Math.random() * (colors.length - 1));
@@ -188,3 +209,4 @@ function showUser(sales) {
 }
 
 showCharts();
+getWarning();

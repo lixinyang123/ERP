@@ -105,3 +105,22 @@ def find():
     productService.dispose()
 
     return (result, 200)
+
+# 查找库存不足产品
+@product.route("findWarning", methods=["get"])
+def findWarning():
+    productService = ProductService()
+
+    num = request.args.get("num")
+    if num is None:
+        return None
+    
+    products = productService.findWarning(int(num))
+    
+    result = []
+    for product in products:
+        result.append(product.dicted())
+
+    productService.dispose()
+
+    return (json.dumps(result), 200)

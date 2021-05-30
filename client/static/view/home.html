@@ -1,4 +1,39 @@
+<link rel="stylesheet" href="./css/home.css" />
+<script src="./js/home.js"></script>
+
 <div class="container animate__animated animate__fadeIn">
     <h1 class="display-4">主页</h1>
     <hr/>
+
+    <div class="row">
+
+        <div class="col-md-6 info">
+            <div>
+                <p>库存不足</p>
+                <div id="warningProducts" class="overflow-auto"></div>
+            </div>
+        </div>
+
+        <div class="col-md-6 info">
+            <div>
+                <p>近期订单金额</p>
+                <canvas id="money"></canvas>
+            </div>
+        </div>
+
+        <div class="col-md-6 info">
+            <div>
+                <p>近期销售产品</p>
+                <canvas id="product"></canvas>
+            </div>
+        </div>
+
+        <div class="col-md-6 info">
+            <div>
+                <p>近期用户消费</p>
+                <canvas id="user"></canvas>
+            </div>
+        </div>
+
+    </div>
 </div>

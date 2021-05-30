@@ -20,6 +20,10 @@
             SELECT * FROM products order by id desc LIMIT ?,?;
         </list>
 
+        <findWarning>
+            SELECT * FROM products WHERE num &lt;= ? order by id desc;
+        </findWarning>
+
         <count>
             SELECT count(*) FROM products;
         </count>

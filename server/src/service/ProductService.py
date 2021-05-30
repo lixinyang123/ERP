@@ -113,6 +113,20 @@ class ProductService:
         except:
             return []
 
+    def findWarning(self, warningNum: int) -> list:
+
+        try:
+            cursor = self.conn.cursor()
+
+            results = list()
+            rows = cursor.execute(self.products.GetOperation("findWarning"), [warningNum]).fetchall()
+            for row in rows:
+                results.append(Product(row[1], row[2], float(row[3]), int(row[4]), row[5], row[6]))
+
+            return results
+        except:
+            return []
+
     # 获取产品信息数量
     def count(self) -> int:
 
