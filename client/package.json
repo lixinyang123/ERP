@@ -4,7 +4,7 @@
   "description": "erp web client",
   "main": "index.js",
   "scripts": {
-    "run": "electron ."
+    "run": "node_modules/electron/dist/electron ."
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,9 @@
   "bugs": {
     "url": "https://github.com/lixinyang123/ERP/issues"
   },
-  "homepage": "https://github.com/lixinyang123/ERP#readme"
+  "homepage": "https://github.com/lixinyang123/ERP#readme",
+  "devDependencies": {
+    "electron": "^13.0.1",
+    "electron-packager": "^15.2.0"
+  }
 }

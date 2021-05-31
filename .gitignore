@@ -5,3 +5,4 @@ __pycache__
 TestData.txt
 dist
 build
+node_modules
