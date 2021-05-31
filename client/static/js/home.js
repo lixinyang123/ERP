@@ -1,6 +1,13 @@
 async function getWarning() {
     let warningNum = Number(localStorage.getItem("productWarning"));
     let products = (await (await fetch(api + `/product/findWarning?num=${warningNum}`)).json());
+    
+    if(products.length <= 0) {
+        document.querySelector("#warningProducts").innerHTML = `
+            <p class="display-6 text-center">无库存不足</p>
+        `;
+        return;
+    }
 
     products.forEach(product => {
         let warningLevel = "alert-warning";
@@ -153,8 +160,16 @@ function showProduct(sales) {
                 datas[index] += operation.num;
             }
         }
-
     });
+
+    if(labels.length <= 0) {
+        let ele = document.createElement("p");
+        ele.className = "display-6 text-center mt-10";
+        ele.innerText = "无近期订单";
+        document.querySelector("#product").parentElement.appendChild(ele);
+        document.querySelector("#product").remove();
+        return;
+    }
 
     let config = {
         type: "doughnut",
