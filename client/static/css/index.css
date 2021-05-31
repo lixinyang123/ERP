@@ -62,12 +62,12 @@ body {
     display: flex;
     align-items: center;
     line-height: 3rem;
+    transition: transform 0.2s ease-out 0s;
 }
 
-/* .sidebar .nav-item a:hover {
-    background-color: blue;
-    color: white;
-} */
+.sidebar .nav-item a:hover {
+    transform: scale(1.1);
+}
 
 @media (min-width: 892px) {
 
