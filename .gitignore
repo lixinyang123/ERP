@@ -3,3 +3,5 @@ erp.db
 __pycache__
 .venv
 TestData.txt
+dist
+build
