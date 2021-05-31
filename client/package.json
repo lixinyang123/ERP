@@ -4,8 +4,8 @@
   "description": "erp web client",
   "main": "index.js",
   "scripts": {
-    "start": "node_modules/electron/dist/electron .",
-    "build": "electron-builder"
+    "start": "node_modules/.bin/electron .",
+    "build": "node_modules/.bin/electron-builder"
   },
   "repository": {
     "type": "git",
@@ -54,6 +54,10 @@
     },
     "extends": null,
     "asar": true,
+    "extraResources": {
+      "from": "./resource/server",
+      "to": "server"
+    },
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
