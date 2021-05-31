@@ -37,12 +37,12 @@
     "appId": "conchbrain.huahua.erp",
     "copyright":"ConchBrain",
     "productName":"ERP",
-    "dmg":{  
-      "window":{  
+    "dmg":{
+      "window":{
 		    "x":100,
-        "y":100,  
-        "width":500,  
-        "height":300  
+        "y":100,
+        "width":500,
+        "height":300
       }
     }
   }
