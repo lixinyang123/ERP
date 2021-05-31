@@ -4,7 +4,8 @@
   "description": "erp web client",
   "main": "index.js",
   "scripts": {
-    "run": "node_modules/electron/dist/electron ."
+    "run": "node_modules/electron/dist/electron .",
+    "build": "node_modules/electron-packager/bin/electron-packager.js ."
   },
   "repository": {
     "type": "git",
@@ -24,5 +25,12 @@
   "devDependencies": {
     "electron": "^13.0.1",
     "electron-packager": "^15.2.0"
+  },
+  "dependencies": {
+    "animate.css": "^4.1.1",
+    "bootstrap": "^5.0.1",
+    "chart.js": "^3.3.2",
+    "darkreader": "^4.9.32",
+    "open-iconic": "^1.1.1"
   }
 }
