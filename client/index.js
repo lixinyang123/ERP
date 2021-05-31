@@ -3,7 +3,7 @@ const child_process = require("child_process");
 const fs = require("fs");
 
 const server = child_process.execFile("./main", { 
-    cwd: "./resource/server"
+    cwd: "./resources/server"
 }, (err, stdout, stderr) => {
     if(err || stderr) {
         let log = `error: ${err} \n stdout: ${stdout} \n stderr: ${stderr}`;

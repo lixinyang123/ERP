@@ -55,7 +55,7 @@
     "extends": null,
     "asar": true,
     "extraResources": {
-      "from": "./resource/server",
+      "from": "./resources/server",
       "to": "server"
     },
     "nsis": {
