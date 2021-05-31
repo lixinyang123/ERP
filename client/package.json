@@ -16,7 +16,8 @@
     "web",
     "client"
   ],
-  "author": "lllxy",
+  "author": "lllxy <conchbrain@outlook.com>",
+  "email": "conchbrain@outlook.com",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/lixinyang123/ERP/issues"
@@ -48,7 +49,7 @@
     },
     "linux": {
       "target": [
-        "AppImage"
+        "deb"
       ],
       "icon": "./icon.png"
     },
@@ -63,7 +64,8 @@
       "allowToChangeInstallationDirectory": true,
       "installerHeaderIcon": "./icon.png",
       "installerIcon": "./icon.png",
-      "createDesktopShortcut": true
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
     }
   }
 }
