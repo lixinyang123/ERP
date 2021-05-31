@@ -35,15 +35,31 @@
   },
   "build": {
     "appId": "conchbrain.huahua.erp",
-    "copyright":"ConchBrain",
-    "productName":"ERP",
-    "dmg":{
-      "window":{
-		    "x":100,
-        "y":100,
-        "width":500,
-        "height":300
-      }
+    "copyright": "ConchBrain",
+    "productName": "ERP",
+    "directories": {
+      "output": "build"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "./icon.png"
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "icon": "./icon.png"
+    },
+    "extends": null,
+    "asar": true,
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerHeaderIcon": "./icon.png",
+      "installerIcon": "./icon.png",
+      "createDesktopShortcut": true
     }
   }
 }
