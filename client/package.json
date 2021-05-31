@@ -4,8 +4,8 @@
   "description": "erp web client",
   "main": "index.js",
   "scripts": {
-    "run": "node_modules/electron/dist/electron .",
-    "build": "node_modules/electron-packager/bin/electron-packager.js ."
+    "start": "node_modules/electron/dist/electron .",
+    "build": "electron-builder"
   },
   "repository": {
     "type": "git",
@@ -24,7 +24,7 @@
   "homepage": "https://github.com/lixinyang123/ERP#readme",
   "devDependencies": {
     "electron": "^13.0.1",
-    "electron-packager": "^15.2.0"
+    "electron-builder": "^22.10.5"
   },
   "dependencies": {
     "animate.css": "^4.1.1",
@@ -32,5 +32,18 @@
     "chart.js": "^3.3.2",
     "darkreader": "^4.9.32",
     "open-iconic": "^1.1.1"
+  },
+  "build": {
+    "appId": "conchbrain.huahua.erp",
+    "copyright":"ConchBrain",
+    "productName":"ERP",
+    "dmg":{  
+      "window":{  
+		    "x":100,
+        "y":100,  
+        "width":500,  
+        "height":300  
+      }
+    }
   }
 }
