@@ -1,3 +1,3 @@
 ## ERP
 
-Flask Desktop app base on Flask & Sciter
+Flask Desktop app base on Flask & Electron
