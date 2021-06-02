@@ -1,4 +1,5 @@
 rm -rf client/resources
+rm -rf build
 
 pyinstaller -F server/main.spec
 mkdir -p client/resources/server

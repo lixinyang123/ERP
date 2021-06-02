@@ -150,6 +150,7 @@ body {
 
 #main {
     padding: 3rem 0;
+    overflow-x: hidden;
 }
 
 #toastArea {
