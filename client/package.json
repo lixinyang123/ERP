@@ -41,6 +41,9 @@
     "directories": {
       "output": "build"
     },
+    "electronDownload":{
+      "mirror":"https://npm.taobao.org/mirrors/electron/"
+    },
     "win": {
       "target": [
         "nsis"
@@ -60,8 +63,8 @@
       "to": "server"
     },
     "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true,
+      "oneClick": true,
+      "allowToChangeInstallationDirectory": false,
       "installerHeaderIcon": "./icon.png",
       "installerIcon": "./icon.png",
       "createDesktopShortcut": true,
