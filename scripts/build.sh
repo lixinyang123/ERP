@@ -1,3 +1,5 @@
+cd $(cd $(dirname ${BASH_SOURCE[0]})/..; pwd)
+
 rm -rf client/resources
 rm -rf build
 
