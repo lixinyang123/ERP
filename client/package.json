@@ -1,7 +1,7 @@
 {
-  "name": "erp.web",
+  "name": "erp",
   "version": "1.0.0",
-  "description": "erp web client",
+  "description": "erp desktop client",
   "main": "index.js",
   "scripts": {
     "start": "node_modules/.bin/electron .",
@@ -13,7 +13,7 @@
   },
   "keywords": [
     "erp",
-    "web",
+    "desktop",
     "client"
   ],
   "author": "lllxy <conchbrain@outlook.com>",
@@ -49,7 +49,7 @@
     },
     "linux": {
       "target": [
-        "deb"
+        "zip"
       ],
       "icon": "./icon.png"
     },
