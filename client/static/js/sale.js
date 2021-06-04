@@ -60,11 +60,12 @@ function showData(sales) {
                         ID：${sale.id}
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">状态：${sale.state == 0 ? "未完成" : "已完成"}</h5>
+                        <h5 class="card-title">状态：${sale.state ? "未完成" : "已完成"}</h5>
                         ${detail}
                         <p class="card-text">用户：${sale.user.name}</p>
                         <p class="card-text">已付：${amounted}</p>
                         <p class="card-text">总价：${sale.selling}</p>
+                        <button class="btn btn-secondary" onclick="showDetail('${sale.id}')" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">详情</button>
                         ${completeBtn}
                         <button class="btn btn-danger" onclick="deleteOrder('${sale.id}')">删除</button>
                     </div>
@@ -229,6 +230,74 @@ function verifyOrder(order) {
     if(order.saleOperations.length > 0 && order.checkOuts.length > 0 && order.selling && order.user)
         return true;
     return false;
+}
+
+async function showDetail(id) {
+    let res = await fetch(api + "/sale/find?id=" + id);
+    let sale = await res.json();
+
+    // Get Amount
+    let amounted = 0;
+    let checkOuts = "";
+    sale.checkOuts.forEach(checkOut => {
+        amounted += checkOut.amount;
+        checkOuts += `
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold">${checkOut.time.substring(0,19)}</div>
+            </div>
+            <span class="badge bg-primary rounded-pill">金额：${checkOut.amount}</span>
+        </li>`;
+    });
+
+    // Get Detail
+    let detail = "";
+    sale.saleOperations.forEach(ele => {
+        detail += `
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold">${ele.product.name}</div>
+            </div>
+            <span class="badge bg-success rounded-pill">单价：${ele.salePrice}</span>
+            &nbsp;&nbsp;
+            <span class="badge bg-primary rounded-pill">数量：${ele.num}</span>
+        </li>`;
+    });
+
+    let html = `
+        <div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">ID</label>
+                <input id="user-name" type="text" class="form-control" disabled value="${sale.id}">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">状态</label>
+                <input id="user-tel" type="tel" class="form-control" disabled value="${sale.state ? "已完成" : "未完成"}">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">用户</label>
+                <input id="user-address" type="text" class="form-control" disabled value="${sale.user.name}">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">已付</label>
+                <input id="user-address" type="text" class="form-control" disabled value="${amounted}/${sale.selling}">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">待付</label>
+                <input id="user-address" type="text" class="form-control" disabled value="${sale.selling - amounted}">
+            </div>
+            <ol class="list-group list-group-numbered mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">订单产品详情</label>
+                ${detail}
+            </ol>
+            <ol class="list-group list-group-numbered mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">支付详情</label>
+                ${checkOuts}
+            </ol>
+        </div>
+    `;
+
+    document.querySelector(".offcanvas-body").innerHTML = html;
 }
 
 async function payment(id, name) {
