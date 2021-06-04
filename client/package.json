@@ -2,7 +2,7 @@
   "name": "erp",
   "version": "1.0.0",
   "description": "erp desktop client",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "start": "node_modules/.bin/electron .",
     "build": "node_modules/.bin/electron-builder"
