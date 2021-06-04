@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, Menu } = require('electron');
 const child_process = require("child_process");
 const fs = require("fs");
 
@@ -28,17 +28,29 @@ function createWindow () {
     mainWindow.loadFile('static/index.html');
 }
 
-app.whenReady().then(() => {
-    createWindow();
+function initMenu(){
+    const menu = Menu.buildFromTemplate([]);
+    Menu.setApplicationMenu(menu);
+}
 
-    app.on('activate', function () {
-        if (BrowserWindow.getAllWindows().length === 0) 
-            createWindow();
+function initApp() {
+
+    app.whenReady().then(() => {
+        createWindow();
+
+        app.on('activate', function () {
+            if (BrowserWindow.getAllWindows().length === 0) 
+                createWindow();
+        });
     });
-});
 
-app.on('window-all-closed', () => {
-    server.kill();
-    if (process.platform !== 'darwin') 
-        app.quit();
-});
+    app.on('window-all-closed', () => {
+        server.kill();
+        if (process.platform !== 'darwin') 
+            app.quit();
+    });
+
+    initMenu();
+}
+
+initApp();
