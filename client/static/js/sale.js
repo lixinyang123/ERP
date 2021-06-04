@@ -22,12 +22,6 @@ function showData(sales) {
 
     sales.forEach(sale => {
 
-        // Get Detail
-        let detail = "";
-        sale.saleOperations.forEach(ele => {
-            detail += `<p class="card-text"><strong>${ele.product.name}</strong> * ${ele.num}</p>`;
-        });
-
         // Get Amount
         let amounted = 0;
         sale.checkOuts.forEach(ele => {
@@ -61,7 +55,6 @@ function showData(sales) {
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">状态：${sale.state ? "未完成" : "已完成"}</h5>
-                        ${detail}
                         <p class="card-text">用户：${sale.user.name}</p>
                         <p class="card-text">已付：${amounted}</p>
                         <p class="card-text">总价：${sale.selling}</p>
