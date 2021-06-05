@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="./css/login.css" />
 
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../node_modules/darkreader/darkreader.js"></script>
     <script src="../node_modules/crypto-js/crypto-js.js"></script>
     <script src="./js/login.js"></script>
@@ -19,6 +20,11 @@
 <body class="container text-center">
     <div id="darkMode" onclick="switchTheme()">
         <span class="oi oi-moon"></span>
+    </div>
+
+    <div id="forget" onclick="showQuestion()">
+        <span class="oi oi-question-mark" data-bs-toggle="tooltip" data-bs-placement="bottom" title="忘记密码？"></span>
+        &nbsp;&nbsp;<i style="color: red;"></i>
     </div>
 
     <main class="form-signin">
@@ -38,7 +44,7 @@
                 </label>
             </div>
             <button class="w-100 btn btn-lg btn-primary" type="button" onclick="login()">登陆</button>
-            <p class="mt-5 mb-3 text-muted">© 2021 - FJH</p>
+            <p class="mt-5 mb-3 text-muted">© 2021 - ConchBrain</p>
         </form>
     </main>
 </body>

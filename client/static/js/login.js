@@ -18,6 +18,13 @@ function login() {
     location.href = "./index.html";
 }
 
+function showQuestion() {
+    document.querySelector("#forget > i").innerText = "提示：" + localStorage.getItem("question");
+    setTimeout(() => {
+        document.querySelector("#forget > i").innerText = "";
+    }, 2000);
+}
+
 function init() {
     // 初始化主题
     if(localStorage.getItem("isDark")) {

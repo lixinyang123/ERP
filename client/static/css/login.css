@@ -16,6 +16,13 @@ body {
     cursor: pointer;
 }
 
+#forget {
+    position: fixed;
+    top: 30px;
+    left: 30px;
+    cursor: pointer;
+}
+
 .form-signin {
     width: 100%;
     max-width: 330px;
