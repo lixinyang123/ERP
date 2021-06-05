@@ -1,4 +1,4 @@
-# ERP
+# Enterprise Resource Planning
 
 Flask Desktop app base on Flask & Electron
 
