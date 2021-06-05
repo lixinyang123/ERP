@@ -10,7 +10,7 @@ Install pre-requisites
 - Python3-pip
 - Node.js
 - npm
-- sqlite
+- Sqlite
 
 ##### On Windows
 
