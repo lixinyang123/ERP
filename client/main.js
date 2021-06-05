@@ -25,7 +25,7 @@ function createWindow () {
         height: 850
     });
 
-    mainWindow.loadFile('static/index.html');
+    mainWindow.loadFile('static/login.html');
 }
 
 function initMenu(){

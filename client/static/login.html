@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <link rel="stylesheet" href="../node_modules/open-iconic/font/css/open-iconic-bootstrap.css" />
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./css/login.css" />
+
+    <script src="../node_modules/darkreader/darkreader.js"></script>
+    <script src="../node_modules/crypto-js/crypto-js.js"></script>
+    <script src="./js/login.js"></script>
+    <script src="./js/setting.js"></script>
+</head>
+
+<body class="container text-center">
+    <div id="darkMode" onclick="switchTheme()">
+        <span class="oi oi-moon"></span>
+    </div>
+
+    <main class="form-signin">
+        <form>
+            <h1 class="h3 mb-3 fw-normal">Enterprise Resource Planning</h1>
+        
+            <div class="form-floating">
+                <input id="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword">密码</label>
+            </div>
+
+            <p id="pwdError"></p>
+        
+            <div class="checkbox mb-3">
+                <label>
+                    <input id="remeberPwd" type="checkbox" value="remember-me"> 记住密码
+                </label>
+            </div>
+            <button class="w-100 btn btn-lg btn-primary" type="button" onclick="login()">登陆</button>
+            <p class="mt-5 mb-3 text-muted">© 2021 - FJH</p>
+        </form>
+    </main>
+</body>
+</html>
