@@ -1,4 +1,4 @@
-# ERP
+# Enterprise Resource Planning
 
 Flask Desktop app base on Flask & Electron
 
@@ -10,12 +10,13 @@ Install pre-requisites
 - Python3-pip
 - Node.js
 - npm
+- Sqlite
 
 ##### On Windows
 
-- Visit [Python official website](https://www.python.org/) to download Python ( Included pip )
+- Install [Python](https://www.python.org/) ( Included pip )
 
-- Install [Nodejs official website](https://nodejs.org/) ( Included npm )
+- Install [Nodejs](https://nodejs.org/) ( Included npm )
 
 ##### On Linux
 
