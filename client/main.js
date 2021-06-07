@@ -10,7 +10,7 @@ function getAppPath() {
     return path + "/resources/server";
 }
 
-const server = child_process.execFile("./main", {
+const server = child_process.execFile("./ERP_SERVICE", {
     cwd: `${getAppPath()}`
 }, (err, stdout, stderr) => {
     if(err || stderr) {

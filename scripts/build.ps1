@@ -4,9 +4,9 @@ cd ..
 Remove-Item client/resources -recurse
 Remove-Item build -recurse
 
-pyinstaller -F server/main.spec
+pyinstaller -F server/build.spec
 mkdir client/resources/server
-mv dist/main/* client/resources/server
+mv dist/ERP_SERVICE/* client/resources/server
 Remove-Item dist build -recurse
 
 cd client
