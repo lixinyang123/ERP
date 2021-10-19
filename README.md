@@ -1,6 +1,6 @@
 # Enterprise Resource Planning
 
-Flask Desktop app base on Flask & Electron
+ERP Desktop App base on Flask & Electron
 
 ### How to Contribute?
 
