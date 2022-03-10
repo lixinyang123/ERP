@@ -54,7 +54,7 @@ function showData(sales) {
                         ID：${sale.id}
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">状态：${sale.state ? "未完成" : "已完成"}</h5>
+                        <h5 class="card-title">状态：${!sale.state ? "未完成" : "已完成"}</h5>
                         <p class="card-text">用户：${sale.user.name}</p>
                         <p class="card-text">已付：${amounted}</p>
                         <p class="card-text">总价：${sale.selling}</p>
